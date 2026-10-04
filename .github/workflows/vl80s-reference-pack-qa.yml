@@ -8,6 +8,7 @@ on:
       - 'docs/reference_packs/vl80s/**'
       - 'qa/validate_vl80s_reference_packs.py'
       - 'qa/normalize_vl80s_reference_pack_metadata.py'
+      - 'qa/migrate_vl80s_legacy_runtime_roles.py'
       - '.github/workflows/vl80s-reference-pack-qa.yml'
   workflow_dispatch:
 
@@ -23,6 +24,9 @@ jobs:
         with:
           ref: content/vl80s-knowledge-expansion
 
+      - name: Backfill legacy runtime roles
+        run: python3 qa/migrate_vl80s_legacy_runtime_roles.py
+
       - name: Normalize derived metadata
         run: python3 qa/normalize_vl80s_reference_pack_metadata.py
 
@@ -33,7 +37,7 @@ jobs:
         shell: bash
         run: |
           if git diff --quiet; then
-            echo 'No derived metadata corrections required.'
+            echo 'No deterministic metadata corrections required.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
