@@ -296,6 +296,7 @@ private fun SchemeCanvas(
                         awaitFirstDown(requireUnconsumed = false)
                         var previousCentroid: Offset? = null
                         var previousSpan: Float? = null
+                        var active: Boolean
                         do {
                             val event = awaitPointerEvent()
                             val pressed = event.changes.filter { it.pressed }
@@ -317,7 +318,8 @@ private fun SchemeCanvas(
                                 previousCentroid = null
                                 previousSpan = null
                             }
-                        } while (event.changes.any { it.pressed })
+                            active = event.changes.any { it.pressed }
+                        } while (active)
                     }
                 }
                 .pointerInput(sequence.id, widthPx, heightPx) {
