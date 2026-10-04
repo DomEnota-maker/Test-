@@ -7,11 +7,13 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -239,12 +241,12 @@ private fun readingOrder(sequence: SchemeSequence): List<SchemeNode> {
 
 private fun readingLayout(sequence: SchemeSequence, width: Float): List<SchemeNode> {
     val ordered = readingOrder(sequence)
-    val columns = if (width >= 600f || (width >= 300f && ordered.size > 4)) 2 else 1
+    val columns = if (width >= 560f) 2 else 1
     val margin = 16f
     val gapX = 20f
     val gapY = 36f
     val nodeWidth = (width - margin * 2 - gapX * (columns - 1)) / columns
-    val nodeHeight = if (nodeWidth < 175f) 92f else 78f
+    val nodeHeight = 96f
     return ordered.mapIndexed { index, node ->
         val row = index / columns
         val col = index % columns
@@ -259,9 +261,9 @@ private fun SchemeCanvas(
     sequence: SchemeSequence, stepIndex: Int, styles: Map<String, FlowStyle>, isDark: Boolean,
     background: Color, foreground: Color, selectedNode: String?, onSelect: (String) -> Unit
 ) {
-    var zoom by rememberSaveable(sequence.id) { mutableFloatStateOf(1f) }
-    var shiftX by rememberSaveable(sequence.id) { mutableFloatStateOf(0f) }
-    var shiftY by rememberSaveable(sequence.id) { mutableFloatStateOf(0f) }
+    var zoom by remember(sequence.id) { mutableFloatStateOf(1f) }
+    var shiftX by remember(sequence.id) { mutableFloatStateOf(0f) }
+    var shiftY by remember(sequence.id) { mutableFloatStateOf(0f) }
     val currentEdges = sequence.steps[stepIndex].edges.toSet()
     val completedEdges = sequence.steps.take(stepIndex).flatMap { it.edges }.toSet()
     val allEdges = remember(sequence.id) { sequence.steps.flatMap { it.edges }.distinct() }
@@ -290,12 +292,32 @@ private fun SchemeCanvas(
             }
             val gestures = Modifier.fillMaxSize()
                 .pointerInput(sequence.id, widthPx, heightPx) {
-                    detectTransformGestures { centroid, pan, factor, _ ->
-                        val next = (zoom * factor).coerceIn(1f, 5f)
-                        val ratio = next / zoom
-                        zoom = next
-                        shiftX = clamp(shiftX * ratio + pan.x + (centroid.x - center.x) * (1f - ratio), width, widthPx)
-                        shiftY = clamp(shiftY * ratio + pan.y + (centroid.y - center.y) * (1f - ratio), height, heightPx)
+                    awaitEachGesture {
+                        awaitFirstDown(requireUnconsumed = false)
+                        var previousCentroid: Offset? = null
+                        var previousSpan: Float? = null
+                        do {
+                            val event = awaitPointerEvent()
+                            val pressed = event.changes.filter { it.pressed }
+                            if (pressed.size >= 2) {
+                                val centroid = Offset(pressed.map { it.position.x }.average().toFloat(),
+                                    pressed.map { it.position.y }.average().toFloat())
+                                val span = pressed.map { (it.position - centroid).getDistance() }.average().toFloat()
+                                val factor = previousSpan?.takeIf { it > 0f }?.let { span / it } ?: 1f
+                                val next = (zoom * factor).coerceIn(1f, 5f)
+                                val ratio = next / zoom
+                                val pan = previousCentroid?.let { centroid - it } ?: Offset.Zero
+                                zoom = next
+                                shiftX = clamp(shiftX * ratio + pan.x + (centroid.x - center.x) * (1f - ratio), width, widthPx)
+                                shiftY = clamp(shiftY * ratio + pan.y + (centroid.y - center.y) * (1f - ratio), height, heightPx)
+                                previousCentroid = centroid
+                                previousSpan = span
+                                event.changes.forEach { it.consume() }
+                            } else {
+                                previousCentroid = null
+                                previousSpan = null
+                            }
+                        } while (event.changes.any { it.pressed })
                     }
                 }
                 .pointerInput(sequence.id, widthPx, heightPx) {
@@ -314,6 +336,7 @@ private fun SchemeCanvas(
                     })
                 }
             Canvas(Modifier.fillMaxWidth().height(height.dp)
+                .clip(RoundedCornerShape(12.dp))
                 .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
                 .then(gestures).background(background)) {
                 withTransform({
@@ -436,7 +459,7 @@ private fun SchemeCanvas(
             OutlinedButton(onClick = { zoom = (zoom * 1.4f).coerceAtMost(5f) }) { Text("+") }
             OutlinedButton(onClick = { zoom = 1f; shiftX = 0f; shiftY = 0f }) { Text("Показать целиком") }
         }
-        Text("Увеличивайте и перемещайте схему жестом. Двойное касание возвращает общий вид.",
+        Text("Прокручивайте страницу одним пальцем. Двумя пальцами увеличивайте и перемещайте схему. Двойное касание возвращает общий вид.",
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

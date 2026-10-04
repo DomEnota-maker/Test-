@@ -81,6 +81,7 @@ import ru.railbrake.calculator.core.MassSupplementResult
 import ru.railbrake.calculator.core.ProfileMode
 import ru.railbrake.calculator.core.TenTonsChoice
 import ru.railbrake.calculator.core.TechnicalFamily
+import ru.railbrake.calculator.core.TechnicalDataRepository
 import ru.railbrake.calculator.core.TechnicalSection
 import ru.railbrake.calculator.core.WorkingLocomotive
 import ru.railbrake.calculator.core.assistant.AssistantRuntime
@@ -480,7 +481,8 @@ fun BrakeCalculatorApp(
                         onFamilyChange = { family -> viewingFamilyName = family.name },
                         onOpenAtlasEquipment = { equipmentId ->
                             atlasReturnToDiagnostics = true
-                            technicalFamilyName = TechnicalFamily.VL80S.name
+                            technicalFamilyName = TechnicalDataRepository(context).entry(equipmentId)?.family?.name
+                                ?: viewingFamily.name
                             technicalSectionName = TechnicalSection.EQUIPMENT.name
                             technicalInitialEntryId = equipmentId
                             screenName = AppScreen.LOCOMOTIVE_MATERIAL.name

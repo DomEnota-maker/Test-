@@ -14,14 +14,14 @@ class DiagnosticFrameworkV2Test {
         File("src/main/assets/technical/vl80s_equipment.json.gz").inputStream()
     ).bufferedReader().use { it.readText() })
 
-    @Test fun referenceModuleUsesCanonicalEquipmentAndExistingQuestionGraph() {
+    @Test fun referenceModuleUsesCanonicalEquipmentAndIndependentQuestionGraph() {
         val scenario = requireNotNull(DiagnosticRepository.scenario("pantograph-no-rise"))
         val module = DiagnosticFrameworkV2.parse(root, { canonical }, mapOf(scenario.id to scenario)).single()
         assertEquals(scenario.id, module.scenarioId)
-        assertEquals(scenario.questions.map { it.key }.toSet(), module.nodes.keys)
+        assertEquals(7, module.nodes.size)
         assertEquals("pnr-danger", module.startNodeId)
         assertEquals("Токоприёмник", module.components.getValue("VL-EQ-HV-002").title)
-        assertEquals(scenario.questions.first().text, module.nodes.getValue("pnr-danger").question)
+        assertEquals("Видно ли повреждение токоприёмника или контактного провода?", module.nodes.getValue("pnr-danger").question)
         assertTrue(module.nodes.values.all { it.answers.keys == DiagnosticResponse.entries.toSet() })
         assertTrue(module.knowledge.any { it.classification == KnowledgeClassification.OPERATIONAL_EXPERIENCE &&
             it.quality == KnowledgeQuality.REFERENCE_ONLY })
@@ -44,9 +44,10 @@ class DiagnosticFrameworkV2Test {
         val scenario = requireNotNull(DiagnosticRepository.scenario("pantograph-no-rise"))
         val module = DiagnosticFrameworkV2.parse(root, { canonical }, mapOf(scenario.id to scenario)).single()
         assertEquals(null, module.nextNode("pnr-danger", DiagnosticResponse.YES))
-        assertEquals("pnr-permission", module.nextNode("pnr-danger", DiagnosticResponse.NO)?.id)
+        assertEquals("pnr-arc", module.nextNode("pnr-danger", DiagnosticResponse.NO)?.id)
         assertTrue(module.answerMeaning("pnr-danger", DiagnosticResponse.UNKNOWN).isNotBlank())
-        assertEquals(module.nodes.getValue("pnr-danger").question, scenario.questions.first().text)
+        assertEquals(null, module.nextNode("pnr-danger", DiagnosticResponse.UNKNOWN))
+        assertEquals("pnr-permission", module.nextNode("pnr-arc", DiagnosticResponse.NO)?.id)
     }
 
     @Test fun aNewProfileAndDataDefinedGraphNeedNoNewCoreBranch() {
@@ -54,7 +55,9 @@ class DiagnosticFrameworkV2Test {
         val item = raw.getJSONArray("modules").getJSONObject(0)
         item.put("scenarioId", "future-family-scenario")
         item.put("profileId", "future-family")
+        item.put("profileTitle", "Будущий локомотив")
         item.put("variantIds", org.json.JSONArray().put("future-variant"))
+        item.put("variantTitles", JSONObject().put("future-variant", "Первое исполнение"))
         item.put("startNodeId", "first")
         item.put("directions", org.json.JSONArray().put(JSONObject()
             .put("id", "first-direction").put("title", "Проверка")
@@ -69,6 +72,7 @@ class DiagnosticFrameworkV2Test {
                 .put("UNKNOWN", "__end__"))))
         val module = DiagnosticFrameworkV2.parse(raw, { canonical }).single()
         assertEquals("future-family", module.profileId)
+        assertEquals("Будущий локомотив", module.profileTitle)
         assertEquals("first", module.startNodeId)
     }
 }

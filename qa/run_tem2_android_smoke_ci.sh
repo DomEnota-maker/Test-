@@ -10,3 +10,5 @@ if [[ -f "$GITHUB_WORKSPACE/app/src/main/assets/technical/diagnostic_framework_v
   QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
     python3 "$GITHUB_WORKSPACE/qa/diagnostic_framework_v2_smoke.py"
 fi
+QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
+  python3 "$GITHUB_WORKSPACE/qa/diesel_scheme_viewport_smoke.py"

@@ -58,9 +58,16 @@ data class FrameworkDirection(
 data class FrameworkDiagnosticModule(
     val scenarioId: String,
     val profileId: String,
+    val title: String,
+    val profileTitle: String,
+    val variantTitles: Map<String, String>,
+    val reactionStatus: String,
     val variantIds: Set<String>,
     val systemIds: Set<String>,
+    val systemTitles: Map<String, String>,
     val symptom: String,
+    val safetyActions: List<String>,
+    val stopConditions: List<String>,
     val components: Map<String, FrameworkComponent>,
     val sources: Map<String, FrameworkSource>,
     val knowledge: List<FrameworkKnowledgeEntry>,
@@ -84,10 +91,9 @@ data class FrameworkDiagnosticModule(
 }
 
 /**
- * The v2 asset stores links and extra knowledge, not copies of Atlas equipment or
- * legacy diagnostic questions. Canonical equipment is resolved from its existing
- * technical asset; the first module adapts its existing runtime question graph.
- * A future module may provide nodes in data without changing this loader.
+ * The v2 asset stores a diagnostic graph and knowledge linked to canonical Atlas
+ * equipment. Equipment is resolved from its existing technical asset. Other
+ * profiles and their graphs can be added as data without a profile-specific branch.
  */
 object DiagnosticFrameworkV2 {
     private const val ASSET = "technical/diagnostic_framework_v2.json"
@@ -108,7 +114,23 @@ object DiagnosticFrameworkV2 {
             val scenarioId = raw.required("scenarioId")
             val profileId = raw.required("profileId")
             val variantIds = raw.strings("variantIds").toSet()
+            val variantTitles = raw.getJSONObject("variantTitles").let { names ->
+                names.keys().asSequence().associateWith { names.getString(it).trim() }
+            }
+            require(variantIds.isNotEmpty() && variantTitles.keys == variantIds && variantTitles.values.all(String::isNotBlank)) {
+                "$scenarioId: missing variant presentation"
+            }
+            val safetyActions = raw.strings("safetyActions")
+            val stopConditions = raw.strings("stopConditions")
+            require(safetyActions.isNotEmpty() && stopConditions.isNotEmpty() &&
+                (safetyActions + stopConditions).all(String::isNotBlank)) { "$scenarioId: missing safety boundary" }
             val systemIds = raw.strings("systemIds").toSet()
+            val systemTitles = raw.getJSONObject("systemTitles").let { names ->
+                names.keys().asSequence().associateWith { names.getString(it).trim() }
+            }
+            require(systemTitles.keys == systemIds && systemTitles.values.all(String::isNotBlank)) {
+                "$scenarioId: missing system presentation"
+            }
             val componentIds = raw.strings("componentIds").toSet()
             val asset = canonicalAsset(raw.required("canonicalEquipmentAsset"))
             val allComponents = asset.getJSONArray("records").objects().associate { item ->
@@ -197,7 +219,9 @@ object DiagnosticFrameworkV2 {
             require(directions.map { it.id }.distinct().size == directions.size && directions.all {
                 it.questionKey in nodes && componentIds.containsAll(it.componentIds)
             }) { "$scenarioId: invalid direction links" }
-            FrameworkDiagnosticModule(scenarioId, profileId, variantIds, systemIds, raw.required("symptom"),
+            FrameworkDiagnosticModule(scenarioId, profileId, raw.required("title"), raw.required("profileTitle"),
+                variantTitles, raw.required("reactionStatus"), variantIds, systemIds, systemTitles, raw.required("symptom"),
+                safetyActions, stopConditions,
                 components, sources, knowledge, directions, nodes, startNodeId)
         }
         require(modules.map { it.scenarioId }.distinct().size == modules.size)

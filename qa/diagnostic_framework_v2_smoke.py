@@ -44,9 +44,9 @@ def open_reference():
 
 try:
     open_reference()
-    scroll_until("Есть повреждение контактной сети")
+    scroll_until("Видно ли повреждение токоприёмника или контактного провода?")
     adb("shell", "input", "swipe", "520", "1850", "520", "1050", "390")
-    tap("Не знаю", 0)
+    tap("Нет", 0)
     wait("Шаг 2;")
     scroll_up_until("Направление проверки")
     shot("framework-v2-beginner")
@@ -61,7 +61,7 @@ try:
         adb("shell", "input", "swipe", "520", "500", "520", "1800", "320")
         time.sleep(.3)
     tap("Изучение", 0)
-    scroll_until("Наблюдения из эксплуатации")
+    scroll_until("Опыт эксплуатации")
     scroll_until("Источник:")
     shot("framework-v2-study")
 

@@ -45,6 +45,7 @@ import ru.railbrake.calculator.core.DiagnosticCheck
 import ru.railbrake.calculator.core.DiagnosticRepository
 import ru.railbrake.calculator.core.DiagnosticFrameworkV2
 import ru.railbrake.calculator.core.FrameworkDiagnosticNode
+import ru.railbrake.calculator.core.FrameworkDiagnosticModule
 import ru.railbrake.calculator.core.DiagnosticResponse
 import ru.railbrake.calculator.core.DiagnosticScenario
 import ru.railbrake.calculator.core.DiagnosticSeverity
@@ -87,9 +88,12 @@ fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: Stri
     var selectedId by rememberSaveable(initialScenarioId) { mutableStateOf(initialScenarioId) }
     var selectedEquipmentId by rememberSaveable(initialEquipmentId) { mutableStateOf(initialEquipmentId) }
     val selected = DiagnosticRepository.scenarios.firstOrNull { it.id == selectedId }
+    val context = LocalContext.current
+    val frameworkModules = remember(context) { DiagnosticFrameworkV2.load(context) }
+    val standalone = frameworkModules.firstOrNull { it.scenarioId == selectedId && selected == null }
     val selectedEquipment = Vl80sObservationCatalog.equipment(selectedEquipmentId.orEmpty())
 
-    BackHandler(enabled = selected != null || selectedEquipment != null) {
+    BackHandler(enabled = selected != null || standalone != null || selectedEquipment != null) {
         if (selectedEquipment != null) selectedEquipmentId = null else selectedId = null
     }
 
@@ -102,9 +106,13 @@ fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: Stri
                 selectedId = scenarioId
             }
         )
+        standalone != null -> FrameworkStandaloneDetails(standalone, onBack = { selectedId = null },
+            onOpenAtlasEquipment = onOpenAtlasEquipment)
         selected == null -> DiagnosticCatalog(
             onOpen = { selectedId = it.id },
-            onOpenEquipment = { selectedEquipmentId = it.id }
+            onOpenEquipment = { selectedEquipmentId = it.id },
+            standaloneModules = frameworkModules.filter { DiagnosticRepository.scenario(it.scenarioId) == null },
+            onOpenFramework = { selectedId = it }
         )
         else -> DiagnosticDetails(
             scenario = selected,
@@ -120,7 +128,9 @@ fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: Stri
 @Composable
 private fun DiagnosticCatalog(
     onOpen: (DiagnosticScenario) -> Unit,
-    onOpenEquipment: (EquipmentReference) -> Unit
+    onOpenEquipment: (EquipmentReference) -> Unit,
+    standaloneModules: List<FrameworkDiagnosticModule>,
+    onOpenFramework: (String) -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }
     var category by rememberSaveable { mutableStateOf("Все") }
@@ -158,6 +168,11 @@ private fun DiagnosticCatalog(
             scenario?.summary.orEmpty()
         ).any { value -> value.contains(query, ignoreCase = true) }
         matchesVariant && matchesQuery
+    }
+    val standaloneResults = standaloneModules.filter { module ->
+        (category == "Все" || query.isNotBlank()) &&
+            (query.isBlank() || listOf(module.title, module.profileTitle, module.symptom)
+                .any { it.contains(query, ignoreCase = true) })
     }
 
     LazyColumn(
@@ -229,6 +244,18 @@ private fun DiagnosticCatalog(
                     }
                 }
                 Text("→", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            }
+        }
+        if (catalogMode == "scenarios" && standaloneResults.isNotEmpty()) {
+            item { Text("Модули базы знаний", style = MaterialTheme.typography.titleLarge) }
+            items(standaloneResults, key = { "framework-${it.scenarioId}" }) { module ->
+                Card(onClick = { onOpenFramework(module.scenarioId) }, modifier = Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                        Text(module.profileTitle, color = MaterialTheme.colorScheme.primary)
+                        Text(module.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                        Text(module.symptom, style = MaterialTheme.typography.bodySmall)
+                    }
+                }
             }
         }
         if (catalogMode == "history") {
@@ -335,7 +362,7 @@ private fun DiagnosticCatalog(
                     }
                 }
             }
-        } else if (results.isEmpty()) {
+        } else if (results.isEmpty() && standaloneResults.isEmpty()) {
             item {
                 InfoCard(
                     title = "Ничего не найдено",
@@ -362,6 +389,62 @@ private fun DiagnosticCatalog(
                 }
             }
         }
+        item { Spacer(Modifier.height(20.dp)) }
+    }
+}
+
+@Composable
+private fun FrameworkStandaloneDetails(
+    module: FrameworkDiagnosticModule,
+    onBack: () -> Unit,
+    onOpenAtlasEquipment: (String) -> Unit
+) {
+    val context = LocalContext.current
+    val settings = remember(context) { KnowledgeDisplayRepository(context) }
+    val selectedVariantId = remember(context) { LocomotiveProfileRepository(context).selectedVariantId() }
+    val variantTitle = module.variantTitles[selectedVariantId] ?: module.variantTitles.values.first()
+    var currentKey by rememberSaveable(module.scenarioId) { mutableStateOf<String?>(module.startNodeId) }
+    var trail by rememberSaveable(module.scenarioId) { mutableStateOf(emptyList<String>()) }
+    val answers = trail.mapNotNull { record ->
+        val key = record.substringBefore('\t')
+        val response = runCatching { DiagnosticResponse.valueOf(record.substringAfter('\t')) }.getOrNull()
+        response?.let { key to it }
+    }
+    val answerTexts = answers.map { (key, response) ->
+        "${module.nodes.getValue(key).question} — ${response.title}. ${module.answerMeaning(key, response)}"
+    }
+    LazyColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        item { TextButton(onClick = onBack) { Text("← Все неисправности") } }
+        item {
+            HybridDiagnosticCardV2(module = module, scenario = null,
+                locomotiveTitle = module.profileTitle, variantTitle = variantTitle,
+                variantId = selectedVariantId,
+                systemTitles = module.systemIds.mapNotNull(module.systemTitles::get),
+                mode = settings.mode(), depth = settings.depth(), answerTrail = answers,
+                onOpenEquipment = onOpenAtlasEquipment)
+        }
+        item { DiagnosticSafetyNotice() }
+        item { InfoCard("Сначала", module.safetyActions, MaterialTheme.colorScheme.primaryContainer) }
+        item {
+            TriageCard(scenario = null, frameworkNode = currentKey?.let(module.nodes::get),
+                currentQuestionKey = currentKey, answers = answerTexts,
+                onAnswer = { response ->
+                    val key = requireNotNull(currentKey)
+                    trail = trail + "$key\t${response.name}"
+                    currentKey = module.nextNode(key, response)?.id
+                },
+                onReset = { trail = emptyList(); currentKey = module.startNodeId },
+                onBackOne = {
+                    currentKey = trail.lastOrNull()?.substringBefore('\t') ?: module.startNodeId
+                    trail = trail.dropLast(1)
+                })
+        }
+        answers.lastOrNull()?.let { (key, response) ->
+            item { InfoCard("Оценка по ответу", listOf(module.answerMeaning(key, response)),
+                MaterialTheme.colorScheme.primaryContainer) }
+        }
+        item { InfoCard("Прекратить диагностику", module.stopConditions, MaterialTheme.colorScheme.errorContainer) }
         item { Spacer(Modifier.height(20.dp)) }
     }
 }
@@ -452,6 +535,7 @@ private fun DiagnosticDetails(
                 scenario = scenario,
                 locomotiveTitle = LocomotiveProfiles.profile(frameworkModule.profileId)?.title ?: "Локомотив не указан",
                 variantTitle = selectedVariant?.title ?: "Исполнение не уточнено",
+                variantId = variantId,
                 systemTitles = frameworkModule.systemIds.mapNotNull { systemId ->
                     TechnicalDataRepository(context).entry(systemId)?.title
                 },
@@ -804,7 +888,7 @@ private fun EquipmentDetails(
 
 @Composable
 private fun TriageCard(
-    scenario: DiagnosticScenario,
+    scenario: DiagnosticScenario?,
     frameworkNode: FrameworkDiagnosticNode?,
     currentQuestionKey: String?,
     answers: List<String>,
@@ -820,7 +904,7 @@ private fun TriageCard(
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("Уточнение симптома", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
-            val question = scenario.questions.firstOrNull { it.key == currentQuestionKey }
+            val question = scenario?.questions?.firstOrNull { it.key == currentQuestionKey }
             if (question != null || frameworkNode != null) {
                 Text("Шаг ${answers.size + 1}; дальнейший вопрос зависит от ответа")
                 Text(frameworkNode?.question ?: requireNotNull(question).text, fontWeight = FontWeight.Bold)
