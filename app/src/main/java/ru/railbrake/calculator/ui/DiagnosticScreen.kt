@@ -59,6 +59,7 @@ import ru.railbrake.calculator.data.DiagnosticSessionRecord
 import ru.railbrake.calculator.data.DiagnosticSessionRepository
 import ru.railbrake.calculator.data.LocomotiveProfileRepository
 import ru.railbrake.calculator.data.KnowledgeDisplayRepository
+import ru.railbrake.calculator.data.KnowledgeDepth
 import ru.railbrake.calculator.data.SecretAccessRepository
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -407,6 +408,8 @@ private fun DiagnosticDetails(
     val knowledgeSettings = remember(context) { KnowledgeDisplayRepository(context) }
     val knowledgeMode = knowledgeSettings.mode()
     val knowledgeDepth = knowledgeSettings.depth()
+    var showAdditionalDetails by rememberSaveable(scenario.id) { mutableStateOf(false) }
+    val compactCard = frameworkModule != null && knowledgeDepth == KnowledgeDepth.MINIMAL && !showAdditionalDetails
     val scenarioMatchesVariant = LocomotiveProfiles.appliesToVariant(variantId, scenario.applicableVariantIds)
     val relatedScenarioIds = scenario.relatedScenarioIds.filter { relatedId ->
         DiagnosticRepository.scenario(relatedId)?.let { relatedScenario ->
@@ -539,7 +542,7 @@ private fun DiagnosticDetails(
                 }
             )
         }
-        if (scenario.observableSigns.isNotEmpty() && (frameworkModule == null || knowledgeDepth != ru.railbrake.calculator.data.KnowledgeDepth.MINIMAL)) {
+        if (scenario.observableSigns.isNotEmpty() && !compactCard) {
             item { InfoCard("Что наблюдать", scenario.observableSigns, MaterialTheme.colorScheme.surfaceVariant) }
         }
         if (currentAssessment.isNotBlank()) {
@@ -558,13 +561,18 @@ private fun DiagnosticDetails(
                 )
             }
         }
+        if (frameworkModule != null && knowledgeDepth == KnowledgeDepth.MINIMAL) item {
+            TextButton(onClick = { showAdditionalDetails = !showAdditionalDetails }) {
+                Text(if (showAdditionalDetails) "Свернуть подробные проверки" else "Показать подробные проверки и материалы")
+            }
+        }
         if (scenario.systemExplanation.isNotEmpty() && frameworkModule == null) {
             item { InfoCard("Как связана система", scenario.systemExplanation, MaterialTheme.colorScheme.secondaryContainer) }
         }
         val leadingCauses = scenario.diagnosticCauses
             .filter { (candidateScores[it.id] ?: 0) > 0 }
             .sortedByDescending { candidateScores[it.id] ?: 0 }
-        if (leadingCauses.isNotEmpty()) {
+        if (leadingCauses.isNotEmpty() && !compactCard) {
             item {
                 InfoCard(
                     "Наиболее подходящие ветви по ответам",
@@ -573,26 +581,26 @@ private fun DiagnosticDetails(
                 )
             }
         }
-        if (frameworkModule == null || answerTrail.isNotEmpty()) {
+        if (!compactCard && (frameworkModule == null || answerTrail.isNotEmpty())) {
             item { InfoCard("Вероятные причины — гипотезы, не вывод", scenario.probableCauses, MaterialTheme.colorScheme.surfaceVariant) }
         }
-        if (scenario.operationalConsequences.isNotEmpty() && (frameworkModule == null || knowledgeDepth != ru.railbrake.calculator.data.KnowledgeDepth.MINIMAL)) {
+        if (scenario.operationalConsequences.isNotEmpty() && !compactCard) {
             item { InfoCard("К чему может привести", scenario.operationalConsequences, MaterialTheme.colorScheme.errorContainer) }
         }
-        item {
+        if (!compactCard) item {
             Text("Проверки по уровню допуска", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
             Text(
                 "Уровень указан для каждой проверки. Он не расширяет допуск конкретного работника.",
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        items(scenario.checks) { check -> DiagnosticCheckCard(check) }
+        if (!compactCard) items(scenario.checks) { check -> DiagnosticCheckCard(check) }
         if (scenario.trainingNotes.isNotEmpty() && frameworkModule == null) {
             item { InfoCard("Почему алгоритм спрашивает именно это", scenario.trainingNotes, MaterialTheme.colorScheme.tertiaryContainer) }
         }
         item { InfoCard("Запрещено", scenario.prohibited, MaterialTheme.colorScheme.errorContainer) }
         item { InfoCard("Прекратить диагностику", scenario.stopConditions, MaterialTheme.colorScheme.errorContainer) }
-        item {
+        if (!compactCard) item {
             SessionJournal(
                 sectionNote = sectionNote,
                 onSectionNote = { sectionNote = it },
@@ -605,7 +613,7 @@ private fun DiagnosticDetails(
                 prompts = scenario.feedbackPrompts
             )
         }
-        item {
+        if (!compactCard) item {
             val sessionLines = listOfNotNull(
                 sectionNote.takeIf { it.isNotBlank() }?.let { "Секция/место: $it" },
                 modeNote.takeIf { it.isNotBlank() }?.let { "Режим: $it" },
@@ -649,7 +657,7 @@ private fun DiagnosticDetails(
                 }
             }
         }
-        if (relatedScenarioIds.isNotEmpty()) {
+        if (relatedScenarioIds.isNotEmpty() && !compactCard) {
             item {
                 RelatedScenarios(relatedScenarioIds, onOpenRelated)
             }
@@ -657,10 +665,10 @@ private fun DiagnosticDetails(
         val linkedEquipment = Vl80sObservationCatalog.equipment.filter { equipment ->
             equipment.scenarioIds.contains(scenario.id)
         }
-        if (linkedEquipment.isNotEmpty()) {
+        if (linkedEquipment.isNotEmpty() && !compactCard) {
             item { RelatedEquipment(linkedEquipment, onOpenEquipment) }
         }
-        if (relatedQuestions.isNotEmpty()) {
+        if (relatedQuestions.isNotEmpty() && !compactCard) {
             item { RelatedExamQuestions(relatedQuestions) }
         }
         item {

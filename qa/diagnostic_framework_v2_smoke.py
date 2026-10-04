@@ -70,6 +70,9 @@ try:
     open_reference()
     scroll_until("Карта направлений поиска")
     shot("framework-v2-expert-minimal")
+    scroll_until("Показать подробные проверки и материалы")
+    tap("Показать подробные проверки и материалы", 0)
+    scroll_until("Проверки по уровню допуска")
 finally:
     (OUT / "framework-v2-crash-logcat.txt").write_bytes(adb("logcat", "-d", "-b", "crash"))
 

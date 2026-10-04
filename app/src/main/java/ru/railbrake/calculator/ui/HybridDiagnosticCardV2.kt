@@ -58,6 +58,17 @@ internal fun HybridDiagnosticCardV2(
     }
 
     if (mode == KnowledgeMode.BASIC) {
+        if (depth == KnowledgeDepth.MINIMAL && answerTrail.isNotEmpty()) {
+            Card(modifier = Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text("Направления проверки", fontWeight = FontWeight.Bold)
+                    directions.forEach { direction ->
+                        Text("• ${direction.title}${answerByNode[direction.questionKey]?.let { " — ответ: ${it.title.lowercase()}" }.orEmpty()}")
+                    }
+                    Text("Ответы лишь уточняют поиск; причина не установлена.", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
         if (depth != KnowledgeDepth.MINIMAL && answerTrail.isNotEmpty()) {
             Card(modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
