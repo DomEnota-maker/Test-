@@ -6,7 +6,9 @@
   "scenarioLifecycle": "ACTIVE",
   "packStatus": "SOURCE_REVIEWED",
   "profileId": "vl80s",
-  "variantIds": ["vl80s-general"],
+  "variantIds": [
+    "vl80s-general"
+  ],
   "preparedAt": "2026-10-05",
   "purpose": "Structured knowledge pack for the active VL80S compressor/no-or-slow-main-reservoir-pressure scenario. Current brake rules, repair context, historical norms and field bypasses are separated explicitly.",
   "productionStatus": "REFERENCE_ONLY_PENDING_FINAL_RUNTIME_REVIEW",
@@ -24,16 +26,76 @@
     "UNSAFE_METHOD": "POPULATED_REDACTED"
   },
   "sourceRegistry": [
-    {"id":"VL80S-COMP-S01","authority":"A","type":"CURRENT_INTERSTATE_BRAKE_RULES","title":"Правила технического обслуживания тормозного оборудования и управления тормозами железнодорожного подвижного состава, протокол Совета №83 от 25–26.11.2025, приложение №65; действуют с 01.07.2026","url":"https://base.garant.ru/413231681/850c9b8f5271cc2c815bc04e52704941/"},
-    {"id":"VL80S-COMP-S02","authority":"A","type":"CURRENT_RZD_MAINTENANCE_INSTRUCTION","title":"Инструкция по ТО, ремонту и испытанию тормозного оборудования локомотивов и МВПС ОАО РЖД, распоряжение №3508/р от 28.12.2022","url":"https://rags.ru/documents/prod/instrukciya/2/instr_69088.html"},
-    {"id":"VL80S-COMP-S03","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006","url":"https://djvu.online/file/pqNFfrSxFsGWi"},
-    {"id":"VL80S-COMP-S04","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005","url":"https://djvu.online/file/DjTvFd9wIK3Ok"},
-    {"id":"VL80S-COMP-S05","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Электровоз ВЛ80С: описание цепей управления и устранение неисправностей, 2004","url":"https://scbist.com/xx2/43048-01-2004-elektrovoz-vl80s-opisanie-cepei-upravleniya-i-ustranenie-neispravnostei.html"},
-    {"id":"VL80S-COMP-S06","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Несколько неисправностей в цепях управления электровоза ВЛ80С, 2018","url":"https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"},
-    {"id":"VL80S-COMP-S07","authority":"C/D","type":"LOCAL_OPERATIONAL_INSTRUCTION_MIRROR","title":"Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)","url":"https://pandia.ru/text/77/356/75652.php"},
-    {"id":"VL80S-COMP-S08","authority":"D","type":"COMMUNITY_TECHNICAL_REFERENCE","title":"azjio: цепь мотор-компрессора ВЛ80С","url":"https://azjio.narod.ru/elektrovoz/vl80c/index.htm"},
-    {"id":"VL80S-COMP-S09","authority":"A_HISTORICAL","type":"SUPERSEDED_BRAKE_RULES","title":"ЦТ-ЦВ-ЦЛ-ВНИИЖТ/277 — исторические нормы времени наполнения главных резервуаров","url":"https://meganorm.ru/Data2/1/4293816/4293816648.htm"},
-    {"id":"VL80S-COMP-S10","authority":"A_MIRROR","type":"CURRENT_INTERSTATE_BRAKE_RULES_MIRROR","title":"Правила тормозов, приложение №65 к протоколу №83; ввод с 01.07.2026 (mirror)","url":"https://prg.kz/m/amp/document/39816410/"}
+    {
+      "id": "VL80S-COMP-S01",
+      "authority": "A",
+      "type": "CURRENT_INTERSTATE_BRAKE_RULES",
+      "title": "Правила технического обслуживания тормозного оборудования и управления тормозами железнодорожного подвижного состава, протокол Совета №83 от 25–26.11.2025, приложение №65; действуют с 01.07.2026",
+      "url": "https://base.garant.ru/413231681/850c9b8f5271cc2c815bc04e52704941/"
+    },
+    {
+      "id": "VL80S-COMP-S02",
+      "authority": "A",
+      "type": "CURRENT_RZD_MAINTENANCE_INSTRUCTION",
+      "title": "Инструкция по ТО, ремонту и испытанию тормозного оборудования локомотивов и МВПС ОАО РЖД, распоряжение №3508/р от 28.12.2022",
+      "url": "https://rags.ru/documents/prod/instrukciya/2/instr_69088.html"
+    },
+    {
+      "id": "VL80S-COMP-S03",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006",
+      "url": "https://djvu.online/file/pqNFfrSxFsGWi"
+    },
+    {
+      "id": "VL80S-COMP-S04",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005",
+      "url": "https://djvu.online/file/DjTvFd9wIK3Ok"
+    },
+    {
+      "id": "VL80S-COMP-S05",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Электровоз ВЛ80С: описание цепей управления и устранение неисправностей, 2004",
+      "url": "https://scbist.com/xx2/43048-01-2004-elektrovoz-vl80s-opisanie-cepei-upravleniya-i-ustranenie-neispravnostei.html"
+    },
+    {
+      "id": "VL80S-COMP-S06",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Несколько неисправностей в цепях управления электровоза ВЛ80С, 2018",
+      "url": "https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"
+    },
+    {
+      "id": "VL80S-COMP-S07",
+      "authority": "C/D",
+      "type": "LOCAL_OPERATIONAL_INSTRUCTION_MIRROR",
+      "title": "Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)",
+      "url": "https://pandia.ru/text/77/356/75652.php"
+    },
+    {
+      "id": "VL80S-COMP-S08",
+      "authority": "D",
+      "type": "COMMUNITY_TECHNICAL_REFERENCE",
+      "title": "azjio: цепь мотор-компрессора ВЛ80С",
+      "url": "https://azjio.narod.ru/elektrovoz/vl80c/index.htm"
+    },
+    {
+      "id": "VL80S-COMP-S09",
+      "authority": "A_HISTORICAL",
+      "type": "SUPERSEDED_BRAKE_RULES",
+      "title": "ЦТ-ЦВ-ЦЛ-ВНИИЖТ/277 — исторические нормы времени наполнения главных резервуаров",
+      "url": "https://meganorm.ru/Data2/1/4293816/4293816648.htm"
+    },
+    {
+      "id": "VL80S-COMP-S10",
+      "authority": "A_MIRROR",
+      "type": "CURRENT_INTERSTATE_BRAKE_RULES_MIRROR",
+      "title": "Правила тормозов, приложение №65 к протоколу №83; ввод с 01.07.2026 (mirror)",
+      "url": "https://prg.kz/m/amp/document/39816410/"
+    }
   ],
   "conflictGroups": [
     {
@@ -71,14 +133,61 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "SOURCE_NOTE",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":["тормозное оборудование и производство сжатого воздуха"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": [
+          "тормозное оборудование и производство сжатого воздуха"
+        ]
+      },
       "summary": "Приложение №65 к протоколу Совета по железнодорожному транспорту №83 введено в действие с 01.07.2026. При конфликте со старыми таблицами runtime не должен автоматически предпочитать прежнюю норму.",
-      "details": ["Старые значения сохраняются в историческом слое для сравнения и расследования происхождения данных."],
-      "limitations": ["Для конкретного численного норматива производительности необходимо проверить действующую норму/РЭ именно для данного типа и исполнения локомотива."],
-      "sourceRefs": ["VL80S-COMP-S01","VL80S-COMP-S10"],
-      "relations": {"componentRefs":["компрессор","главные резервуары","тормозная система"],"directionRefs":["normative-context"],"relatedEntryIds":["vl80s-comp-hist-001","vl80s-comp-unverified-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_EFFECTIVE_DATE_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Не утверждает конкретное время наполнения без проверки действующей таблицы/РЭ.","conflictGroupIds":["COMP-FILLTIME-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Старые значения сохраняются в историческом слое для сравнения и расследования происхождения данных."
+      ],
+      "limitations": [
+        "Для конкретного численного норматива производительности необходимо проверить действующую норму/РЭ именно для данного типа и исполнения локомотива."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S01",
+        "VL80S-COMP-S10"
+      ],
+      "relations": {
+        "componentRefs": [
+          "компрессор",
+          "главные резервуары",
+          "тормозная система"
+        ],
+        "directionRefs": [
+          "normative-context"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-hist-001",
+          "vl80s-comp-unverified-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_EFFECTIVE_DATE_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не утверждает конкретное время наполнения без проверки действующей таблицы/РЭ.",
+        "conflictGroupIds": [
+          "COMP-FILLTIME-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-comp-norm-002",
@@ -89,14 +198,57 @@
       "applicationStatus": "PRACTICE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ТО-2/ремонтный контекст"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ТО-2/ремонтный контекст"
+        ]
+      },
       "summary": "Инструкция ОАО РЖД №3508/р требует при ТО-2 проверять пределы давления автоматического возобновления и отключения компрессоров, производительность, отсутствие посторонних звуков, течи масла и перегрева подшипников.",
-      "details": ["Это подтверждает, что давление, время наполнения и состояние агрегата — разные контролируемые параметры."],
-      "limitations": ["Ремонтный/ТО-контекст не превращать в перечень действий бригады в пути."],
-      "sourceRefs": ["VL80S-COMP-S02"],
-      "relations": {"componentRefs":["КТ6/КТ6Эл","регулятор давления","главные резервуары"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-maint-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_RZD_INSTRUCTION_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Численные настройки показывать только при доказанной применимости прибора/исполнения.","conflictGroupIds":["COMP-PRESSURE-THRESHOLD-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Это подтверждает, что давление, время наполнения и состояние агрегата — разные контролируемые параметры."
+      ],
+      "limitations": [
+        "Ремонтный/ТО-контекст не превращать в перечень действий бригады в пути."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КТ6/КТ6Эл",
+          "регулятор давления",
+          "главные резервуары"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-maint-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_RZD_INSTRUCTION_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Численные настройки показывать только при доказанной применимости прибора/исполнения.",
+        "conflictGroupIds": [
+          "COMP-PRESSURE-THRESHOLD-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-tech-001",
@@ -107,14 +259,51 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 2,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "На ВЛ80С мотор-компрессор создает запас сжатого воздуха в главных резервуарах для тормозной системы и пневматически управляемого оборудования.",
-      "details": ["Поэтому отказ набора давления может одновременно затронуть тормозную готовность и работу ряда пневматических аппаратов."],
-      "limitations": ["Фактический тип компрессора и состав модернизаций конкретной секции проверять по документации машины."],
-      "sourceRefs": ["VL80S-COMP-S03"],
-      "relations": {"componentRefs":["мотор-компрессор","КТ-6Эл","главные резервуары"],"directionRefs":[],"relatedEntryIds":[],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"PROFILE_BOOK_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Базовый технический слой.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Поэтому отказ набора давления может одновременно затронуть тормозную готовность и работу ряда пневматических аппаратов."
+      ],
+      "limitations": [
+        "Фактический тип компрессора и состав модернизаций конкретной секции проверять по документации машины."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "мотор-компрессор",
+          "КТ-6Эл",
+          "главные резервуары"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "PROFILE_BOOK_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Базовый технический слой.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-comp-tech-002",
@@ -125,14 +314,61 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["электродвигатель компрессора не запускается"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "электродвигатель компрессора не запускается"
+        ]
+      },
       "summary": "Эксплуатационно-схемный источник описывает цепь: регулятор давления 230 управляет реле 430; далее через разрешающие контакты получает питание катушка контактора 124, включающего двигатель компрессора.",
-      "details": ["Реле 431 и связанные контакты участвуют в разрешающей логике.","Это позволяет разделять отсутствие запроса регулятора, отсутствие команды на 124 и отсутствие фактического запуска двигателя."],
-      "limitations": ["Проводные номера и точный состав разрешений должны подтверждаться схемой исполнения."],
-      "sourceRefs": ["VL80S-COMP-S04","VL80S-COMP-S05"],
-      "relations": {"componentRefs":["регулятор 230","реле 430","реле 431","контактор 124","двигатель компрессора"],"directionRefs":["control-chain"],"relatedEntryIds":["vl80s-comp-case-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_WITH_VARIANT_GATE","requiresHumanReview":true,"interpretationNotes":"Функциональная цепь полезнее универсальной проводной нумерации.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Реле 431 и связанные контакты участвуют в разрешающей логике.",
+        "Это позволяет разделять отсутствие запроса регулятора, отсутствие команды на 124 и отсутствие фактического запуска двигателя."
+      ],
+      "limitations": [
+        "Проводные номера и точный состав разрешений должны подтверждаться схемой исполнения."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S04",
+        "VL80S-COMP-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор 230",
+          "реле 430",
+          "реле 431",
+          "контактор 124",
+          "двигатель компрессора"
+        ],
+        "directionRefs": [
+          "control-chain"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-case-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_WITH_VARIANT_GATE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Функциональная цепь полезнее универсальной проводной нумерации.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-tech-003",
@@ -143,14 +379,57 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["двигатель пытается запуститься тяжело/не разгоняется"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "двигатель пытается запуститься тяжело/не разгоняется"
+        ]
+      },
       "summary": "Источник по цепям ВЛ80С указывает, что клапан 246 разгружает участок напорной магистрали при неработающем компрессоре, снижая нагрузку при запуске.",
-      "details": ["Неисправность разгрузки является отдельным направлением от электрического отсутствия команды и от внутренней неисправности компрессора."],
-      "limitations": ["Не объявлять клапан причиной только по тяжелому запуску; механические и электрические причины остаются альтернативами."],
-      "sourceRefs": ["VL80S-COMP-S05"],
-      "relations": {"componentRefs":["клапан 246","напорная магистраль","мотор-компрессор"],"directionRefs":["start-load"],"relatedEntryIds":[],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SOURCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Одно наблюдение только меняет приоритет ветви.","conflictGroupIds":["COMP-CAUSE-SPLIT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Неисправность разгрузки является отдельным направлением от электрического отсутствия команды и от внутренней неисправности компрессора."
+      ],
+      "limitations": [
+        "Не объявлять клапан причиной только по тяжелому запуску; механические и электрические причины остаются альтернативами."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "клапан 246",
+          "напорная магистраль",
+          "мотор-компрессор"
+        ],
+        "directionRefs": [
+          "start-load"
+        ],
+        "relatedEntryIds": [],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SOURCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Одно наблюдение только меняет приоритет ветви.",
+        "conflictGroupIds": [
+          "COMP-CAUSE-SPLIT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-tech-004",
@@ -161,14 +440,62 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": []
+      },
       "summary": "Диагностический граф должен сначала разделить отсутствие вращения двигателя, недостаточную производительность при вращении и потерю уже набранного воздуха после остановки.",
-      "details": ["Первая ветвь преимущественно ведет к управлению/электроприводу; вторая — к компрессору, разгрузке и утечкам; третья — к герметичности, обратной арматуре и потребителям."],
-      "limitations": ["Разделение является маршрутизацией, а не подтверждением причины."],
-      "sourceRefs": ["VL80S-COMP-S02","VL80S-COMP-S03","VL80S-COMP-S05"],
-      "relations": {"componentRefs":["двигатель компрессора","КТ-6Эл","обратная арматура","главные резервуары"],"directionRefs":["symptom-shape"],"relatedEntryIds":["vl80s-comp-case-001","vl80s-comp-case-002","vl80s-comp-case-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SYNTHESIS","requiresHumanReview":true,"interpretationNotes":"Ключевое раннее ветвление сценария.","conflictGroupIds":["COMP-CAUSE-SPLIT-001"],"humanFactorRisk":"LOW"}
+      "details": [
+        "Первая ветвь преимущественно ведет к управлению/электроприводу; вторая — к компрессору, разгрузке и утечкам; третья — к герметичности, обратной арматуре и потребителям."
+      ],
+      "limitations": [
+        "Разделение является маршрутизацией, а не подтверждением причины."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02",
+        "VL80S-COMP-S03",
+        "VL80S-COMP-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "двигатель компрессора",
+          "КТ-6Эл",
+          "обратная арматура",
+          "главные резервуары"
+        ],
+        "directionRefs": [
+          "symptom-shape"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-case-001",
+          "vl80s-comp-case-002",
+          "vl80s-comp-case-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SYNTHESIS",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Ключевое раннее ветвление сценария.",
+        "conflictGroupIds": [
+          "COMP-CAUSE-SPLIT-001"
+        ],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-comp-op-001",
@@ -179,14 +506,59 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":false,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": false,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": []
+      },
       "summary": "Полезно отдельно записывать давление, при котором компрессор получил команду, давление отключения, время/скорость набора, какая секция работает, и удерживается ли давление после остановки.",
-      "details": ["Такой набор отличает проблему автоматики от производительности и от утечки лучше, чем одиночное показание манометра."],
-      "limitations": ["Оценивать соответствие конкретной норме только после выбора применимого документа/исполнения."],
-      "sourceRefs": ["VL80S-COMP-S02","VL80S-COMP-S05"],
-      "relations": {"componentRefs":["регулятор давления","манометр ГР","мотор-компрессор"],"directionRefs":["evidence"],"relatedEntryIds":["vl80s-comp-unverified-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_MAINTENANCE_PLUS_OPERATIONAL_SUPPORT","requiresHumanReview":false,"interpretationNotes":"Подходит для session journal.","conflictGroupIds":["COMP-PRESSURE-THRESHOLD-001","COMP-FILLTIME-001"],"humanFactorRisk":"LOW"}
+      "details": [
+        "Такой набор отличает проблему автоматики от производительности и от утечки лучше, чем одиночное показание манометра."
+      ],
+      "limitations": [
+        "Оценивать соответствие конкретной норме только после выбора применимого документа/исполнения."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02",
+        "VL80S-COMP-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор давления",
+          "манометр ГР",
+          "мотор-компрессор"
+        ],
+        "directionRefs": [
+          "evidence"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-unverified-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_MAINTENANCE_PLUS_OPERATIONAL_SUPPORT",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Подходит для session journal.",
+        "conflictGroupIds": [
+          "COMP-PRESSURE-THRESHOLD-001",
+          "COMP-FILLTIME-001"
+        ],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-comp-op-002",
@@ -197,14 +569,58 @@
       "applicationStatus": "ACTIONABLE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":["посторонний шум","перегрев","дым","утечка масла"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": [
+          "посторонний шум",
+          "перегрев",
+          "дым",
+          "утечка масла"
+        ]
+      },
       "summary": "Текущая ремонтная инструкция прямо включает отсутствие посторонних звуков, течи масла и перегрева подшипников в контролируемые признаки. При их появлении обычная ветвь «измерить производительность» не должна стимулировать повторные длительные пуски.",
-      "details": ["Hybrid Card должна поднять аварийный/остановочный контекст выше исследовательских проверок."],
-      "limitations": ["Конкретные эксплуатационные действия определяются действующим порядком; запись задает приоритет безопасности, а не полный алгоритм."],
-      "sourceRefs": ["VL80S-COMP-S02"],
-      "relations": {"componentRefs":["компрессор","подшипники","система смазки"],"directionRefs":["safety"],"relatedEntryIds":[],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_RZD_SOURCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Не превращать отсутствие аварийных признаков в доказательство исправности компрессора.","conflictGroupIds":[],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Hybrid Card должна поднять аварийный/остановочный контекст выше исследовательских проверок."
+      ],
+      "limitations": [
+        "Конкретные эксплуатационные действия определяются действующим порядком; запись задает приоритет безопасности, а не полный алгоритм."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02"
+      ],
+      "relations": {
+        "componentRefs": [
+          "компрессор",
+          "подшипники",
+          "система смазки"
+        ],
+        "directionRefs": [
+          "safety"
+        ],
+        "relatedEntryIds": [],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_RZD_SOURCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не превращать отсутствие аварийных признаков в доказательство исправности компрессора.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-comp-maint-001",
@@ -215,14 +631,57 @@
       "applicationStatus": "PRACTICE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ТО/ТР"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ТО/ТР"
+        ]
+      },
       "summary": "Инструкция №3508/р содержит отдельный раздел ремонта компрессоров КТ6, КТ6Эл, КТ7 и требования к проверке производительности, смазки, нагрева и арматуры.",
-      "details": ["Detailed/Learning может объяснять внутренние дефекты компрессора, но не должен переносить ремонтные операции в маршрут действий локомотивной бригады."],
-      "limitations": ["Численные ремонтные нормы показывать только из соответствующего пункта инструкции и при подтвержденном типе агрегата."],
-      "sourceRefs": ["VL80S-COMP-S02"],
-      "relations": {"componentRefs":["КТ6","КТ6Эл","клапаны компрессора","смазка","арматура"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-norm-002"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_RZD_MAINTENANCE_SOURCE","requiresHumanReview":true,"interpretationNotes":"Разделение repair knowledge и operational permission обязательно.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Detailed/Learning может объяснять внутренние дефекты компрессора, но не должен переносить ремонтные операции в маршрут действий локомотивной бригады."
+      ],
+      "limitations": [
+        "Численные ремонтные нормы показывать только из соответствующего пункта инструкции и при подтвержденном типе агрегата."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КТ6",
+          "КТ6Эл",
+          "клапаны компрессора",
+          "смазка",
+          "арматура"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-norm-002"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_RZD_MAINTENANCE_SOURCE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Разделение repair knowledge и operational permission обязательно.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-hist-001",
@@ -233,14 +692,59 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческое сравнение норм производительности"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческое сравнение норм производительности"
+        ]
+      },
       "summary": "Инструкция ЦТ-ЦВ-ЦЛ-ВНИИЖТ/277 приводила для электровозов ВЛ80 всех индексов с КТ6эл и объемом главных резервуаров 1800 л время наполнения с 7,0 до 8,0 кгс/см² не более 45 с.",
-      "details": ["Значение полезно для истории и проверки происхождения старых памяток.","После ввода новых Правил оно не переносится в current runtime без подтверждения действующей нормой или РЭ."],
-      "limitations": ["Не отображать как действующую универсальную норму ВЛ80С в рабочей диагностике."],
-      "sourceRefs": ["VL80S-COMP-S09","VL80S-COMP-S01"],
-      "relations": {"componentRefs":["КТ6эл","главные резервуары"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-norm-001","vl80s-comp-unverified-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"HISTORICAL_NORM_CONFIRMED_SUPERSEDED_CONTEXT","requiresHumanReview":true,"interpretationNotes":"Именно historical, даже если число продолжает встречаться в современных учебных материалах.","conflictGroupIds":["COMP-FILLTIME-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Значение полезно для истории и проверки происхождения старых памяток.",
+        "После ввода новых Правил оно не переносится в current runtime без подтверждения действующей нормой или РЭ."
+      ],
+      "limitations": [
+        "Не отображать как действующую универсальную норму ВЛ80С в рабочей диагностике."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S09",
+        "VL80S-COMP-S01"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КТ6эл",
+          "главные резервуары"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-norm-001",
+          "vl80s-comp-unverified-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "HISTORICAL_NORM_CONFIRMED_SUPERSEDED_CONTEXT",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Именно historical, даже если число продолжает встречаться в современных учебных материалах.",
+        "conflictGroupIds": [
+          "COMP-FILLTIME-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-comp-archive-001",
@@ -251,14 +755,60 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческая локальная инструкция"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческая локальная инструкция"
+        ]
+      },
       "summary": "Архивные эксплуатационные материалы описывают отказ регулятора/реле/контактора компрессора и временные способы управления цепью 430/431/124.",
-      "details": ["Из них можно извлекать связи аппаратов и характерные симптомы.","Саму аварийную процедуру нельзя автоматически переносить в active flow."],
-      "limitations": ["Локальная историческая инструкция не является универсальным действующим порядком."],
-      "sourceRefs": ["VL80S-COMP-S07","VL80S-COMP-S05"],
-      "relations": {"componentRefs":["регулятор 230","реле 430/431","контактор 124"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-field-001","vl80s-comp-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"ARCHIVAL_CONTEXT_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Сохраняются topology/provenance, не современная разрешенность действий.","conflictGroupIds":["COMP-FIELD-BYPASS-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Из них можно извлекать связи аппаратов и характерные симптомы.",
+        "Саму аварийную процедуру нельзя автоматически переносить в active flow."
+      ],
+      "limitations": [
+        "Локальная историческая инструкция не является универсальным действующим порядком."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S07",
+        "VL80S-COMP-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор 230",
+          "реле 430/431",
+          "контактор 124"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-field-001",
+          "vl80s-comp-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "ARCHIVAL_CONTEXT_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Сохраняются topology/provenance, не современная разрешенность действий.",
+        "conflictGroupIds": [
+          "COMP-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-comp-case-001",
@@ -269,14 +819,59 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["давление ниже условия пуска, команда ожидается, вращения нет"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "давление ниже условия пуска, команда ожидается, вращения нет"
+        ]
+      },
       "summary": "Если регулятор сформировал запрос, но двигатель не вращается, приоритет получает управляющая/силовая ветвь 430/431/124 и защита двигателя; производительность компрессорной части еще не может быть оценена.",
-      "details": ["Следует отличать срабатывание реле/контактора от фактического пуска двигателя."],
-      "limitations": ["Не объявлять контактор 124 причиной без подтверждения его команды и силового включения."],
-      "sourceRefs": ["VL80S-COMP-S05","VL80S-COMP-S04"],
-      "relations": {"componentRefs":["регулятор 230","реле 430/431","контактор 124","двигатель компрессора"],"directionRefs":["control-chain"],"relatedEntryIds":["vl80s-comp-tech-002"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SCHEMATIC_CASE_PATTERN","requiresHumanReview":true,"interpretationNotes":"Электрическая ветвь только приоритетна, причина еще не установлена.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Следует отличать срабатывание реле/контактора от фактического пуска двигателя."
+      ],
+      "limitations": [
+        "Не объявлять контактор 124 причиной без подтверждения его команды и силового включения."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S05",
+        "VL80S-COMP-S04"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор 230",
+          "реле 430/431",
+          "контактор 124",
+          "двигатель компрессора"
+        ],
+        "directionRefs": [
+          "control-chain"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-tech-002"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SCHEMATIC_CASE_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Электрическая ветвь только приоритетна, причина еще не установлена.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-case-002",
@@ -287,14 +882,61 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["компрессор вращается устойчиво, рост давления ниже ожидаемого"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "компрессор вращается устойчиво, рост давления ниже ожидаемого"
+        ]
+      },
       "summary": "Такой симптом оставляет открытыми как минимум две крупные ветви: сниженная производительность самого компрессора/его арматуры и значительная утечка в пневмосистеме.",
-      "details": ["Следующий полезный признак — удерживается ли давление после остановки и есть ли слышимая крупная утечка."],
-      "limitations": ["Медленный рост не доказывает износ цилиндро-поршневой группы без дальнейшей проверки."],
-      "sourceRefs": ["VL80S-COMP-S02","VL80S-COMP-S03"],
-      "relations": {"componentRefs":["КТ6Эл","клапаны компрессора","пневмосистема","ГР"],"directionRefs":["productivity-vs-leak"],"relatedEntryIds":["vl80s-comp-tech-004"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_DIAGNOSTIC_SYNTHESIS","requiresHumanReview":true,"interpretationNotes":"Специальный тест сохранения альтернатив.","conflictGroupIds":["COMP-CAUSE-SPLIT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Следующий полезный признак — удерживается ли давление после остановки и есть ли слышимая крупная утечка."
+      ],
+      "limitations": [
+        "Медленный рост не доказывает износ цилиндро-поршневой группы без дальнейшей проверки."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02",
+        "VL80S-COMP-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КТ6Эл",
+          "клапаны компрессора",
+          "пневмосистема",
+          "ГР"
+        ],
+        "directionRefs": [
+          "productivity-vs-leak"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-tech-004"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_DIAGNOSTIC_SYNTHESIS",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Специальный тест сохранения альтернатив.",
+        "conflictGroupIds": [
+          "COMP-CAUSE-SPLIT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-case-003",
@@ -305,14 +947,61 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["после прекращения работы запас воздуха быстро уменьшается"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "после прекращения работы запас воздуха быстро уменьшается"
+        ]
+      },
       "summary": "Падение уже набранного давления после остановки повышает приоритет утечки, обратной арматуры или открытого потребителя относительно чисто низкой производительности компрессора.",
-      "details": ["Место потери воздуха не устанавливается одним показанием манометра."],
-      "limitations": ["Не предлагать разбор арматуры под давлением как маршрутную проверку."],
-      "sourceRefs": ["VL80S-COMP-S02","VL80S-COMP-S03"],
-      "relations": {"componentRefs":["ГР","обратный клапан","напорная магистраль","потребители воздуха"],"directionRefs":["leak"],"relatedEntryIds":["vl80s-comp-tech-004"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"TECHNICAL_DIAGNOSTIC_SYNTHESIS","requiresHumanReview":true,"interpretationNotes":"Меняет приоритет, не локализует точное место утечки.","conflictGroupIds":["COMP-CAUSE-SPLIT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Место потери воздуха не устанавливается одним показанием манометра."
+      ],
+      "limitations": [
+        "Не предлагать разбор арматуры под давлением как маршрутную проверку."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02",
+        "VL80S-COMP-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ГР",
+          "обратный клапан",
+          "напорная магистраль",
+          "потребители воздуха"
+        ],
+        "directionRefs": [
+          "leak"
+        ],
+        "relatedEntryIds": [
+          "vl80s-comp-tech-004"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "TECHNICAL_DIAGNOSTIC_SYNTHESIS",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Меняет приоритет, не локализует точное место утечки.",
+        "conflictGroupIds": [
+          "COMP-CAUSE-SPLIT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-comp-field-001",
@@ -323,15 +1012,65 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческая аварийная практика"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческая аварийная практика"
+        ]
+      },
       "summary": "Старые эксплуатационные материалы фиксируют временное принудительное управление реле/контактором мотор-компрессора или обход части автоматической цепи при отказах.",
-      "details": ["В pack сохраняются происхождение и затрагиваемая функция.","Пошаговые перемычки и способы фиксации аппаратов намеренно не включены."],
-      "limitations": ["Не является штатной современной рекомендацией.","Не означает разрешения обходить регулятор или защиту двигателя."],
-      "sourceRefs": ["VL80S-COMP-S07","VL80S-COMP-S06"],
-      "relations": {"componentRefs":["регулятор 230","реле 430/431","контактор 124"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-archive-001","vl80s-comp-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Potentially hazardous bypass/forcing procedure intentionally omitted."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_EXISTENCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Confidence относится к документированию практики, не к допустимости.","conflictGroupIds":["COMP-FIELD-BYPASS-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "В pack сохраняются происхождение и затрагиваемая функция.",
+        "Пошаговые перемычки и способы фиксации аппаратов намеренно не включены."
+      ],
+      "limitations": [
+        "Не является штатной современной рекомендацией.",
+        "Не означает разрешения обходить регулятор или защиту двигателя."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S07",
+        "VL80S-COMP-S06"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор 230",
+          "реле 430/431",
+          "контактор 124"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-archive-001",
+          "vl80s-comp-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Potentially hazardous bypass/forcing procedure intentionally omitted."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_EXISTENCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Confidence относится к документированию практики, не к допустимости.",
+        "conflictGroupIds": [
+          "COMP-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-comp-unsafe-001",
@@ -342,15 +1081,63 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":false,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["нештатный обход автоматики/защиты"]},
+      "visibility": {
+        "base": false,
+        "extended": false,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "нештатный обход автоматики/защиты"
+        ]
+      },
       "summary": "Исторические способы, при которых компрессор принудительно включается в обход штатной автоматики или защиты, должны храниться только как restricted knowledge и не появляться в обычной карточке диагностики.",
-      "details": ["Риски включают неконтролируемую работу, перегрев/повреждение агрегата и неправильное управление давлением."],
-      "limitations": ["Пошаговая процедура отсутствует.","Не использовать как эксплуатационную инструкцию."],
-      "sourceRefs": ["VL80S-COMP-S07","VL80S-COMP-S02"],
-      "relations": {"componentRefs":["регулятор давления","контактор 124","защита двигателя"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-field-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Reference pack validates unsafe classification and gating only."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_CONFLICT_WITH_CURRENT_MAINTENANCE_SAFETY","requiresHumanReview":true,"interpretationNotes":"Факт старой практики не равен разрешению применения.","conflictGroupIds":["COMP-FIELD-BYPASS-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "Риски включают неконтролируемую работу, перегрев/повреждение агрегата и неправильное управление давлением."
+      ],
+      "limitations": [
+        "Пошаговая процедура отсутствует.",
+        "Не использовать как эксплуатационную инструкцию."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S07",
+        "VL80S-COMP-S02"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор давления",
+          "контактор 124",
+          "защита двигателя"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-field-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Reference pack validates unsafe classification and gating only."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_CONFLICT_WITH_CURRENT_MAINTENANCE_SAFETY",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Факт старой практики не равен разрешению применения.",
+        "conflictGroupIds": [
+          "COMP-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-comp-unverified-001",
@@ -361,20 +1148,84 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "SOURCE_NOTE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["использование конкретных численных порогов в runtime"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "использование конкретных численных порогов в runtime"
+        ]
+      },
       "summary": "В старых и вторичных материалах повторяются численные ориентиры для включения/отключения компрессоров и времени наполнения. Для современной карточки каждый такой порог требует проверки по действующим Правилам, РЭ и установленному регулятору.",
-      "details": ["Историческое значение 45 с хранится отдельно как подтвержденный факт старой нормы, а не как current runtime threshold.","Регулировочные значения из №3508/р относятся к конкретному ремонтному контексту и также требуют applicability check."],
-      "limitations": ["Не использовать численные значения как универсальное разрешение/браковочный критерий без актуальной привязки."],
-      "sourceRefs": ["VL80S-COMP-S02","VL80S-COMP-S07","VL80S-COMP-S09","VL80S-COMP-S01"],
-      "relations": {"componentRefs":["регулятор давления","ГР","КТ6Эл"],"directionRefs":[],"relatedEntryIds":["vl80s-comp-hist-001","vl80s-comp-op-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_VS_HISTORICAL_CONFLICT_PRESERVED","requiresHumanReview":true,"interpretationNotes":"Не усреднять и не выбирать число без applicability.","conflictGroupIds":["COMP-PRESSURE-THRESHOLD-001","COMP-FILLTIME-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Историческое значение 45 с хранится отдельно как подтвержденный факт старой нормы, а не как current runtime threshold.",
+        "Регулировочные значения из №3508/р относятся к конкретному ремонтному контексту и также требуют applicability check."
+      ],
+      "limitations": [
+        "Не использовать численные значения как универсальное разрешение/браковочный критерий без актуальной привязки."
+      ],
+      "sourceRefs": [
+        "VL80S-COMP-S02",
+        "VL80S-COMP-S07",
+        "VL80S-COMP-S09",
+        "VL80S-COMP-S01"
+      ],
+      "relations": {
+        "componentRefs": [
+          "регулятор давления",
+          "ГР",
+          "КТ6Эл"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-comp-hist-001",
+          "vl80s-comp-op-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_VS_HISTORICAL_CONFLICT_PRESERVED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не усреднять и не выбирать число без applicability.",
+        "conflictGroupIds": [
+          "COMP-PRESSURE-THRESHOLD-001",
+          "COMP-FILLTIME-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     }
   ],
   "acceptanceExpectations": {
     "minimumEntryCount": 16,
-    "actualEntryCount": 16,
-    "mustExercise": ["current vs historical norm separation","no-start vs low-productivity vs leak split","control-chain vs mechanical branch","maintenance-only values","historical fill-time norm","restricted field practice","unsafe gate","numeric-threshold uncertainty"],
-    "mustNot": ["show historical 45 s as current universal norm","hardcode regulator pressure without appliance applicability","declare compressor worn from slow pressure rise alone","convert old forced control into normal recommendation","mix repair instruction with crew permission"]
+    "actualEntryCount": 17,
+    "mustExercise": [
+      "current vs historical norm separation",
+      "no-start vs low-productivity vs leak split",
+      "control-chain vs mechanical branch",
+      "maintenance-only values",
+      "historical fill-time norm",
+      "restricted field practice",
+      "unsafe gate",
+      "numeric-threshold uncertainty"
+    ],
+    "mustNot": [
+      "show historical 45 s as current universal norm",
+      "hardcode regulator pressure without appliance applicability",
+      "declare compressor worn from slow pressure rise alone",
+      "convert old forced control into normal recommendation",
+      "mix repair instruction with crew permission"
+    ]
   }
 }
