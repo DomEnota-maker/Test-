@@ -6,7 +6,9 @@
   "scenarioLifecycle": "ACTIVE",
   "packStatus": "SOURCE_REVIEWED",
   "profileId": "vl80s",
-  "variantIds": ["vl80s-general"],
+  "variantIds": [
+    "vl80s-general"
+  ],
   "preparedAt": "2026-10-05",
   "purpose": "Structured knowledge pack for the active VL80S EKG-8Zh control fault scenario. Historical synchronization changes, maintenance practice and old field recovery procedures remain attached knowledge, not duplicate active scenarios.",
   "productionStatus": "REFERENCE_ONLY_PENDING_FINAL_RUNTIME_REVIEW",
@@ -24,18 +26,90 @@
     "UNSAFE_METHOD": "POPULATED_REDACTED"
   },
   "sourceRegistry": [
-    {"id":"VL80S-EKG-S01","authority":"A","type":"NORMATIVE_RZD_SAFETY","title":"Инструкция по охране труда для локомотивных бригад ОАО РЖД, распоряжение №2961/р от 16.11.2022","url":"https://legalacts.ru/doc/rasporjazhenie-oao-rzhd-ot-16112022-n-2961r-ob-utverzhdenii/"},
-    {"id":"VL80S-EKG-S02","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006","url":"https://djvu.online/file/pqNFfrSxFsGWi"},
-    {"id":"VL80S-EKG-S03","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005","url":"https://djvu.online/file/DjTvFd9wIK3Ok"},
-    {"id":"VL80S-EKG-S04","authority":"B","type":"HISTORICAL_TECHNICAL_BOOK","title":"Раков В.А. Электровозы ВЛ80С и их серийные изменения, 1990","url":"https://djvu.online/file/5TQ9h1aKQrIU1"},
-    {"id":"VL80S-EKG-S05","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Электровоз ВЛ80С: устранение неисправностей в цепях управления, 2004","url":"https://scbist.com/xx2/43087-02-2004-elektrovoz-vl80s-ustranenie-neispravnostei-v-cepyah-upravleniya.html"},
-    {"id":"VL80S-EKG-S06","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Электровоз ВЛ80С: устранение неисправностей в электрических цепях","url":"https://scbist.com/xx2/9889-elektrovoz-vl80s-ustranenie-neispravnostei-v-elektricheskih-cepyah.html"},
-    {"id":"VL80S-EKG-S07","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Несколько неисправностей в цепях управления электровоза ВЛ80С, 2018","url":"https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"},
-    {"id":"VL80S-EKG-S08","authority":"C/D","type":"LOCAL_OPERATIONAL_INSTRUCTION_MIRROR","title":"Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)","url":"https://pandia.ru/text/77/356/75652.php"},
-    {"id":"VL80S-EKG-S09","authority":"A/B","type":"CURRENT_MAINTENANCE_CATALOG_METADATA","title":"ПКБ ЦТ: перечень действующей документации; ПКБ ЦТ.25.0072 — ТО и текущий ремонт главного контроллера ЭКГ-8Ж","url":"https://www.pkbct.ru/upload/docs/1734954150_0.pdf"},
-    {"id":"VL80S-EKG-S10","authority":"D","type":"COMMUNITY_TECHNICAL_REFERENCE","title":"azjio: ЭКГ-8Ж","url":"https://azjio.narod.ru/elektrovoz/vl80c/ekg8zh.htm"},
-    {"id":"VL80S-EKG-S11","authority":"D","type":"COMMUNITY_OPERATIONAL_REFERENCE","title":"azjio: цепи набора/сброса и синхронизации ЭКГ ВЛ80С","url":"https://azjio.narod.ru/elektrovoz/vl80c/index.htm"},
-    {"id":"VL80S-EKG-S12","authority":"C","type":"PROFESSIONAL_ARTICLE","title":"Потанин А.А. Поиск неисправностей цепей ЭКГ ВЛ80С, профессиональная публикация 2018","url":"https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"}
+    {
+      "id": "VL80S-EKG-S01",
+      "authority": "A",
+      "type": "NORMATIVE_RZD_SAFETY",
+      "title": "Инструкция по охране труда для локомотивных бригад ОАО РЖД, распоряжение №2961/р от 16.11.2022",
+      "url": "https://legalacts.ru/doc/rasporjazhenie-oao-rzhd-ot-16112022-n-2961r-ob-utverzhdenii/"
+    },
+    {
+      "id": "VL80S-EKG-S02",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006",
+      "url": "https://djvu.online/file/pqNFfrSxFsGWi"
+    },
+    {
+      "id": "VL80S-EKG-S03",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005",
+      "url": "https://djvu.online/file/DjTvFd9wIK3Ok"
+    },
+    {
+      "id": "VL80S-EKG-S04",
+      "authority": "B",
+      "type": "HISTORICAL_TECHNICAL_BOOK",
+      "title": "Раков В.А. Электровозы ВЛ80С и их серийные изменения, 1990",
+      "url": "https://djvu.online/file/5TQ9h1aKQrIU1"
+    },
+    {
+      "id": "VL80S-EKG-S05",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Электровоз ВЛ80С: устранение неисправностей в цепях управления, 2004",
+      "url": "https://scbist.com/xx2/43087-02-2004-elektrovoz-vl80s-ustranenie-neispravnostei-v-cepyah-upravleniya.html"
+    },
+    {
+      "id": "VL80S-EKG-S06",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Электровоз ВЛ80С: устранение неисправностей в электрических цепях",
+      "url": "https://scbist.com/xx2/9889-elektrovoz-vl80s-ustranenie-neispravnostei-v-elektricheskih-cepyah.html"
+    },
+    {
+      "id": "VL80S-EKG-S07",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Несколько неисправностей в цепях управления электровоза ВЛ80С, 2018",
+      "url": "https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"
+    },
+    {
+      "id": "VL80S-EKG-S08",
+      "authority": "C/D",
+      "type": "LOCAL_OPERATIONAL_INSTRUCTION_MIRROR",
+      "title": "Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)",
+      "url": "https://pandia.ru/text/77/356/75652.php"
+    },
+    {
+      "id": "VL80S-EKG-S09",
+      "authority": "A/B",
+      "type": "CURRENT_MAINTENANCE_CATALOG_METADATA",
+      "title": "ПКБ ЦТ: перечень действующей документации; ПКБ ЦТ.25.0072 — ТО и текущий ремонт главного контроллера ЭКГ-8Ж",
+      "url": "https://www.pkbct.ru/upload/docs/1734954150_0.pdf"
+    },
+    {
+      "id": "VL80S-EKG-S10",
+      "authority": "D",
+      "type": "COMMUNITY_TECHNICAL_REFERENCE",
+      "title": "azjio: ЭКГ-8Ж",
+      "url": "https://azjio.narod.ru/elektrovoz/vl80c/ekg8zh.htm"
+    },
+    {
+      "id": "VL80S-EKG-S11",
+      "authority": "D",
+      "type": "COMMUNITY_OPERATIONAL_REFERENCE",
+      "title": "azjio: цепи набора/сброса и синхронизации ЭКГ ВЛ80С",
+      "url": "https://azjio.narod.ru/elektrovoz/vl80c/index.htm"
+    },
+    {
+      "id": "VL80S-EKG-S12",
+      "authority": "C",
+      "type": "PROFESSIONAL_ARTICLE",
+      "title": "Потанин А.А. Поиск неисправностей цепей ЭКГ ВЛ80С, профессиональная публикация 2018",
+      "url": "https://scbist.com/xx2/51308-02-2018-neskolko-neispravnostei-v-cepyah-upravleniya-elektrovoza-vl80s.html"
+    }
   ],
   "conflictGroups": [
     {
@@ -73,14 +147,57 @@
       "applicationStatus": "ACTIONABLE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":["поиск отказа ЭКГ/цепей тяги"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": [
+          "поиск отказа ЭКГ/цепей тяги"
+        ]
+      },
       "summary": "Неисправность регулирования или промежуточное положение ЭКГ не является основанием для доступа к ВВК или принудительного воздействия на высоковольтную аппаратуру без установленного безопасного порядка.",
-      "details": ["Карточка должна отделять наблюдения из кабины и контроль индикации от ремонтных действий внутри ВВК."],
-      "limitations": ["Перед production сверить локальные требования и действующую редакцию документов безопасности."],
-      "sourceRefs": ["VL80S-EKG-S01"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","ВВК","цепи управления"],"directionRefs":["safety"],"relatedEntryIds":["vl80s-ekg-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SOURCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Это permission boundary, а не ремонтная процедура.","conflictGroupIds":[],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Карточка должна отделять наблюдения из кабины и контроль индикации от ремонтных действий внутри ВВК."
+      ],
+      "limitations": [
+        "Перед production сверить локальные требования и действующую редакцию документов безопасности."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S01"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "ВВК",
+          "цепи управления"
+        ],
+        "directionRefs": [
+          "safety"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SOURCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Это permission boundary, а не ремонтная процедура.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-ekg-tech-001",
@@ -91,14 +208,55 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 2,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Главный контроллер ЭКГ-8Ж изменяет подключение секций тяговой обмотки трансформатора и тем самым ступенчато меняет напряжение на тяговых двигателях.",
-      "details": ["Конструкция включает дугогасительные, переходные и переключающие контакты, работающие в заданной последовательности.","Поэтому остановка между позициями имеет иной смысл, чем отсутствие команды на привод."],
-      "limitations": ["Фактическую модификацию ЭКГ и изменения схемы конкретной секции проверять по профилю машины."],
-      "sourceRefs": ["VL80S-EKG-S02","VL80S-EKG-S03"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","тяговый трансформатор","тяговые двигатели"],"directionRefs":[],"relatedEntryIds":["vl80s-ekg-tech-004"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Базовый обучающий слой.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Конструкция включает дугогасительные, переходные и переключающие контакты, работающие в заданной последовательности.",
+        "Поэтому остановка между позициями имеет иной смысл, чем отсутствие команды на привод."
+      ],
+      "limitations": [
+        "Фактическую модификацию ЭКГ и изменения схемы конкретной секции проверять по профилю машины."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S02",
+        "VL80S-EKG-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "тяговый трансформатор",
+          "тяговые двигатели"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-ekg-tech-004"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Базовый обучающий слой.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-ekg-tech-002",
@@ -109,14 +267,60 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Команда машиниста, показание указателя и реальное положение вала/контактов ЭКГ — связанные, но не тождественные состояния. При отказе необходимо фиксировать именно наблюдаемую реакцию аппарата и индикации.",
-      "details": ["Схема использует блок-контакты ЭКГ для формирования сигнализации и условий дальнейших переключений.","Промежуточное положение нельзя автоматически трактовать как достигнутую соседнюю позицию."],
-      "limitations": ["Способ подтверждения фактической позиции зависит от исполнения и доступной индикации."],
-      "sourceRefs": ["VL80S-EKG-S03","VL80S-EKG-S02"],
-      "relations": {"componentRefs":["КМЭ","вал ЭКГ","указатель позиции","блок-контакты ЭКГ"],"directionRefs":["actual-position"],"relatedEntryIds":["vl80s-ekg-op-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Предотвращает смешение команды и результата.","conflictGroupIds":["EKG-POSITION-STATE-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Схема использует блок-контакты ЭКГ для формирования сигнализации и условий дальнейших переключений.",
+        "Промежуточное положение нельзя автоматически трактовать как достигнутую соседнюю позицию."
+      ],
+      "limitations": [
+        "Способ подтверждения фактической позиции зависит от исполнения и доступной индикации."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S03",
+        "VL80S-EKG-S02"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КМЭ",
+          "вал ЭКГ",
+          "указатель позиции",
+          "блок-контакты ЭКГ"
+        ],
+        "directionRefs": [
+          "actual-position"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-op-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Предотвращает смешение команды и результата.",
+        "conflictGroupIds": [
+          "EKG-POSITION-STATE-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-tech-003",
@@ -127,14 +331,66 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ЭКГ не перемещается по команде"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ЭКГ не перемещается по команде"
+        ]
+      },
       "summary": "Схемные и эксплуатационные материалы связывают набор/сброс ЭКГ с реле 265/266, контакторами 194/206/208 и сервомотором. Диагностика должна разделять отсутствие команды, отсутствие срабатывания контакторов и отсутствие механического движения.",
-      "details": ["Если управляющая цепь менялась по серии, конкретные номера проводов и промежуточные контакты должны приходить из profile-specific схемы.","Наличие команды на контактор еще не доказывает вращение сервомотора."],
-      "limitations": ["Не использовать перечисление аппаратов как универсальную проводную последовательность для всех выпусков."],
-      "sourceRefs": ["VL80S-EKG-S03","VL80S-EKG-S05","VL80S-EKG-S08"],
-      "relations": {"componentRefs":["реле 265","реле 266","контактор 194","контактор 206","контактор 208","сервомотор ЭКГ"],"directionRefs":["control-chain","drive"],"relatedEntryIds":["vl80s-ekg-case-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_WITH_VARIANT_GATE","requiresHumanReview":true,"interpretationNotes":"Функциональная цепь подтверждена, проводная реализация profile-specific.","conflictGroupIds":["EKG-SYNC-VARIANT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Если управляющая цепь менялась по серии, конкретные номера проводов и промежуточные контакты должны приходить из profile-specific схемы.",
+        "Наличие команды на контактор еще не доказывает вращение сервомотора."
+      ],
+      "limitations": [
+        "Не использовать перечисление аппаратов как универсальную проводную последовательность для всех выпусков."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S03",
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "реле 265",
+          "реле 266",
+          "контактор 194",
+          "контактор 206",
+          "контактор 208",
+          "сервомотор ЭКГ"
+        ],
+        "directionRefs": [
+          "control-chain",
+          "drive"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-case-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_WITH_VARIANT_GATE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Функциональная цепь подтверждена, проводная реализация profile-specific.",
+        "conflictGroupIds": [
+          "EKG-SYNC-VARIANT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-tech-004",
@@ -145,14 +401,61 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 4,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ЭКГ остановился между позициями"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ЭКГ остановился между позициями"
+        ]
+      },
       "summary": "Схема ЭКГ имеет ходовые и переходные позиции; в техническом пособии для рассматриваемого исполнения выделяются ходовые 1, 5, 9, 13, 17, 21, 25, 29 и 33. Остановка на переходной позиции не эквивалентна нормальной фиксации на ходовой.",
-      "details": ["Блок-контакты и сигнализация используются для контроля положения.","При промежуточном положении приоритет получает ветвь привода/фиксации/управления, а не произвольный набор тяги."],
-      "limitations": ["Набор ходовых позиций и схема сигнализации должны быть подтверждены для конкретного исполнения перед hardcode в runtime."],
-      "sourceRefs": ["VL80S-EKG-S03"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","блок-контакты","указатель позиции"],"directionRefs":["actual-position","intermediate-position"],"relatedEntryIds":["vl80s-ekg-case-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"EXPLICIT_SOURCE_SCOPE","requiresHumanReview":true,"interpretationNotes":"Числа не расширяются на иные исполнения без проверки.","conflictGroupIds":["EKG-POSITION-STATE-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Блок-контакты и сигнализация используются для контроля положения.",
+        "При промежуточном положении приоритет получает ветвь привода/фиксации/управления, а не произвольный набор тяги."
+      ],
+      "limitations": [
+        "Набор ходовых позиций и схема сигнализации должны быть подтверждены для конкретного исполнения перед hardcode в runtime."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "блок-контакты",
+          "указатель позиции"
+        ],
+        "directionRefs": [
+          "actual-position",
+          "intermediate-position"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-case-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "EXPLICIT_SOURCE_SCOPE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Числа не расширяются на иные исполнения без проверки.",
+        "conflictGroupIds": [
+          "EKG-POSITION-STATE-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-op-001",
@@ -163,14 +466,60 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":false,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": false,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": []
+      },
       "summary": "Для ранней маршрутизации полезно различать: ЭКГ совсем не движется; начинает движение и останавливается; останавливается между позициями; идет непрерывно/самопроизвольно; секции теряют синхронность.",
-      "details": ["Эти признаки ведут к разным ветвям, поэтому не должны объединяться одной формулировкой «ЭКГ не работает»."],
-      "limitations": ["Форма отказа не устанавливает конкретный аппарат как причину."],
-      "sourceRefs": ["VL80S-EKG-S05","VL80S-EKG-S06","VL80S-EKG-S07","VL80S-EKG-S08"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","цепь управления","сервомотор"],"directionRefs":["symptom-shape"],"relatedEntryIds":["vl80s-ekg-case-001","vl80s-ekg-case-002","vl80s-ekg-case-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_PATTERN","requiresHumanReview":false,"interpretationNotes":"Кандидат на первое ветвление Hybrid Card.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Эти признаки ведут к разным ветвям, поэтому не должны объединяться одной формулировкой «ЭКГ не работает»."
+      ],
+      "limitations": [
+        "Форма отказа не устанавливает конкретный аппарат как причину."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S06",
+        "VL80S-EKG-S07",
+        "VL80S-EKG-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "цепь управления",
+          "сервомотор"
+        ],
+        "directionRefs": [
+          "symptom-shape"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-case-001",
+          "vl80s-ekg-case-002",
+          "vl80s-ekg-case-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_PATTERN",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Кандидат на первое ветвление Hybrid Card.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-ekg-op-002",
@@ -181,14 +530,59 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Если один ЭКГ не реагирует при нормальной работе другого, выше становится приоритет локальной цепи привода/управления секции. Одновременный отказ нескольких секций повышает приоритет общей команды, питания или синхронизации.",
-      "details": ["На многосекционной работе неисправность одной секции через цепи синхронизации может влиять на остальные, поэтому «все остановились» не всегда означает общую первичную причину."],
-      "limitations": ["Влияние синхронизации особенно variant-specific и требует знания схемы выпуска."],
-      "sourceRefs": ["VL80S-EKG-S03","VL80S-EKG-S08","VL80S-EKG-S11"],
-      "relations": {"componentRefs":["ЭКГ секций","межсекционные цепи синхронизации"],"directionRefs":["scope","synchronization"],"relatedEntryIds":["vl80s-ekg-hist-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_WITH_LOW_AUTHORITY_CROSSCHECK","requiresHumanReview":true,"interpretationNotes":"Синхронизация меняет интерпретацию масштаба отказа.","conflictGroupIds":["EKG-SYNC-VARIANT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "На многосекционной работе неисправность одной секции через цепи синхронизации может влиять на остальные, поэтому «все остановились» не всегда означает общую первичную причину."
+      ],
+      "limitations": [
+        "Влияние синхронизации особенно variant-specific и требует знания схемы выпуска."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S03",
+        "VL80S-EKG-S08",
+        "VL80S-EKG-S11"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ секций",
+          "межсекционные цепи синхронизации"
+        ],
+        "directionRefs": [
+          "scope",
+          "synchronization"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-hist-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_WITH_LOW_AUTHORITY_CROSSCHECK",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Синхронизация меняет интерпретацию масштаба отказа.",
+        "conflictGroupIds": [
+          "EKG-SYNC-VARIANT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-op-003",
@@ -199,14 +593,60 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":false,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": false,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": []
+      },
       "summary": "В журнале проверки полезно отдельно записывать положение КМЭ, показание позиции, факт/направление движения ЭКГ, момент остановки и реакцию другой секции.",
-      "details": ["Такой набор данных позволяет не превращать «рукоятка в нуле» в ложный вывод «ЭКГ фактически в нуле»."],
-      "limitations": ["Это организация наблюдений, а не команда на дополнительные переключения."],
-      "sourceRefs": ["VL80S-EKG-S03","VL80S-EKG-S05","VL80S-EKG-S12"],
-      "relations": {"componentRefs":["КМЭ","указатель позиции","ЭКГ секции"],"directionRefs":["evidence","actual-position"],"relatedEntryIds":["vl80s-ekg-tech-002"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Подходит для session journal и прогресса «что проверено».","conflictGroupIds":["EKG-POSITION-STATE-001"],"humanFactorRisk":"LOW"}
+      "details": [
+        "Такой набор данных позволяет не превращать «рукоятка в нуле» в ложный вывод «ЭКГ фактически в нуле»."
+      ],
+      "limitations": [
+        "Это организация наблюдений, а не команда на дополнительные переключения."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S03",
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S12"
+      ],
+      "relations": {
+        "componentRefs": [
+          "КМЭ",
+          "указатель позиции",
+          "ЭКГ секции"
+        ],
+        "directionRefs": [
+          "evidence",
+          "actual-position"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-tech-002"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Подходит для session journal и прогресса «что проверено».",
+        "conflictGroupIds": [
+          "EKG-POSITION-STATE-001"
+        ],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-ekg-maint-001",
@@ -217,14 +657,54 @@
       "applicationStatus": "PRACTICE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ТО/ТР"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ТО/ТР"
+        ]
+      },
       "summary": "В перечне действующей документации ПКБ ЦТ указана инструкция ПКБ ЦТ.25.0072 «Техническое обслуживание и текущий ремонт главного контроллера ЭКГ-8Ж», применяемая в том числе к ВЛ80.",
-      "details": ["Это сильное основание держать подробные ремонтные операции в отдельном maintenance layer, а не смешивать их с маршрутной диагностикой локомотивной бригады.","Сам каталог подтверждает существование и статус документа, но не дает права пересказывать отсутствующие в пакете ремонтные нормы."],
-      "limitations": ["Для конкретных ремонтных параметров требуется сам текст ПКБ ЦТ.25.0072, а не только запись каталога."],
-      "sourceRefs": ["VL80S-EKG-S09"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","сервомотор","контактная система"],"directionRefs":[],"relatedEntryIds":[],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CURRENT_DOCUMENT_METADATA_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Не подменять текст действующей ТИ вторичными ремонтными конспектами.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Это сильное основание держать подробные ремонтные операции в отдельном maintenance layer, а не смешивать их с маршрутной диагностикой локомотивной бригады.",
+        "Сам каталог подтверждает существование и статус документа, но не дает права пересказывать отсутствующие в пакете ремонтные нормы."
+      ],
+      "limitations": [
+        "Для конкретных ремонтных параметров требуется сам текст ПКБ ЦТ.25.0072, а не только запись каталога."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S09"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "сервомотор",
+          "контактная система"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CURRENT_DOCUMENT_METADATA_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не подменять текст действующей ТИ вторичными ремонтными конспектами.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-hist-001",
@@ -235,14 +715,58 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["сравнение ранней и поздней схемы синхронизации"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "сравнение ранней и поздней схемы синхронизации"
+        ]
+      },
       "summary": "Исторический технический источник указывает, что начиная с электровоза №1406 была изменена схема управления, чтобы предотвратить рассинхронизацию главных контроллеров ЭКГ-8Ж при работе нескольких секций.",
-      "details": ["Это прямой пример того, почему один алгоритм по контактам синхронизации нельзя считать универсальным для всей серии."],
-      "limitations": ["Для runtime profile gate границу и конкретный состав изменений желательно дополнительно сверить по первичной схеме соответствующего выпуска."],
-      "sourceRefs": ["VL80S-EKG-S04"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","межсекционные цепи синхронизации"],"directionRefs":["synchronization"],"relatedEntryIds":["vl80s-ekg-unverified-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"HISTORICAL_TECHNICAL_SOURCE_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Историческая граница — knowledge/profile evidence, не отдельный active scenario.","conflictGroupIds":["EKG-SYNC-VARIANT-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Это прямой пример того, почему один алгоритм по контактам синхронизации нельзя считать универсальным для всей серии."
+      ],
+      "limitations": [
+        "Для runtime profile gate границу и конкретный состав изменений желательно дополнительно сверить по первичной схеме соответствующего выпуска."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S04"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "межсекционные цепи синхронизации"
+        ],
+        "directionRefs": [
+          "synchronization"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-unverified-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "HISTORICAL_TECHNICAL_SOURCE_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Историческая граница — knowledge/profile evidence, не отдельный active scenario.",
+        "conflictGroupIds": [
+          "EKG-SYNC-VARIANT-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-ekg-archive-001",
@@ -253,14 +777,60 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческая локальная эксплуатационная инструкция"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческая локальная эксплуатационная инструкция"
+        ]
+      },
       "summary": "Зеркало локальной инструкции описывает отдельные действия при отсутствии позиций ЭКГ на одной/двух секциях и при отказах элементов цепи управления.",
-      "details": ["Ценность архива — структура симптомов, аппаратные связи и понимание старой эксплуатационной логики.","Перемычки и принудительное включение реле/контакторов не переносятся в обычную диагностику."],
-      "limitations": ["Локальный исторический документ не считается общим действующим порядком."],
-      "sourceRefs": ["VL80S-EKG-S08","VL80S-EKG-S05"],
-      "relations": {"componentRefs":["реле 265/266","контакторы 194/206/208","сервомотор ЭКГ"],"directionRefs":[],"relatedEntryIds":["vl80s-ekg-field-001","vl80s-ekg-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"ARCHIVAL_CONTEXT_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Активному графу можно наследовать наблюдаемые симптомы, но не разрешенность старых действий.","conflictGroupIds":["EKG-FIELD-BYPASS-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Ценность архива — структура симптомов, аппаратные связи и понимание старой эксплуатационной логики.",
+        "Перемычки и принудительное включение реле/контакторов не переносятся в обычную диагностику."
+      ],
+      "limitations": [
+        "Локальный исторический документ не считается общим действующим порядком."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S08",
+        "VL80S-EKG-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "реле 265/266",
+          "контакторы 194/206/208",
+          "сервомотор ЭКГ"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-ekg-field-001",
+          "vl80s-ekg-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "ARCHIVAL_CONTEXT_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Активному графу можно наследовать наблюдаемые симптомы, но не разрешенность старых действий.",
+        "conflictGroupIds": [
+          "EKG-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-ekg-case-001",
@@ -271,14 +841,59 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["локальный отказ одной секции"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "локальный отказ одной секции"
+        ]
+      },
       "summary": "При нормальной реакции другой секции эксплуатационные материалы направляют поиск к локальному питанию/управлению сервомотором и контактам цепи неисправной секции.",
-      "details": ["Проверка начинается с доступной индикации и состояния цепи управления, а не с предположения о механическом заклинивании ЭКГ."],
-      "limitations": ["Не считать конкретное реле или предохранитель причиной до подтверждения."],
-      "sourceRefs": ["VL80S-EKG-S08","VL80S-EKG-S12"],
-      "relations": {"componentRefs":["сервомотор ЭКГ","цепь управления секции","реле 265/266"],"directionRefs":["scope","control-chain"],"relatedEntryIds":["vl80s-ekg-tech-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"CROSSCHECKED_OPERATIONAL_PATTERN","requiresHumanReview":true,"interpretationNotes":"Изменяется приоритет локальной ветви, а не устанавливается причина.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Проверка начинается с доступной индикации и состояния цепи управления, а не с предположения о механическом заклинивании ЭКГ."
+      ],
+      "limitations": [
+        "Не считать конкретное реле или предохранитель причиной до подтверждения."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S08",
+        "VL80S-EKG-S12"
+      ],
+      "relations": {
+        "componentRefs": [
+          "сервомотор ЭКГ",
+          "цепь управления секции",
+          "реле 265/266"
+        ],
+        "directionRefs": [
+          "scope",
+          "control-chain"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-tech-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "CROSSCHECKED_OPERATIONAL_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Изменяется приоритет локальной ветви, а не устанавливается причина.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-ekg-case-002",
@@ -289,14 +904,64 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["самопроизвольное/непрерывное вращение после команды"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "самопроизвольное/непрерывное вращение после команды"
+        ]
+      },
       "summary": "Источники описывают несколько кандидатов: цепь динамического торможения контактора 208, состояние его контактов, напряжение цепей управления и состояние коллектора сервомотора. Симптом должен открывать многопричинную ветвь.",
-      "details": ["Карточка не должна сразу объявлять контактор 208 причиной.","На многосекционной машине дополнительно учитывается влияние синхронизации."],
-      "limitations": ["Детальные ремонтные проверки относятся к maintenance context."],
-      "sourceRefs": ["VL80S-EKG-S05","VL80S-EKG-S07","VL80S-EKG-S08"],
-      "relations": {"componentRefs":["контактор 208","сервомотор ЭКГ","цепь управления","синхронизация"],"directionRefs":["runaway","drive"],"relatedEntryIds":["vl80s-ekg-op-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_MULTI_CAUSE","requiresHumanReview":true,"interpretationNotes":"Специальный тест запрета premature cause conclusion.","conflictGroupIds":["EKG-RUNAWAY-CAUSE-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Карточка не должна сразу объявлять контактор 208 причиной.",
+        "На многосекционной машине дополнительно учитывается влияние синхронизации."
+      ],
+      "limitations": [
+        "Детальные ремонтные проверки относятся к maintenance context."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S07",
+        "VL80S-EKG-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "контактор 208",
+          "сервомотор ЭКГ",
+          "цепь управления",
+          "синхронизация"
+        ],
+        "directionRefs": [
+          "runaway",
+          "drive"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-op-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_MULTI_CAUSE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Специальный тест запрета premature cause conclusion.",
+        "conflictGroupIds": [
+          "EKG-RUNAWAY-CAUSE-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-ekg-case-003",
@@ -307,14 +972,62 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["остановка на переходной позиции и последующее защитное отключение"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "остановка на переходной позиции и последующее защитное отключение"
+        ]
+      },
       "summary": "В эксплуатационных публикациях встречается сочетание остановки ЭКГ между позициями и отключения ГВ. Такой набор признаков требует одновременно учитывать фактическую позицию ЭКГ и защитную ветвь, не сводя событие к одному контакту.",
-      "details": ["Промежуточное положение меняет допустимость дальнейшего набора и диагностическую последовательность.","Сработавшую защиту и индикацию следует сохранить до попытки восстановления."],
-      "limitations": ["Конкретная первопричина из одного кейса не обобщается на все ВЛ80С."],
-      "sourceRefs": ["VL80S-EKG-S05","VL80S-EKG-S06"],
-      "relations": {"componentRefs":["ЭКГ-8Ж","главный выключатель","защиты"],"directionRefs":["intermediate-position","protection"],"relatedEntryIds":["vl80s-ekg-tech-004"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"FIELD_CASE_REPORTED","requiresHumanReview":true,"interpretationNotes":"Кейс нужен для межсценарной связи EKG ↔ GV, а не для готового диагноза.","conflictGroupIds":["EKG-POSITION-STATE-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Промежуточное положение меняет допустимость дальнейшего набора и диагностическую последовательность.",
+        "Сработавшую защиту и индикацию следует сохранить до попытки восстановления."
+      ],
+      "limitations": [
+        "Конкретная первопричина из одного кейса не обобщается на все ВЛ80С."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S06"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ЭКГ-8Ж",
+          "главный выключатель",
+          "защиты"
+        ],
+        "directionRefs": [
+          "intermediate-position",
+          "protection"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-tech-004"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "FIELD_CASE_REPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Кейс нужен для межсценарной связи EKG ↔ GV, а не для готового диагноза.",
+        "conflictGroupIds": [
+          "EKG-POSITION-STATE-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-ekg-field-001",
@@ -325,15 +1038,65 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческая аварийная практика"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческая аварийная практика"
+        ]
+      },
       "summary": "Архивные эксплуатационные инструкции описывают принудительное воздействие на реле/контакторы и изменение цепей управления ЭКГ для временного восстановления регулирования.",
-      "details": ["В базе сохраняются факт существования, затрагиваемые аппараты и источник.","Пошаговые перемычки и последовательность принудительных действий в unrestricted pack отсутствуют."],
-      "limitations": ["Не является современной штатной рекомендацией.","Высокая чувствительность к исполнению и схеме синхронизации."],
-      "sourceRefs": ["VL80S-EKG-S05","VL80S-EKG-S08"],
-      "relations": {"componentRefs":["реле 265/266","контакторы 194/206/208","цепь синхронизации"],"directionRefs":[],"relatedEntryIds":["vl80s-ekg-archive-001","vl80s-ekg-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Potentially hazardous forcing/jumper procedure intentionally omitted."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_MULTI_SOURCE_EXISTENCE","requiresHumanReview":true,"interpretationNotes":"Confidence относится к факту документирования, не к разрешенности применения.","conflictGroupIds":["EKG-FIELD-BYPASS-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "В базе сохраняются факт существования, затрагиваемые аппараты и источник.",
+        "Пошаговые перемычки и последовательность принудительных действий в unrestricted pack отсутствуют."
+      ],
+      "limitations": [
+        "Не является современной штатной рекомендацией.",
+        "Высокая чувствительность к исполнению и схеме синхронизации."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "реле 265/266",
+          "контакторы 194/206/208",
+          "цепь синхронизации"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-ekg-archive-001",
+          "vl80s-ekg-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Potentially hazardous forcing/jumper procedure intentionally omitted."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_MULTI_SOURCE_EXISTENCE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Confidence относится к факту документирования, не к разрешенности применения.",
+        "conflictGroupIds": [
+          "EKG-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-ekg-unsafe-001",
@@ -344,15 +1107,66 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":false,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["нештатное принудительное управление/обход"]},
+      "visibility": {
+        "base": false,
+        "extended": false,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "нештатное принудительное управление/обход"
+        ]
+      },
       "summary": "Любые исторические способы, которые обходят штатную синхронизацию или принудительно удерживают/включают аппараты цепи ЭКГ, должны храниться отдельно от обычной диагностики и обучения.",
-      "details": ["Обычный EXTENDED не должен раскрывать такие процедуры.","Особенно опасно переносить метод между ранней и поздней схемами без проверки исполнения."],
-      "limitations": ["Не использовать как эксплуатационную инструкцию.","Пошаговые действия намеренно исключены."],
-      "sourceRefs": ["VL80S-EKG-S01","VL80S-EKG-S05","VL80S-EKG-S08"],
-      "relations": {"componentRefs":["цепь ЭКГ","межсекционная синхронизация","контакторы привода"],"directionRefs":[],"relatedEntryIds":["vl80s-ekg-field-001","vl80s-ekg-norm-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Reference pack validates classification/gating, not hazardous procedure delivery."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_CONFLICT_WITH_SAFETY_CONTRACT","requiresHumanReview":true,"interpretationNotes":"Не смешивать «так делали» и «так разрешено делать».","conflictGroupIds":["EKG-FIELD-BYPASS-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "Обычный EXTENDED не должен раскрывать такие процедуры.",
+        "Особенно опасно переносить метод между ранней и поздней схемами без проверки исполнения."
+      ],
+      "limitations": [
+        "Не использовать как эксплуатационную инструкцию.",
+        "Пошаговые действия намеренно исключены."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S01",
+        "VL80S-EKG-S05",
+        "VL80S-EKG-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "цепь ЭКГ",
+          "межсекционная синхронизация",
+          "контакторы привода"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-ekg-field-001",
+          "vl80s-ekg-norm-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Reference pack validates classification/gating, not hazardous procedure delivery."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_CONFLICT_WITH_SAFETY_CONTRACT",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не смешивать «так делали» и «так разрешено делать».",
+        "conflictGroupIds": [
+          "EKG-FIELD-BYPASS-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-ekg-unverified-001",
@@ -363,20 +1177,82 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "SOURCE_NOTE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["возможное позднейшее изменение схемы синхронизации"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "возможное позднейшее изменение схемы синхронизации"
+        ]
+      },
       "summary": "Вторичные материалы сообщают о дополнительных изменениях цепи синхронизации после уже подтвержденной границы №1406, включая другую серийную границу. В текущем исследовании первичная ведомость изменений для этой последующей границы не подтверждена.",
-      "details": ["Запись служит указателем для дальнейшего поиска схемы конкретного номера.","До подтверждения нельзя строить runtime profile gate по вторичной серийной границе."],
-      "limitations": ["Не использовать неподтвержденный номер как жесткое условие диагностического графа."],
-      "sourceRefs": ["VL80S-EKG-S10","VL80S-EKG-S11"],
-      "relations": {"componentRefs":["межсекционная синхронизация ЭКГ"],"directionRefs":["synchronization"],"relatedEntryIds":["vl80s-ekg-hist-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SECONDARY_ONLY_PENDING_PRIMARY","requiresHumanReview":true,"interpretationNotes":"Эталон хранения полезной, но неподтвержденной серийной информации.","conflictGroupIds":["EKG-SYNC-VARIANT-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Запись служит указателем для дальнейшего поиска схемы конкретного номера.",
+        "До подтверждения нельзя строить runtime profile gate по вторичной серийной границе."
+      ],
+      "limitations": [
+        "Не использовать неподтвержденный номер как жесткое условие диагностического графа."
+      ],
+      "sourceRefs": [
+        "VL80S-EKG-S10",
+        "VL80S-EKG-S11"
+      ],
+      "relations": {
+        "componentRefs": [
+          "межсекционная синхронизация ЭКГ"
+        ],
+        "directionRefs": [
+          "synchronization"
+        ],
+        "relatedEntryIds": [
+          "vl80s-ekg-hist-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SECONDARY_ONLY_PENDING_PRIMARY",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Эталон хранения полезной, но неподтвержденной серийной информации.",
+        "conflictGroupIds": [
+          "EKG-SYNC-VARIANT-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     }
   ],
   "acceptanceExpectations": {
     "minimumEntryCount": 16,
-    "actualEntryCount": 16,
-    "mustExercise": ["active scenario vs archive separation","no-motion/stops-between/runaway/desync symptom split","actual position vs KME command","one-section vs all-section scope","pre/post-1406 variant gate","maintenance-document separation","restricted field practice","unsafe gate","multi-cause runaway","unverified later serial change"],
-    "mustNot": ["create separate active scenario from an old depot procedure","assume KME handle proves EKG position","hardcode one synchronization chain for all VL80S","declare contactor 208 as cause from runaway alone","show forcing/jumper procedure in normal extended mode"]
+    "actualEntryCount": 17,
+    "mustExercise": [
+      "active scenario vs archive separation",
+      "no-motion/stops-between/runaway/desync symptom split",
+      "actual position vs KME command",
+      "one-section vs all-section scope",
+      "pre/post-1406 variant gate",
+      "maintenance-document separation",
+      "restricted field practice",
+      "unsafe gate",
+      "multi-cause runaway",
+      "unverified later serial change"
+    ],
+    "mustNot": [
+      "create separate active scenario from an old depot procedure",
+      "assume KME handle proves EKG position",
+      "hardcode one synchronization chain for all VL80S",
+      "declare contactor 208 as cause from runaway alone",
+      "show forcing/jumper procedure in normal extended mode"
+    ]
   }
 }
