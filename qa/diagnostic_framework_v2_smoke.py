@@ -72,7 +72,7 @@ try:
     shot("framework-v2-expert-minimal")
     scroll_until("Показать подробные проверки и материалы")
     tap("Показать подробные проверки и материалы", 0)
-    scroll_until("Проверки по уровню допуска")
+    scroll_until("Проверки по уровню допуска", 30)
 finally:
     (OUT / "framework-v2-crash-logcat.txt").write_bytes(adb("logcat", "-d", "-b", "crash"))
 

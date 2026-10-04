@@ -2,7 +2,7 @@
 """Verify diesel diagrams stay inside their canvas and a swipe scrolls the page."""
 import time
 
-from tem2_android_smoke import adb, label, open_menu, shot, tap, tree, wait
+from tem2_android_smoke import PACKAGE, adb, label, open_menu, shot, tap, tree, wait
 
 
 def scroll_until(text, attempts=14):
@@ -26,6 +26,9 @@ def scroll_up_until(text, attempts=8):
 
 
 for family, slug in (("ЧМЭ3", "chme3"), ("ТЭМ2", "tem2")):
+    adb("shell", "am", "force-stop", PACKAGE)
+    adb("shell", "monkey", "-p", PACKAGE, "1")
+    wait("Железнодорожный помощник")
     open_menu("Локомотивы / атлас")
     wait("Выберите серию и тип материала")
     tap(family, 10)

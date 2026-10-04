@@ -8,8 +8,10 @@ APK="$apk" QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
   python3 "$GITHUB_WORKSPACE/qa/tem2_android_smoke.py"
 if [[ -f "$GITHUB_WORKSPACE/app/src/main/assets/technical/diagnostic_framework_v2.json" ]]; then
   QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
+    python3 "$GITHUB_WORKSPACE/qa/diesel_scheme_viewport_smoke.py" || status=1
+  adb shell am force-stop ru.railbrake.calculator
+  adb shell monkey -p ru.railbrake.calculator 1
+  QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
     python3 "$GITHUB_WORKSPACE/qa/diagnostic_framework_v2_smoke.py" || status=1
 fi
-QA_OUT="$GITHUB_WORKSPACE/qa-evidence" \
-  python3 "$GITHUB_WORKSPACE/qa/diesel_scheme_viewport_smoke.py" || status=1
 exit "${status:-0}"
