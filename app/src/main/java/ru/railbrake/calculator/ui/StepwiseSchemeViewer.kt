@@ -343,7 +343,7 @@ private fun SchemeCanvas(
                 .then(gestures).background(background)) {
                 withTransform({
                     translate(center.x + shiftX, center.y + shiftY)
-                    scale(fit * zoom, fit * zoom)
+                    scale(fit * zoom, fit * zoom, pivot = Offset.Zero)
                     translate(-contentCenter.x, -contentCenter.y)
                 }) {
                     allEdges.forEach { edge ->

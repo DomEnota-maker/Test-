@@ -67,19 +67,18 @@ def wait(text, timeout=60):
 def tap(text, vertical_swipes=2):
     for attempt in range(vertical_swipes+1):
         root=tree()
-        node=find(root,text)
-        if node is not None:
-            parents={c:p for p in root.iter() for c in p}
+        parents={c:p for p in root.iter() for c in p}
+        for candidate in (n for n in root.iter("node") if label(n) == text):
+            node=candidate
             while (
                 node.get("clickable") != "true"
                 and node.get("checkable") != "true"
                 and node in parents
             ):
                 node=parents[node]
-            if node.get("clickable") != "true" and node.get("checkable") != "true":
-                raise AssertionError(f"No actionable target for {text}")
-            tap_node(node)
-            return
+            if node.get("clickable") == "true" or node.get("checkable") == "true":
+                tap_node(node)
+                return
         if attempt < vertical_swipes:
             adb("shell","input","swipe","500","1700","500","520","420")
             time.sleep(.7)
