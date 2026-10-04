@@ -2,7 +2,7 @@ package ru.railbrake.calculator.data
 
 import android.content.Context
 
-enum class KnowledgeMode(val title: String) { BASIC("Базовый"), ADVANCED("Расширенный") }
+enum class KnowledgeMode(val title: String) { BASIC("Базовый"), ADVANCED("Расширенные знания") }
 enum class KnowledgeDepth(val title: String) {
     MINIMAL("Минимальная"), STANDARD("Стандартная"), DETAILED("Подробная")
 }

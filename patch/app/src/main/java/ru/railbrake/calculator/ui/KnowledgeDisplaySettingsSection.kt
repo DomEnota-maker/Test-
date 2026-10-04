@@ -2,6 +2,8 @@ package ru.railbrake.calculator.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
@@ -20,6 +22,7 @@ import ru.railbrake.calculator.data.KnowledgeDepth
 import ru.railbrake.calculator.data.KnowledgeDisplayRepository
 import ru.railbrake.calculator.data.KnowledgeMode
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun KnowledgeDisplaySettingsSection() {
     val context = LocalContext.current
@@ -29,20 +32,24 @@ internal fun KnowledgeDisplaySettingsSection() {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Карточка диагностики", style = MaterialTheme.typography.titleMedium)
-            Text("Режим знаний", style = MaterialTheme.typography.bodyMedium)
-            KnowledgeMode.entries.forEach { option ->
-                FilterChip(selected = mode == option, onClick = {
-                    repository.setMode(option); mode = option
-                }, label = { Text(option.title) })
+            Text("Объём знаний в диагностической карточке", style = MaterialTheme.typography.bodyMedium)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                KnowledgeMode.entries.forEach { option ->
+                    FilterChip(selected = mode == option, onClick = {
+                        repository.setMode(option); mode = option
+                    }, label = { Text(option.title) })
+                }
             }
             Text("Глубина отображения", style = MaterialTheme.typography.bodyMedium)
-            KnowledgeDepth.entries.forEach { option ->
-                FilterChip(selected = depth == option, onClick = {
-                    repository.setDepth(option); depth = option
-                }, label = { Text(option.title) })
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                KnowledgeDepth.entries.forEach { option ->
+                    FilterChip(selected = depth == option, onClick = {
+                        repository.setDepth(option); depth = option
+                    }, label = { Text(option.title) })
+                }
             }
             Text(
-                "Расширенные аварийные приёмы включаются отдельно и сохраняют собственные ограничения.",
+                "Здесь открываются объяснения и учебные материалы. Аварийные приёмы регулируются отдельным переключателем ниже.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

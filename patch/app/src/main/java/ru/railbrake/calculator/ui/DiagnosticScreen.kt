@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import ru.railbrake.calculator.core.DiagnosticActionLevel
 import ru.railbrake.calculator.core.DiagnosticCheck
 import ru.railbrake.calculator.core.DiagnosticRepository
 import ru.railbrake.calculator.core.DiagnosticFrameworkV2
+import ru.railbrake.calculator.core.FrameworkDiagnosticNode
 import ru.railbrake.calculator.core.DiagnosticResponse
 import ru.railbrake.calculator.core.DiagnosticScenario
 import ru.railbrake.calculator.core.DiagnosticSeverity
@@ -79,7 +81,8 @@ private val quickRouteItems = listOf(
 )
 
 @Composable
-fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: String? = null) {
+fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: String? = null,
+    onOpenAtlasEquipment: (String) -> Unit) {
     var selectedId by rememberSaveable(initialScenarioId) { mutableStateOf(initialScenarioId) }
     var selectedEquipmentId by rememberSaveable(initialEquipmentId) { mutableStateOf(initialEquipmentId) }
     val selected = DiagnosticRepository.scenarios.firstOrNull { it.id == selectedId }
@@ -106,7 +109,8 @@ fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: Stri
             scenario = selected,
             onBack = { selectedId = null },
             onOpenRelated = { selectedId = it },
-            onOpenEquipment = { selectedEquipmentId = it }
+            onOpenEquipment = { selectedEquipmentId = it },
+            onOpenAtlasEquipment = onOpenAtlasEquipment
         )
     }
 }
@@ -366,7 +370,8 @@ private fun DiagnosticDetails(
     scenario: DiagnosticScenario,
     onBack: () -> Unit,
     onOpenRelated: (String) -> Unit,
-    onOpenEquipment: (String) -> Unit
+    onOpenEquipment: (String) -> Unit,
+    onOpenAtlasEquipment: (String) -> Unit
 ) {
     var currentQuestionKey by rememberSaveable(scenario.id) {
         mutableStateOf(scenario.questions.firstOrNull()?.key)
@@ -395,7 +400,10 @@ private fun DiagnosticDetails(
     val frameworkModule = remember(context, scenario.id) {
         DiagnosticFrameworkV2.load(context).firstOrNull { it.scenarioId == scenario.id }
     }?.takeIf { it.profileId == profileId &&
-        (it.variantIds.contains(LocomotiveProfiles.VL80S_GENERAL) || variantId in it.variantIds) }
+        LocomotiveProfiles.appliesToVariant(variantId, it.variantIds) }
+    LaunchedEffect(frameworkModule?.startNodeId) {
+        if (answerTrail.isEmpty() && frameworkModule != null) currentQuestionKey = frameworkModule.startNodeId
+    }
     val knowledgeSettings = remember(context) { KnowledgeDisplayRepository(context) }
     val knowledgeMode = knowledgeSettings.mode()
     val knowledgeDepth = knowledgeSettings.depth()
@@ -449,39 +457,44 @@ private fun DiagnosticDetails(
                 answerTrail = answerTrail.mapNotNull { record ->
                     val response = runCatching { DiagnosticResponse.valueOf(record.substringAfter('\t')) }.getOrNull()
                     response?.let { record.substringBefore('\t') to it }
-                }
+                },
+                onOpenEquipment = onOpenAtlasEquipment
             )
         }
         item { DiagnosticSafetyNotice() }
         item { InfoCard("Сначала", scenario.immediateActions, MaterialTheme.colorScheme.primaryContainer) }
-        if (scenario.observableSigns.isNotEmpty()) {
-            item { InfoCard("Что наблюдать", scenario.observableSigns, MaterialTheme.colorScheme.surfaceVariant) }
-        }
         item { InfoCard("Опасные признаки", scenario.dangerSigns, MaterialTheme.colorScheme.errorContainer) }
         item {
             TriageCard(
                 scenario = scenario,
+                frameworkNode = currentQuestionKey?.let { frameworkModule?.nodes?.get(it) },
                 currentQuestionKey = currentQuestionKey,
                 answers = answers,
                 onAnswer = { response ->
-                    val question = scenario.questions.first { it.key == currentQuestionKey }
-                    val meaning = DiagnosticRepository.meaning(question, response)
+                    val nodeKey = requireNotNull(currentQuestionKey)
+                    val question = scenario.questions.firstOrNull { it.key == nodeKey }
+                    val meaning = frameworkModule?.answerMeaning(nodeKey, response)
+                        ?: DiagnosticRepository.meaning(requireNotNull(question), response)
                     currentAssessment = meaning
-                    val explicitNext = when (response) {
-                        DiagnosticResponse.YES -> question.yesNextKey
-                        DiagnosticResponse.NO -> question.noNextKey
-                        DiagnosticResponse.UNKNOWN -> question.unknownNextKey
-                    }
-                    ordinaryRouteStopped = explicitNext == DiagnosticRepository.END_OF_FLOW &&
-                        (response == DiagnosticResponse.UNKNOWN || scenario.questions.lastOrNull()?.key != question.key)
-                    answers = answers + "${question.text} — ${response.title}. $meaning"
-                    answerTrail = answerTrail + "${question.key}\t${response.name}"
+                    val legacyNext = question?.let { when (response) {
+                        DiagnosticResponse.YES -> it.yesNextKey
+                        DiagnosticResponse.NO -> it.noNextKey
+                        DiagnosticResponse.UNKNOWN -> it.unknownNextKey
+                    } }
+                    val nextKey = if (frameworkModule != null) frameworkModule.nextNode(nodeKey, response)?.id
+                        else DiagnosticRepository.nextQuestion(scenario, nodeKey, response)?.key
+                    ordinaryRouteStopped = (legacyNext == DiagnosticRepository.END_OF_FLOW ||
+                        frameworkModule != null && nextKey == null) &&
+                        (response == DiagnosticResponse.UNKNOWN || scenario.questions.lastOrNull()?.key != nodeKey)
+                    val questionText = frameworkModule?.nodes?.get(nodeKey)?.question ?: requireNotNull(question).text
+                    answers = answers + "$questionText — ${response.title}. $meaning"
+                    answerTrail = answerTrail + "$nodeKey\t${response.name}"
                     candidateScores = candidateScores.toMutableMap().also { scores ->
-                        DiagnosticRepository.candidateCauseIds(question, response).forEach { causeId ->
+                        question?.let { DiagnosticRepository.candidateCauseIds(it, response) }.orEmpty().forEach { causeId ->
                             scores[causeId] = (scores[causeId] ?: 0) + 1
                         }
                     }
-                    currentQuestionKey = DiagnosticRepository.nextQuestion(scenario, question.key, response)?.key
+                    currentQuestionKey = nextKey
                 },
                 onReset = {
                     answers = emptyList()
@@ -489,7 +502,7 @@ private fun DiagnosticDetails(
                     candidateScores = emptyMap()
                     currentAssessment = ""
                     ordinaryRouteStopped = false
-                    currentQuestionKey = scenario.questions.firstOrNull()?.key
+                    currentQuestionKey = frameworkModule?.startNodeId ?: scenario.questions.firstOrNull()?.key
                 },
                 onBackOne = {
                     val removed = answerTrail.lastOrNull()
@@ -517,22 +530,27 @@ private fun DiagnosticDetails(
                                 DiagnosticResponse.valueOf(record.substringAfter('\t'))
                             }.getOrNull()
                             val priorQuestion = scenario.questions.firstOrNull { it.key == key }
-                            if (response != null && priorQuestion != null) {
-                                DiagnosticRepository.meaning(priorQuestion, response)
+                            if (response != null) {
+                                frameworkModule?.answerMeaning(key, response)
+                                    ?: priorQuestion?.let { DiagnosticRepository.meaning(it, response) }.orEmpty()
                             } else ""
                         }.orEmpty()
                     }
                 }
             )
         }
+        if (scenario.observableSigns.isNotEmpty() && (frameworkModule == null || knowledgeDepth != ru.railbrake.calculator.data.KnowledgeDepth.MINIMAL)) {
+            item { InfoCard("Что наблюдать", scenario.observableSigns, MaterialTheme.colorScheme.surfaceVariant) }
+        }
         if (currentAssessment.isNotBlank()) {
-            val nextQuestion = scenario.questions.firstOrNull { it.key == currentQuestionKey }
+            val nextQuestionText = currentQuestionKey?.let { frameworkModule?.nodes?.get(it)?.question }
+                ?: scenario.questions.firstOrNull { it.key == currentQuestionKey }?.text
             item {
                 InfoCard(
                     "Текущая оценка по ответам",
                     buildList {
                         add(currentAssessment)
-                        if (nextQuestion != null) add("Следующее уточнение: ${nextQuestion.text}")
+                        if (nextQuestionText != null) add("Следующее уточнение: $nextQuestionText")
                         else if (ordinaryRouteStopped) add("Доступных различающих вопросов больше нет. Помощь продолжается ниже: сохранены возможные причины, разрешённые проверки, ограничения и данные для доклада; неподтверждённый вариант не считать установленным.")
                         else add("Вопросы этого маршрута пройдены. Сопоставьте вывод с признаками, проверками и условиями прекращения диагностики ниже.")
                     },
@@ -558,7 +576,7 @@ private fun DiagnosticDetails(
         if (frameworkModule == null || answerTrail.isNotEmpty()) {
             item { InfoCard("Вероятные причины — гипотезы, не вывод", scenario.probableCauses, MaterialTheme.colorScheme.surfaceVariant) }
         }
-        if (scenario.operationalConsequences.isNotEmpty()) {
+        if (scenario.operationalConsequences.isNotEmpty() && (frameworkModule == null || knowledgeDepth != ru.railbrake.calculator.data.KnowledgeDepth.MINIMAL)) {
             item { InfoCard("К чему может привести", scenario.operationalConsequences, MaterialTheme.colorScheme.errorContainer) }
         }
         item {
@@ -779,6 +797,7 @@ private fun EquipmentDetails(
 @Composable
 private fun TriageCard(
     scenario: DiagnosticScenario,
+    frameworkNode: FrameworkDiagnosticNode?,
     currentQuestionKey: String?,
     answers: List<String>,
     onAnswer: (DiagnosticResponse) -> Unit,
@@ -794,9 +813,12 @@ private fun TriageCard(
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("Уточнение симптома", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
             val question = scenario.questions.firstOrNull { it.key == currentQuestionKey }
-            if (question != null) {
+            if (question != null || frameworkNode != null) {
                 Text("Шаг ${answers.size + 1}; дальнейший вопрос зависит от ответа")
-                Text(question.text, fontWeight = FontWeight.Bold)
+                Text(frameworkNode?.question ?: requireNotNull(question).text, fontWeight = FontWeight.Bold)
+                if (frameworkNode != null) {
+                    Text(frameworkNode.explanation, style = MaterialTheme.typography.bodySmall)
+                }
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     Button(onClick = { onAnswer(DiagnosticResponse.YES) }) { Text("Да") }
                     OutlinedButton(onClick = { onAnswer(DiagnosticResponse.NO) }) { Text("Нет") }

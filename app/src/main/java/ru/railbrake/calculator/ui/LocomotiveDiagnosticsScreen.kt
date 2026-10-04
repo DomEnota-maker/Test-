@@ -19,7 +19,8 @@ fun LocomotiveDiagnosticsScreen(
     initialFamily: TechnicalFamily? = null,
     workingFamily: TechnicalFamily? = null,
     workingVariantId: String? = null,
-    onFamilyChange: (TechnicalFamily) -> Unit = {}
+    onFamilyChange: (TechnicalFamily) -> Unit = {},
+    onOpenAtlasEquipment: (String) -> Unit
 ) {
     val linkedFamily = if (initialScenarioId != null || initialEquipmentId != null)
         diagnosticInitialFamily(initialScenarioId, initialEquipmentId) else null
@@ -50,7 +51,7 @@ fun LocomotiveDiagnosticsScreen(
         if (family != null) Box(Modifier.fillMaxWidth().weight(1f)) {
             if (family == TechnicalFamily.VL80S)
                 DiagnosticScreen(diagnosticScenarioForFamily(initialScenarioId, family),
-                    diagnosticEquipmentForFamily(initialEquipmentId, family))
+                    diagnosticEquipmentForFamily(initialEquipmentId, family), onOpenAtlasEquipment)
             else ErmakDiagnosticsScreen(
                 initialScenarioId = diagnosticScenarioForFamily(initialScenarioId, family),
                 initialEquipmentId = diagnosticEquipmentForFamily(initialEquipmentId, family),

@@ -35,8 +35,18 @@ class DiagnosticFrameworkV2Test {
         val reordered = module.orderedDirections(listOf("pnr-danger" to DiagnosticResponse.UNKNOWN))
         assertEquals(initial.toSet(), reordered.map { it.id }.toSet())
         assertEquals("safety", reordered.last().id)
+        assertEquals("permission", module.orderedDirections(listOf("pnr-danger" to DiagnosticResponse.NO)).first().id)
         assertEquals(initial, module.directions.map { it.id })
         assertFalse(module.nodes.getValue("pnr-danger").answers.getValue(DiagnosticResponse.UNKNOWN).isBlank())
+    }
+
+    @Test fun frameworkGraphRoutesByAnswerAndKeepsUnknownExplanation() {
+        val scenario = requireNotNull(DiagnosticRepository.scenario("pantograph-no-rise"))
+        val module = DiagnosticFrameworkV2.parse(root, { canonical }, mapOf(scenario.id to scenario)).single()
+        assertEquals(null, module.nextNode("pnr-danger", DiagnosticResponse.YES))
+        assertEquals("pnr-permission", module.nextNode("pnr-danger", DiagnosticResponse.NO)?.id)
+        assertTrue(module.answerMeaning("pnr-danger", DiagnosticResponse.UNKNOWN).isNotBlank())
+        assertEquals(module.nodes.getValue("pnr-danger").question, scenario.questions.first().text)
     }
 
     @Test fun aNewProfileAndDataDefinedGraphNeedNoNewCoreBranch() {

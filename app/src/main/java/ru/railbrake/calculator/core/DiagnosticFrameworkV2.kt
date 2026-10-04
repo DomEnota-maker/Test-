@@ -68,9 +68,18 @@ data class FrameworkDiagnosticModule(
     val nodes: Map<String, FrameworkDiagnosticNode>,
     val startNodeId: String
 ) {
+    fun nextNode(currentId: String, response: DiagnosticResponse): FrameworkDiagnosticNode? =
+        nodes.getValue(currentId).nextNodeIds.getValue(response)?.let(nodes::getValue)
+
+    fun answerMeaning(currentId: String, response: DiagnosticResponse): String =
+        nodes.getValue(currentId).answers.getValue(response)
+
     fun orderedDirections(answerTrail: List<Pair<String, DiagnosticResponse>>): List<FrameworkDirection> {
         val visited = answerTrail.mapTo(hashSetOf()) { it.first }
-        return directions.filterNot { it.questionKey in visited } + directions.filter { it.questionKey in visited }
+        val next = answerTrail.lastOrNull()?.let { (id, response) -> nodes[id]?.nextNodeIds?.get(response) }
+        return directions.filter { it.questionKey == next } +
+            directions.filter { it.questionKey != next && it.questionKey !in visited } +
+            directions.filter { it.questionKey != next && it.questionKey in visited }
     }
 }
 

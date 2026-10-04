@@ -9,6 +9,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,8 @@ internal fun HybridDiagnosticCardV2(
     systemTitles: List<String>,
     mode: KnowledgeMode,
     depth: KnowledgeDepth,
-    answerTrail: List<Pair<String, DiagnosticResponse>>
+    answerTrail: List<Pair<String, DiagnosticResponse>>,
+    onOpenEquipment: (String) -> Unit
 ) {
     var study by rememberSaveable(module.scenarioId) { mutableStateOf(false) }
     val answerByNode = answerTrail.toMap()
@@ -77,10 +79,10 @@ internal fun HybridDiagnosticCardV2(
         FilterChip(selected = study, onClick = { study = true }, label = { Text("Изучение") })
     }
 
-    if (study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = true)
-    DirectionMap(directions, module, answerByNode, depth)
-    if (study && depth != KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = depth == KnowledgeDepth.STANDARD)
-    if (!study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = false)
+    if (study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = true, onOpenEquipment = onOpenEquipment)
+    DirectionMap(directions, module, answerByNode, depth, onOpenEquipment)
+    if (study && depth != KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = depth == KnowledgeDepth.STANDARD, onOpenEquipment = onOpenEquipment)
+    if (!study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = false, onOpenEquipment = onOpenEquipment)
 }
 
 @Composable
@@ -88,7 +90,8 @@ private fun DirectionMap(
     directions: List<FrameworkDirection>,
     module: FrameworkDiagnosticModule,
     answerByNode: Map<String, DiagnosticResponse>,
-    depth: KnowledgeDepth
+    depth: KnowledgeDepth,
+    onOpenEquipment: (String) -> Unit
 ) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -100,8 +103,9 @@ private fun DirectionMap(
                     Text(direction.explanation, style = MaterialTheme.typography.bodySmall)
                 }
                 if (depth == KnowledgeDepth.DETAILED) {
-                    val labels = direction.componentIds.mapNotNull { module.components[it]?.title }
-                    Text("Связанные элементы: ${labels.joinToString()}", style = MaterialTheme.typography.bodySmall)
+                    direction.componentIds.mapNotNull(module.components::get).forEach { component ->
+                        TextButton(onClick = { onOpenEquipment(component.id) }) { Text("Элемент Атласа: ${component.title}") }
+                    }
                 }
             }
             Text("Порядок меняется по ответам. Непроверенные направления не исчезают; причина не считается установленной.",
@@ -111,13 +115,13 @@ private fun DirectionMap(
 }
 
 @Composable
-private fun KnowledgeLayers(module: FrameworkDiagnosticModule, showExperience: Boolean) {
+private fun KnowledgeLayers(module: FrameworkDiagnosticModule, showExperience: Boolean, onOpenEquipment: (String) -> Unit) {
     module.knowledge.filter { showExperience || it.classification != KnowledgeClassification.OPERATIONAL_EXPERIENCE }
-        .forEach { entry -> KnowledgeLayer(entry, module) }
+        .forEach { entry -> KnowledgeLayer(entry, module, onOpenEquipment) }
 }
 
 @Composable
-private fun KnowledgeLayer(entry: FrameworkKnowledgeEntry, module: FrameworkDiagnosticModule) {
+private fun KnowledgeLayer(entry: FrameworkKnowledgeEntry, module: FrameworkDiagnosticModule, onOpenEquipment: (String) -> Unit) {
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
             Text(entry.classification.title, style = MaterialTheme.typography.labelMedium,
@@ -125,7 +129,7 @@ private fun KnowledgeLayer(entry: FrameworkKnowledgeEntry, module: FrameworkDiag
             Text(entry.title, fontWeight = FontWeight.Bold)
             Text(entry.body)
             entry.componentIds.mapNotNull(module.components::get).forEach { component ->
-                Text("${component.title}: ${component.purpose}", style = MaterialTheme.typography.bodySmall)
+                TextButton(onClick = { onOpenEquipment(component.id) }) { Text("${component.title}: ${component.purpose}") }
             }
             Text("Проверка: ${when (entry.quality.name) {
                 "CONFIRMED" -> "подтверждено"

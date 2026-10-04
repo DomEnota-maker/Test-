@@ -52,7 +52,7 @@ try:
     shot("framework-v2-beginner")
 
     open_menu("Настройки")
-    tap("Расширенный", 12)
+    tap("Расширенные знания", 12)
     tap("Подробная", 2)
     open_reference()
     scroll_until("Карта направлений поиска")

@@ -16,7 +16,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
@@ -112,11 +116,20 @@ class AssistantResultActivity : ComponentActivity() {
             KIND_VL80_DIAGNOSTIC,
             KIND_ERMAK_DIAGNOSTIC,
             KIND_CHME3_DIAGNOSTIC -> {
-                LocomotiveDiagnosticsScreen(initialScenarioId = id, workingFamily = workingFamily,
-                    workingVariantId = workingVariantId,
-                    initialFamily = if (kind == KIND_CHME3_DIAGNOSTIC) TechnicalFamily.entries.firstOrNull {
-                        it.name == intent.getStringExtra(EXTRA_FAMILY)
-                    } else null)
+                var atlasEquipmentId by rememberSaveable(kind, id) { mutableStateOf<String?>(null) }
+                if (atlasEquipmentId != null) {
+                    TechnicalCatalogScreen(initialFamily = TechnicalFamily.VL80S,
+                        initialSection = TechnicalSection.EQUIPMENT,
+                        initialEntryId = atlasEquipmentId,
+                        onSectionBack = { atlasEquipmentId = null })
+                } else {
+                    LocomotiveDiagnosticsScreen(initialScenarioId = id, workingFamily = workingFamily,
+                        workingVariantId = workingVariantId,
+                        initialFamily = if (kind == KIND_CHME3_DIAGNOSTIC) TechnicalFamily.entries.firstOrNull {
+                            it.name == intent.getStringExtra(EXTRA_FAMILY)
+                        } else null,
+                        onOpenAtlasEquipment = { atlasEquipmentId = it })
+                }
             }
 
             KIND_FIRST_AID -> {

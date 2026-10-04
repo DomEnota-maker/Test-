@@ -171,6 +171,7 @@ fun BrakeCalculatorApp(
     var technicalFamilyName by rememberSaveable { mutableStateOf(TechnicalFamily.VL80S.name) }
     var technicalSectionName by rememberSaveable { mutableStateOf(TechnicalSection.EQUIPMENT.name) }
     var technicalInitialEntryId by rememberSaveable { mutableStateOf<String?>(null) }
+    var atlasReturnToDiagnostics by rememberSaveable { mutableStateOf(false) }
     var diagnosticRootVersion by rememberSaveable { mutableIntStateOf(0) }
     var locomotiveRootVersion by rememberSaveable { mutableIntStateOf(0) }
     var acceptanceRootVersion by rememberSaveable { mutableIntStateOf(0) }
@@ -284,7 +285,11 @@ fun BrakeCalculatorApp(
         BackHandler(enabled = screen != AppScreen.HOME) {
             screenName = when (screen) {
                 AppScreen.MASS, AppScreen.APPENDIX -> AppScreen.CALCULATIONS.name
-                AppScreen.LOCOMOTIVE_MATERIAL, AppScreen.LOCOMOTIVE_LEGACY -> AppScreen.LOCOMOTIVES.name
+                AppScreen.LOCOMOTIVE_MATERIAL -> if (atlasReturnToDiagnostics) {
+                    atlasReturnToDiagnostics = false
+                    AppScreen.DIAGNOSTICS.name
+                } else AppScreen.LOCOMOTIVES.name
+                AppScreen.LOCOMOTIVE_LEGACY -> AppScreen.LOCOMOTIVES.name
                 AppScreen.DIAGNOSTICS -> diagnosticReturnScreenName
                 else -> AppScreen.HOME.name
             }
@@ -423,7 +428,10 @@ fun BrakeCalculatorApp(
                         viewingFamilyName = family.name
                         technicalFamilyName = family.name
                     },
-                    onSectionBack = { screenName = AppScreen.LOCOMOTIVES.name },
+                    onSectionBack = {
+                        screenName = if (atlasReturnToDiagnostics) AppScreen.DIAGNOSTICS.name else AppScreen.LOCOMOTIVES.name
+                        atlasReturnToDiagnostics = false
+                    },
                     onOpenLegacyArticle = { articleId ->
                         locomotiveMaterialQuery = null
                         locomotiveMaterialArticleId = articleId
@@ -469,7 +477,14 @@ fun BrakeCalculatorApp(
                         initialFamily = viewingFamily,
                         workingFamily = workingFamily,
                         workingVariantId = workingLocomotive?.variantId,
-                        onFamilyChange = { family -> viewingFamilyName = family.name }
+                        onFamilyChange = { family -> viewingFamilyName = family.name },
+                        onOpenAtlasEquipment = { equipmentId ->
+                            atlasReturnToDiagnostics = true
+                            technicalFamilyName = TechnicalFamily.VL80S.name
+                            technicalSectionName = TechnicalSection.EQUIPMENT.name
+                            technicalInitialEntryId = equipmentId
+                            screenName = AppScreen.LOCOMOTIVE_MATERIAL.name
+                        }
                     )
                 }
                 AppScreen.KNOWLEDGE -> key(knowledgeRootVersion) {
