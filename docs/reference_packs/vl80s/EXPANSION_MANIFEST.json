@@ -52,6 +52,14 @@
       "packStatus": "SOURCE_REVIEWED",
       "path": "aux-machines/reference_pack.json",
       "batch": "BATCH-02"
+    },
+    {
+      "scenarioId": "compressor-pressure",
+      "title": "Компрессор не запускается или давление ГР растёт медленно",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "SOURCE_REVIEWED",
+      "path": "compressor-pressure/reference_pack.json",
+      "batch": "BATCH-02"
     }
   ]
 }
