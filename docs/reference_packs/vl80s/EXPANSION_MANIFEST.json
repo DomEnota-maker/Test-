@@ -44,6 +44,14 @@
       "packStatus": "SOURCE_REVIEWED",
       "path": "ekg-stuck/reference_pack.json",
       "batch": "BATCH-01"
+    },
+    {
+      "scenarioId": "aux-machines",
+      "title": "Не запускается фазорасщепитель или вспомогательные машины",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "SOURCE_REVIEWED",
+      "path": "aux-machines/reference_pack.json",
+      "batch": "BATCH-02"
     }
   ]
 }
