@@ -6,7 +6,9 @@
   "scenarioLifecycle": "ACTIVE",
   "packStatus": "SOURCE_REVIEWED",
   "profileId": "vl80s",
-  "variantIds": ["vl80s-general"],
+  "variantIds": [
+    "vl80s-general"
+  ],
   "preparedAt": "2026-10-05",
   "purpose": "Structured knowledge pack for the active VL80S auxiliary-machines/phase-splitter start-failure scenario. Reserve schemes, historical depot instructions and field bypasses remain attached knowledge, not duplicate active scenarios.",
   "productionStatus": "REFERENCE_ONLY_PENDING_FINAL_RUNTIME_REVIEW",
@@ -24,15 +26,69 @@
     "UNSAFE_METHOD": "POPULATED_REDACTED"
   },
   "sourceRegistry": [
-    {"id":"VL80S-AUX-S01","authority":"A","type":"NORMATIVE_RZD_SAFETY","title":"Инструкция по охране труда для локомотивных бригад ОАО РЖД, распоряжение №2961/р от 16.11.2022","url":"https://legalacts.ru/doc/rasporjazhenie-oao-rzhd-ot-16112022-n-2961r-ob-utverzhdenii/"},
-    {"id":"VL80S-AUX-S02","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006","url":"https://djvu.online/file/pqNFfrSxFsGWi"},
-    {"id":"VL80S-AUX-S03","authority":"B","type":"TECHNICAL_TRAINING_BOOK","title":"Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005","url":"https://djvu.online/file/DjTvFd9wIK3Ok"},
-    {"id":"VL80S-AUX-S04","authority":"B","type":"HISTORICAL_TECHNICAL_BOOK","title":"Зенькович Н.В. Электровоз ВЛ80С, 1982","url":"https://djvu.online/file/1r2i8GZ6HHNCM"},
-    {"id":"VL80S-AUX-S05","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Некоторые неисправности в цепях управления электровозом ВЛ80С — цепи вспомогательных машин","url":"https://scbist.com/xx2/11307-nekotorye-neispravnosti-v-cepyah-upravleniya-elektrovozom-vl80s.html"},
-    {"id":"VL80S-AUX-S06","authority":"C","type":"OPERATIONAL_ARTICLE","title":"Электровоз ВЛ80С: устранение неисправностей в электрических цепях","url":"https://scbist.com/xx2/9889-elektrovoz-vl80s-ustranenie-neispravnostei-v-elektricheskih-cepyah.html"},
-    {"id":"VL80S-AUX-S07","authority":"C/D","type":"LOCAL_OPERATIONAL_INSTRUCTION_MIRROR","title":"Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)","url":"https://pandia.ru/text/77/356/75652.php"},
-    {"id":"VL80S-AUX-S08","authority":"D","type":"AGGREGATED_OPERATIONAL_REFERENCE","title":"WikiRail: Устранение неисправностей ВЛ80С — вспомогательные машины","url":"https://wikirail.ru/wiki/%D0%A3%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B5%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D0%B5%D0%B9_%D0%92%D0%9B80%D0%A1"},
-    {"id":"VL80S-AUX-S09","authority":"D","type":"MAINTENANCE_EDUCATIONAL_MIRROR","title":"Устройство и ремонт расщепителя фаз НБ-455А ВЛ80С (educational mirror)","url":"https://parketspektr.ru/remont-fazorasschepitelya-nb-455a-vl80s/"}
+    {
+      "id": "VL80S-AUX-S01",
+      "authority": "A",
+      "type": "NORMATIVE_RZD_SAFETY",
+      "title": "Инструкция по охране труда для локомотивных бригад ОАО РЖД, распоряжение №2961/р от 16.11.2022",
+      "url": "https://legalacts.ru/doc/rasporjazhenie-oao-rzhd-ot-16112022-n-2961r-ob-utverzhdenii/"
+    },
+    {
+      "id": "VL80S-AUX-S02",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Николаев А.Ю., Сесявин Н.В. Устройство и работа электровоза ВЛ80С, 2006",
+      "url": "https://djvu.online/file/pqNFfrSxFsGWi"
+    },
+    {
+      "id": "VL80S-AUX-S03",
+      "authority": "B",
+      "type": "TECHNICAL_TRAINING_BOOK",
+      "title": "Потанин А.А., Куприн В.В. Электрическая схема электровоза переменного тока ВЛ80С и ее обслуживание, 2005",
+      "url": "https://djvu.online/file/DjTvFd9wIK3Ok"
+    },
+    {
+      "id": "VL80S-AUX-S04",
+      "authority": "B",
+      "type": "HISTORICAL_TECHNICAL_BOOK",
+      "title": "Зенькович Н.В. Электровоз ВЛ80С, 1982",
+      "url": "https://djvu.online/file/1r2i8GZ6HHNCM"
+    },
+    {
+      "id": "VL80S-AUX-S05",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Некоторые неисправности в цепях управления электровозом ВЛ80С — цепи вспомогательных машин",
+      "url": "https://scbist.com/xx2/11307-nekotorye-neispravnosti-v-cepyah-upravleniya-elektrovozom-vl80s.html"
+    },
+    {
+      "id": "VL80S-AUX-S06",
+      "authority": "C",
+      "type": "OPERATIONAL_ARTICLE",
+      "title": "Электровоз ВЛ80С: устранение неисправностей в электрических цепях",
+      "url": "https://scbist.com/xx2/9889-elektrovoz-vl80s-ustranenie-neispravnostei-v-elektricheskih-cepyah.html"
+    },
+    {
+      "id": "VL80S-AUX-S07",
+      "authority": "C/D",
+      "type": "LOCAL_OPERATIONAL_INSTRUCTION_MIRROR",
+      "title": "Инструкция локомотивным бригадам ВЛ80С депо Батайск (mirror)",
+      "url": "https://pandia.ru/text/77/356/75652.php"
+    },
+    {
+      "id": "VL80S-AUX-S08",
+      "authority": "D",
+      "type": "AGGREGATED_OPERATIONAL_REFERENCE",
+      "title": "WikiRail: Устранение неисправностей ВЛ80С — вспомогательные машины",
+      "url": "https://wikirail.ru/wiki/%D0%A3%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BD%D0%B5%D0%B8%D1%81%D0%BF%D1%80%D0%B0%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D0%B5%D0%B9_%D0%92%D0%9B80%D0%A1"
+    },
+    {
+      "id": "VL80S-AUX-S09",
+      "authority": "D",
+      "type": "MAINTENANCE_EDUCATIONAL_MIRROR",
+      "title": "Устройство и ремонт расщепителя фаз НБ-455А ВЛ80С (educational mirror)",
+      "url": "https://parketspektr.ru/remont-fazorasschepitelya-nb-455a-vl80s/"
+    }
   ],
   "conflictGroups": [
     {
@@ -64,14 +120,58 @@
       "applicationStatus": "ACTIONABLE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":["отказ ФР, вентилятора, маслонасоса или мотор-компрессора"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": [
+          "отказ ФР, вентилятора, маслонасоса или мотор-компрессора"
+        ]
+      },
       "summary": "Маршрутная диагностика ограничивается доступными наблюдениями и штатными органами управления; внутренний осмотр высоковольтного или вращающегося оборудования остается отдельным допусковым контекстом.",
-      "details": ["Запах, дым, ненормальный шум и сильная вибрация должны повышать safety-приоритет, а не провоцировать повторные пуски."],
-      "limitations": ["Конкретный порядок осмотра и допуска определяется действующими документами и местными инструкциями."],
-      "sourceRefs": ["VL80S-AUX-S01"],
-      "relations": {"componentRefs":["фазорасщепитель","мотор-вентиляторы","маслонасос","мотор-компрессор"],"directionRefs":["safety"],"relatedEntryIds":["vl80s-aux-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SOURCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Safety boundary, не ремонтная процедура.","conflictGroupIds":[],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Запах, дым, ненормальный шум и сильная вибрация должны повышать safety-приоритет, а не провоцировать повторные пуски."
+      ],
+      "limitations": [
+        "Конкретный порядок осмотра и допуска определяется действующими документами и местными инструкциями."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S01"
+      ],
+      "relations": {
+        "componentRefs": [
+          "фазорасщепитель",
+          "мотор-вентиляторы",
+          "маслонасос",
+          "мотор-компрессор"
+        ],
+        "directionRefs": [
+          "safety"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SOURCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Safety boundary, не ремонтная процедура.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-aux-tech-001",
@@ -82,14 +182,54 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 2,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Асинхронный расщепитель фаз НБ-455А преобразует однофазное питание обмотки собственных нужд в систему, используемую для питания трехфазных вспомогательных двигателей.",
-      "details": ["Это объясняет, почему отказ ФР может выглядеть как общий отказ нескольких вспомогательных машин, а отказ одного двигателя — как локальный симптом."],
-      "limitations": ["Для модернизированных вариантов и схем работы без ФР необходимо отдельное подтверждение исполнения."],
-      "sourceRefs": ["VL80S-AUX-S02","VL80S-AUX-S04"],
-      "relations": {"componentRefs":["НБ-455А","обмотка собственных нужд","вспомогательные двигатели"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-hist-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Базовая функция подтверждена профильной литературой разных лет.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Это объясняет, почему отказ ФР может выглядеть как общий отказ нескольких вспомогательных машин, а отказ одного двигателя — как локальный симптом."
+      ],
+      "limitations": [
+        "Для модернизированных вариантов и схем работы без ФР необходимо отдельное подтверждение исполнения."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S02",
+        "VL80S-AUX-S04"
+      ],
+      "relations": {
+        "componentRefs": [
+          "НБ-455А",
+          "обмотка собственных нужд",
+          "вспомогательные двигатели"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-hist-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Базовая функция подтверждена профильной литературой разных лет.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-aux-tech-002",
@@ -100,14 +240,63 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ФР пытается запуститься"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ФР пытается запуститься"
+        ]
+      },
       "summary": "Схемные источники описывают пуск через контактор 119 и переход в рабочее состояние через контактор 125; реле оборотов 249 участвует в отключении пусковой ступени после разгона.",
-      "details": ["Поэтому «не начинает вращение» и «запускается, но после отпускания кнопки останавливается» — разные ветви поиска.","Наличие звука срабатывания контактора не доказывает разгон машины."],
-      "limitations": ["Контакты, проводные номера и вариант самоподхвата сверять по схеме конкретного выпуска."],
-      "sourceRefs": ["VL80S-AUX-S03","VL80S-AUX-S05"],
-      "relations": {"componentRefs":["контактор 119","контактор 125","реле 249","НБ-455А"],"directionRefs":["start-attempt","self-hold"],"relatedEntryIds":["vl80s-aux-case-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED_WITH_VARIANT_GATE","requiresHumanReview":true,"interpretationNotes":"Функциональная логика стабильнее конкретной проводной реализации.","conflictGroupIds":["AUX-FR-VARIANT-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Поэтому «не начинает вращение» и «запускается, но после отпускания кнопки останавливается» — разные ветви поиска.",
+        "Наличие звука срабатывания контактора не доказывает разгон машины."
+      ],
+      "limitations": [
+        "Контакты, проводные номера и вариант самоподхвата сверять по схеме конкретного выпуска."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S03",
+        "VL80S-AUX-S05"
+      ],
+      "relations": {
+        "componentRefs": [
+          "контактор 119",
+          "контактор 125",
+          "реле 249",
+          "НБ-455А"
+        ],
+        "directionRefs": [
+          "start-attempt",
+          "self-hold"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-case-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED_WITH_VARIANT_GATE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Функциональная логика стабильнее конкретной проводной реализации.",
+        "conflictGroupIds": [
+          "AUX-FR-VARIANT-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-tech-003",
@@ -118,14 +307,62 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ФР запускается только при удержании кнопки"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ФР запускается только при удержании кнопки"
+        ]
+      },
       "summary": "Эксплуатационные источники связывают устойчивый пуск только при удержании кнопки с цепью самоподхвата/удержания рабочей ступени, а не с полным отсутствием питания ФР.",
-      "details": ["Карточка должна повысить приоритет цепи 125/249 и связанных контактов, сохраняя альтернативы до подтверждения."],
-      "limitations": ["Не переводить старые советы по заклиниванию кнопки в штатную рекомендацию."],
-      "sourceRefs": ["VL80S-AUX-S06","VL80S-AUX-S05","VL80S-AUX-S07"],
-      "relations": {"componentRefs":["контактор 125","реле 249","цепь самоподхвата"],"directionRefs":["self-hold"],"relatedEntryIds":["vl80s-aux-archive-001","vl80s-aux-field-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_OPERATIONAL_PATTERN","requiresHumanReview":true,"interpretationNotes":"Диагностический признак отделен от исторического способа временного удержания.","conflictGroupIds":["AUX-FR-FIELD-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Карточка должна повысить приоритет цепи 125/249 и связанных контактов, сохраняя альтернативы до подтверждения."
+      ],
+      "limitations": [
+        "Не переводить старые советы по заклиниванию кнопки в штатную рекомендацию."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S05",
+        "VL80S-AUX-S07"
+      ],
+      "relations": {
+        "componentRefs": [
+          "контактор 125",
+          "реле 249",
+          "цепь самоподхвата"
+        ],
+        "directionRefs": [
+          "self-hold"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-archive-001",
+          "vl80s-aux-field-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_OPERATIONAL_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Диагностический признак отделен от исторического способа временного удержания.",
+        "conflictGroupIds": [
+          "AUX-FR-FIELD-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-tech-004",
@@ -136,14 +373,59 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Отказ ФР/общего питания способен затронуть группу трехфазных вспомогательных машин, тогда как неисправность контактора, двигателя или механизма одной машины формирует локальный отказ.",
-      "details": ["Сравнение секций и машин является ранним способом уменьшить пространство поиска.","Отдельно учитываются машины с собственными цепями управления и условиями запуска."],
-      "limitations": ["Не считать исправность одной машины доказательством исправности всей системы собственных нужд."],
-      "sourceRefs": ["VL80S-AUX-S02","VL80S-AUX-S03"],
-      "relations": {"componentRefs":["ФР","МВ1–МВ4","маслонасос","МК","контакторы вспомогательных машин"],"directionRefs":["scope"],"relatedEntryIds":["vl80s-aux-op-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Масштаб отказа — направление, не причина.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Сравнение секций и машин является ранним способом уменьшить пространство поиска.",
+        "Отдельно учитываются машины с собственными цепями управления и условиями запуска."
+      ],
+      "limitations": [
+        "Не считать исправность одной машины доказательством исправности всей системы собственных нужд."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S02",
+        "VL80S-AUX-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ФР",
+          "МВ1–МВ4",
+          "маслонасос",
+          "МК",
+          "контакторы вспомогательных машин"
+        ],
+        "directionRefs": [
+          "scope"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-op-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Масштаб отказа — направление, не причина.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-aux-op-001",
@@ -154,14 +436,60 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":false,"minDepth":"MINIMAL"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":false,"conditions":[]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": false,
+        "minDepth": "MINIMAL"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": false,
+        "conditions": []
+      },
       "summary": "Полезно различать: не запускаются ФР всех секций; не запускается одна секция; ФР начинает разгон и останавливается; ВА9/защита отключается при команде; ФР работает, но конкретная вспомогательная машина не запускается.",
-      "details": ["Такая классификация предотвращает смешение общей цепи питания, пусковой цепи ФР и локальной ветви отдельной машины."],
-      "limitations": ["Не создавать повторные пуски при срабатывании защиты, гуле без разгона, дыме или перегреве."],
-      "sourceRefs": ["VL80S-AUX-S05","VL80S-AUX-S06","VL80S-AUX-S07"],
-      "relations": {"componentRefs":["ФР","ВА9","вспомогательные машины"],"directionRefs":["symptom-shape","scope"],"relatedEntryIds":["vl80s-aux-case-001","vl80s-aux-case-002","vl80s-aux-case-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_PATTERN","requiresHumanReview":false,"interpretationNotes":"Кандидат на раннее ветвление Hybrid Card.","conflictGroupIds":[],"humanFactorRisk":"LOW"}
+      "details": [
+        "Такая классификация предотвращает смешение общей цепи питания, пусковой цепи ФР и локальной ветви отдельной машины."
+      ],
+      "limitations": [
+        "Не создавать повторные пуски при срабатывании защиты, гуле без разгона, дыме или перегреве."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S05",
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S07"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ФР",
+          "ВА9",
+          "вспомогательные машины"
+        ],
+        "directionRefs": [
+          "symptom-shape",
+          "scope"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-case-001",
+          "vl80s-aux-case-002",
+          "vl80s-aux-case-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_PATTERN",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Кандидат на раннее ветвление Hybrid Card.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-aux-op-002",
@@ -172,14 +500,59 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":true,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["не работает вентилятор или маслонасос"]},
+      "visibility": {
+        "base": true,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "не работает вентилятор или маслонасос"
+        ]
+      },
       "summary": "Вспомогательные машины обслуживают разные критические потребители. Для карточки важен вопрос не только «что не запустилось», но и какое оборудование лишилось предусмотренного охлаждения/циркуляции.",
-      "details": ["Неисправность маслонасоса трансформатора и неисправность одного вентилятора ТЭД имеют разные последствия и ограничения."],
-      "limitations": ["Конкретные режимные ограничения должны подтверждаться действующим руководством/местной инструкцией; pack не вводит универсальные лимиты."],
-      "sourceRefs": ["VL80S-AUX-S02","VL80S-AUX-S03"],
-      "relations": {"componentRefs":["маслонасос трансформатора","мотор-вентиляторы","тяговый трансформатор","ТЭД"],"directionRefs":["consequence"],"relatedEntryIds":[],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"TECHNICAL_CONSEQUENCE_SUPPORTED","requiresHumanReview":true,"interpretationNotes":"Не выдавать универсальное «можно/нельзя ехать» без вида отказавшего охлаждения.","conflictGroupIds":["AUX-COOLING-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Неисправность маслонасоса трансформатора и неисправность одного вентилятора ТЭД имеют разные последствия и ограничения."
+      ],
+      "limitations": [
+        "Конкретные режимные ограничения должны подтверждаться действующим руководством/местной инструкцией; pack не вводит универсальные лимиты."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S02",
+        "VL80S-AUX-S03"
+      ],
+      "relations": {
+        "componentRefs": [
+          "маслонасос трансформатора",
+          "мотор-вентиляторы",
+          "тяговый трансформатор",
+          "ТЭД"
+        ],
+        "directionRefs": [
+          "consequence"
+        ],
+        "relatedEntryIds": [],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "TECHNICAL_CONSEQUENCE_SUPPORTED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не выдавать универсальное «можно/нельзя ехать» без вида отказавшего охлаждения.",
+        "conflictGroupIds": [
+          "AUX-COOLING-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-aux-maint-001",
@@ -190,14 +563,57 @@
       "applicationStatus": "PRACTICE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["ТО/ТР"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "ТО/ТР"
+        ]
+      },
       "summary": "Учебные ремонтные материалы для НБ-455А рассматривают нагрев/шум подшипников, состояние изоляции, зазоры, крепление и реле оборотов как отдельные объекты контроля.",
-      "details": ["Это объясняет, почему электрическая команда на пуск не исключает внутренний механический или электрический дефект машины."],
-      "limitations": ["Источник ремонтных норм низшего уровня; численные браковочные значения не переносить в production без официальной ТИ."],
-      "sourceRefs": ["VL80S-AUX-S02","VL80S-AUX-S09"],
-      "relations": {"componentRefs":["НБ-455А","реле оборотов","подшипники","обмотка статора"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-tech-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"TECH_BOOK_PLUS_LOW_AUTHORITY_MAINTENANCE_MIRROR","requiresHumanReview":true,"interpretationNotes":"Ремонтный контекст отделен от действий в пути.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Это объясняет, почему электрическая команда на пуск не исключает внутренний механический или электрический дефект машины."
+      ],
+      "limitations": [
+        "Источник ремонтных норм низшего уровня; численные браковочные значения не переносить в production без официальной ТИ."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S02",
+        "VL80S-AUX-S09"
+      ],
+      "relations": {
+        "componentRefs": [
+          "НБ-455А",
+          "реле оборотов",
+          "подшипники",
+          "обмотка статора"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-tech-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "TECH_BOOK_PLUS_LOW_AUTHORITY_MAINTENANCE_MIRROR",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Ремонтный контекст отделен от действий в пути.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-hist-001",
@@ -208,14 +624,54 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":[]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": []
+      },
       "summary": "Издания 1982 и 2006 годов описывают НБ-455А как фазорасщепитель ВЛ80С, что подтверждает длительную базовую применимость аппарата, но не исключает серийные изменения его цепи управления.",
-      "details": ["Историческая стабильность типа аппарата и вариантность управляющей схемы должны храниться раздельно."],
-      "limitations": ["Не использовать год книги как доказательство конкретной схемы данной секции."],
-      "sourceRefs": ["VL80S-AUX-S02","VL80S-AUX-S04"],
-      "relations": {"componentRefs":["НБ-455А"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-unverified-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_HISTORICAL_SUPPORTED","requiresHumanReview":false,"interpretationNotes":"Тип аппарата не равен полной идентичности цепи управления.","conflictGroupIds":["AUX-FR-VARIANT-001"],"humanFactorRisk":"LOW"}
+      "details": [
+        "Историческая стабильность типа аппарата и вариантность управляющей схемы должны храниться раздельно."
+      ],
+      "limitations": [
+        "Не использовать год книги как доказательство конкретной схемы данной секции."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S02",
+        "VL80S-AUX-S04"
+      ],
+      "relations": {
+        "componentRefs": [
+          "НБ-455А"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-unverified-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_HISTORICAL_SUPPORTED",
+        "requiresHumanReview": false,
+        "interpretationNotes": "Тип аппарата не равен полной идентичности цепи управления.",
+        "conflictGroupIds": [
+          "AUX-FR-VARIANT-001"
+        ],
+        "humanFactorRisk": "LOW"
+      }
     },
     {
       "id": "vl80s-aux-archive-001",
@@ -226,14 +682,62 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "LEARNING_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["исторические локальные эксплуатационные инструкции"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "исторические локальные эксплуатационные инструкции"
+        ]
+      },
       "summary": "Старые материалы отдельно описывают резервирование при отказе ФР одной секции, удержание схемы при потере самоподхвата и аварийное управление цепью пуска.",
-      "details": ["Архив сохраняет эксплуатационную логику и связи аппаратов.","Конкретные действия не наследуются active-сценарием автоматически."],
-      "limitations": ["Не считать старую локальную процедуру действующей на любом ВЛ80С сегодня."],
-      "sourceRefs": ["VL80S-AUX-S06","VL80S-AUX-S07","VL80S-AUX-S08"],
-      "relations": {"componentRefs":["ФР","контактор 119","контактор 125","щиток 227"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-field-001","vl80s-aux-tech-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"ARCHIVAL_PATTERN_CONFIRMED","requiresHumanReview":true,"interpretationNotes":"Не превращать archived recovery method в текущую рекомендацию.","conflictGroupIds":["AUX-FR-FIELD-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Архив сохраняет эксплуатационную логику и связи аппаратов.",
+        "Конкретные действия не наследуются active-сценарием автоматически."
+      ],
+      "limitations": [
+        "Не считать старую локальную процедуру действующей на любом ВЛ80С сегодня."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S07",
+        "VL80S-AUX-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ФР",
+          "контактор 119",
+          "контактор 125",
+          "щиток 227"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-field-001",
+          "vl80s-aux-tech-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "ARCHIVAL_PATTERN_CONFIRMED",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Не превращать archived recovery method в текущую рекомендацию.",
+        "conflictGroupIds": [
+          "AUX-FR-FIELD-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     },
     {
       "id": "vl80s-aux-case-001",
@@ -244,14 +748,60 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["одинаковый отказ нескольких секций"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "одинаковый отказ нескольких секций"
+        ]
+      },
       "summary": "Повторяющийся эксплуатационный паттерн: одновременное отсутствие пуска на нескольких секциях повышает приоритет общей команды, ВА9/питания управления и межсекционной части по сравнению с механическим дефектом одного ФР.",
-      "details": ["Общая ветвь получает приоритет, но локальные совпадающие отказы не исключаются автоматически."],
-      "limitations": ["Не делать вывод о конкретной кнопке/автомате без фактической проверки."],
-      "sourceRefs": ["VL80S-AUX-S05","VL80S-AUX-S07"],
-      "relations": {"componentRefs":["ВА9","кнопка вспомогательных машин","межсекционная цепь","ФР секций"],"directionRefs":["scope","command"],"relatedEntryIds":["vl80s-aux-op-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_PATTERN","requiresHumanReview":true,"interpretationNotes":"Приоритизация общей ветви, не готовый диагноз.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Общая ветвь получает приоритет, но локальные совпадающие отказы не исключаются автоматически."
+      ],
+      "limitations": [
+        "Не делать вывод о конкретной кнопке/автомате без фактической проверки."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S05",
+        "VL80S-AUX-S07"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ВА9",
+          "кнопка вспомогательных машин",
+          "межсекционная цепь",
+          "ФР секций"
+        ],
+        "directionRefs": [
+          "scope",
+          "command"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-op-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Приоритизация общей ветви, не готовый диагноз.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-case-002",
@@ -262,14 +812,61 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["другая секция запускает ФР штатно"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "другая секция запускает ФР штатно"
+        ]
+      },
       "summary": "При исправной реакции другой секции выше становится приоритет локальной цепи 119/125/249, переключателя режима и самого ФР неисправной секции.",
-      "details": ["Следующий вопрос полезно строить по признаку: слышно ли срабатывание пускового контактора и начинается ли вращение."],
-      "limitations": ["Нельзя объявлять 119 или 125 неисправным только по отсутствию пуска."],
-      "sourceRefs": ["VL80S-AUX-S05","VL80S-AUX-S06","VL80S-AUX-S08"],
-      "relations": {"componentRefs":["контактор 119","контактор 125","реле 249","ФР секции"],"directionRefs":["scope","start-attempt"],"relatedEntryIds":["vl80s-aux-tech-002"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_PATTERN","requiresHumanReview":true,"interpretationNotes":"Локальный scope не равен установленному аппарату-причине.","conflictGroupIds":[],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Следующий вопрос полезно строить по признаку: слышно ли срабатывание пускового контактора и начинается ли вращение."
+      ],
+      "limitations": [
+        "Нельзя объявлять 119 или 125 неисправным только по отсутствию пуска."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S05",
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "контактор 119",
+          "контактор 125",
+          "реле 249",
+          "ФР секции"
+        ],
+        "directionRefs": [
+          "scope",
+          "start-attempt"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-tech-002"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Локальный scope не равен установленному аппарату-причине.",
+        "conflictGroupIds": [],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-case-003",
@@ -280,14 +877,61 @@
       "applicationStatus": "EXPERIENCE",
       "runtimeRole": "DIAGNOSTIC_CONTEXT",
       "knowledgeLayerDepth": 5,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":true,"study":true,"minDepth":"STANDARD"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["разгон начинается, устойчивого рабочего состояния после отпускания команды нет"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": true,
+        "study": true,
+        "minDepth": "STANDARD"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "разгон начинается, устойчивого рабочего состояния после отпускания команды нет"
+        ]
+      },
       "summary": "Такой симптом устойчиво связывается источниками с цепью перехода в рабочее состояние/самоподхвата, а не с полным отсутствием питания или механическим отсутствием вращения.",
-      "details": ["Динамическая карточка должна переставить ветвь self-hold выше общей ветви «нет пуска»."],
-      "limitations": ["Исторические способы удержания кнопки/аппарата не являются частью обычной диагностики."],
-      "sourceRefs": ["VL80S-AUX-S05","VL80S-AUX-S06","VL80S-AUX-S07"],
-      "relations": {"componentRefs":["контактор 125","реле 249","самоподхват"],"directionRefs":["self-hold"],"relatedEntryIds":["vl80s-aux-tech-003"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"MULTI_SOURCE_CASE_PATTERN","requiresHumanReview":true,"interpretationNotes":"Сохраняется гипотеза участка, не конкретный дефект контакта.","conflictGroupIds":["AUX-FR-FIELD-001"],"humanFactorRisk":"MEDIUM"}
+      "details": [
+        "Динамическая карточка должна переставить ветвь self-hold выше общей ветви «нет пуска»."
+      ],
+      "limitations": [
+        "Исторические способы удержания кнопки/аппарата не являются частью обычной диагностики."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S05",
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S07"
+      ],
+      "relations": {
+        "componentRefs": [
+          "контактор 125",
+          "реле 249",
+          "самоподхват"
+        ],
+        "directionRefs": [
+          "self-hold"
+        ],
+        "relatedEntryIds": [
+          "vl80s-aux-tech-003"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "MULTI_SOURCE_CASE_PATTERN",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Сохраняется гипотеза участка, не конкретный дефект контакта.",
+        "conflictGroupIds": [
+          "AUX-FR-FIELD-001"
+        ],
+        "humanFactorRisk": "MEDIUM"
+      }
     },
     {
       "id": "vl80s-aux-field-001",
@@ -298,15 +942,66 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["историческая аварийная практика"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "историческая аварийная практика"
+        ]
+      },
       "summary": "Эксплуатационные материалы документируют резервирование ФР и способы временно удерживать/перепитывать участки его цепи управления при отказах в пути.",
-      "details": ["В knowledge base сохраняются назначение метода, затрагиваемые аппараты и provenance.","Конкретные перемычки и пошаговое принудительное управление не входят в unrestricted payload."],
-      "limitations": ["Не является общей действующей рекомендацией.","Применимость сильно зависит от схемы выпуска и местной инструкции."],
-      "sourceRefs": ["VL80S-AUX-S06","VL80S-AUX-S07","VL80S-AUX-S08"],
-      "relations": {"componentRefs":["ФР","щиток 227","цепи 119/125"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-archive-001","vl80s-aux-unsafe-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Reserve/bypass procedure intentionally omitted from unrestricted reference data."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_MULTI_SOURCE_EXISTENCE","requiresHumanReview":true,"interpretationNotes":"Подтверждается существование практики, а не современная разрешенность.","conflictGroupIds":["AUX-FR-FIELD-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "В knowledge base сохраняются назначение метода, затрагиваемые аппараты и provenance.",
+        "Конкретные перемычки и пошаговое принудительное управление не входят в unrestricted payload."
+      ],
+      "limitations": [
+        "Не является общей действующей рекомендацией.",
+        "Применимость сильно зависит от схемы выпуска и местной инструкции."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S07",
+        "VL80S-AUX-S08"
+      ],
+      "relations": {
+        "componentRefs": [
+          "ФР",
+          "щиток 227",
+          "цепи 119/125"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-archive-001",
+          "vl80s-aux-unsafe-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Reserve/bypass procedure intentionally omitted from unrestricted reference data."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_MULTI_SOURCE_EXISTENCE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Подтверждается существование практики, а не современная разрешенность.",
+        "conflictGroupIds": [
+          "AUX-FR-FIELD-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-aux-unsafe-001",
@@ -317,15 +1012,66 @@
       "applicationStatus": "RESTRICTED",
       "runtimeRole": "RESTRICTED_REFERENCE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":false,"extendedEmergencyRequired":true,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["нештатное принудительное управление/обход"]},
+      "visibility": {
+        "base": false,
+        "extended": false,
+        "extendedEmergencyRequired": true,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "нештатное принудительное управление/обход"
+        ]
+      },
       "summary": "Старые инструкции содержат перемычки и механическое/электрическое принудительное удержание аппаратов пуска ФР. Такие действия не должны появляться в обычной диагностической карточке.",
-      "details": ["Обычный EXTENDED не открывает этот класс без отдельного restricted gate.","Пошаговая процедура намеренно исключена."],
-      "limitations": ["Не использовать как эксплуатационную инструкцию.","Не переносить между вариантами схемы."],
-      "sourceRefs": ["VL80S-AUX-S01","VL80S-AUX-S06","VL80S-AUX-S07"],
-      "relations": {"componentRefs":["цепь пуска ФР","контакторы 119/125","блокировки"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-field-001","vl80s-aux-norm-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "restrictedProcedure": {"procedureIncluded":false,"reason":"Reference pack validates gating and provenance only."},
-      "qualityControl": {"reviewStatus":"RESTRICTED_CONFLICT_WITH_SAFETY_CONTRACT","requiresHumanReview":true,"interpretationNotes":"Факт старой практики отделен от permission to act.","conflictGroupIds":["AUX-FR-FIELD-001"],"humanFactorRisk":"CRITICAL"}
+      "details": [
+        "Обычный EXTENDED не открывает этот класс без отдельного restricted gate.",
+        "Пошаговая процедура намеренно исключена."
+      ],
+      "limitations": [
+        "Не использовать как эксплуатационную инструкцию.",
+        "Не переносить между вариантами схемы."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S01",
+        "VL80S-AUX-S06",
+        "VL80S-AUX-S07"
+      ],
+      "relations": {
+        "componentRefs": [
+          "цепь пуска ФР",
+          "контакторы 119/125",
+          "блокировки"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-field-001",
+          "vl80s-aux-norm-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "restrictedProcedure": {
+        "procedureIncluded": false,
+        "reason": "Reference pack validates gating and provenance only."
+      },
+      "qualityControl": {
+        "reviewStatus": "RESTRICTED_CONFLICT_WITH_SAFETY_CONTRACT",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Факт старой практики отделен от permission to act.",
+        "conflictGroupIds": [
+          "AUX-FR-FIELD-001"
+        ],
+        "humanFactorRisk": "CRITICAL"
+      }
     },
     {
       "id": "vl80s-aux-unverified-001",
@@ -336,20 +1082,79 @@
       "applicationStatus": "REFERENCE",
       "runtimeRole": "SOURCE_NOTE",
       "knowledgeLayerDepth": 6,
-      "visibility": {"base":false,"extended":true,"extendedEmergencyRequired":false,"diagnosis":false,"study":true,"minDepth":"DETAILED"},
-      "applicability": {"profiles":["vl80s"],"variants":["vl80s-general"],"variantCheckRequired":true,"conditions":["возможное серийное отличие цепи запуска ФР"]},
+      "visibility": {
+        "base": false,
+        "extended": true,
+        "extendedEmergencyRequired": false,
+        "diagnosis": false,
+        "study": true,
+        "minDepth": "DETAILED"
+      },
+      "applicability": {
+        "profiles": [
+          "vl80s"
+        ],
+        "variants": [
+          "vl80s-general"
+        ],
+        "variantCheckRequired": true,
+        "conditions": [
+          "возможное серийное отличие цепи запуска ФР"
+        ]
+      },
       "summary": "Вторичный ремонтно-эксплуатационный материал отдельно описывает схему до определенного заводского номера. Первичная ведомость изменения в текущем исследовании не подтверждена.",
-      "details": ["Это полезный маркер для поиска схем конкретного электровоза, но не готовый runtime gate."],
-      "limitations": ["Не использовать серийную границу из вторичного источника как жесткое условие без первичной схемы."],
-      "sourceRefs": ["VL80S-AUX-S09"],
-      "relations": {"componentRefs":["цепь пуска ФР","переключатель 111","реле 249/259/260"],"directionRefs":[],"relatedEntryIds":["vl80s-aux-hist-001"],"canonicalMappingStatus":"PENDING_RUNTIME_MAPPING"},
-      "qualityControl": {"reviewStatus":"SINGLE_LOW_AUTHORITY_SOURCE","requiresHumanReview":true,"interpretationNotes":"Намеренно не переносим номер границы в summary до первичной проверки.","conflictGroupIds":["AUX-FR-VARIANT-001"],"humanFactorRisk":"HIGH"}
+      "details": [
+        "Это полезный маркер для поиска схем конкретного электровоза, но не готовый runtime gate."
+      ],
+      "limitations": [
+        "Не использовать серийную границу из вторичного источника как жесткое условие без первичной схемы."
+      ],
+      "sourceRefs": [
+        "VL80S-AUX-S09"
+      ],
+      "relations": {
+        "componentRefs": [
+          "цепь пуска ФР",
+          "переключатель 111",
+          "реле 249/259/260"
+        ],
+        "directionRefs": [],
+        "relatedEntryIds": [
+          "vl80s-aux-hist-001"
+        ],
+        "canonicalMappingStatus": "PENDING_RUNTIME_MAPPING"
+      },
+      "qualityControl": {
+        "reviewStatus": "SINGLE_LOW_AUTHORITY_SOURCE",
+        "requiresHumanReview": true,
+        "interpretationNotes": "Намеренно не переносим номер границы в summary до первичной проверки.",
+        "conflictGroupIds": [
+          "AUX-FR-VARIANT-001"
+        ],
+        "humanFactorRisk": "HIGH"
+      }
     }
   ],
   "acceptanceExpectations": {
     "minimumEntryCount": 15,
-    "actualEntryCount": 15,
-    "mustExercise": ["active scenario vs archive separation","all-sections vs one-section scope","no-start vs starts-then-stops split","self-hold branch","cooling consequence separation","maintenance context","restricted reserve practice","unsafe gate","unverified serial variant"],
-    "mustNot": ["create active duplicate scenarios from old reserve instructions","convert old button/jumper method into normal action","assume one auxiliary-machine failure means complete auxiliary supply failure","hardcode secondary serial boundary","give one universal traction permission when cooling equipment is unavailable"]
+    "actualEntryCount": 16,
+    "mustExercise": [
+      "active scenario vs archive separation",
+      "all-sections vs one-section scope",
+      "no-start vs starts-then-stops split",
+      "self-hold branch",
+      "cooling consequence separation",
+      "maintenance context",
+      "restricted reserve practice",
+      "unsafe gate",
+      "unverified serial variant"
+    ],
+    "mustNot": [
+      "create active duplicate scenarios from old reserve instructions",
+      "convert old button/jumper method into normal action",
+      "assume one auxiliary-machine failure means complete auxiliary supply failure",
+      "hardcode secondary serial boundary",
+      "give one universal traction permission when cooling equipment is unavailable"
+    ]
   }
 }
