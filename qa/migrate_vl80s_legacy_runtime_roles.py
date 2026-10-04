@@ -3,8 +3,9 @@
 
 This is intentionally conservative and deterministic:
 - restricted/unsafe material -> RESTRICTED_REFERENCE;
+- ARCHIVE/HISTORICAL -> LEARNING_REFERENCE even when relevant to diagnosis;
 - UNVERIFIED material -> SOURCE_NOTE unless explicitly diagnostic;
-- entries marked diagnosis=true -> DIAGNOSTIC_CONTEXT;
+- remaining entries marked diagnosis=true -> DIAGNOSTIC_CONTEXT;
 - everything else -> LEARNING_REFERENCE.
 
 The script never changes classification, confidence, application status,
@@ -27,6 +28,8 @@ def choose_role(entry: dict) -> str:
     visibility = entry.get("visibility") or {}
     if classification == "UNSAFE_METHOD" or application == "RESTRICTED" or visibility.get("extendedEmergencyRequired") is True:
         return "RESTRICTED_REFERENCE"
+    if classification in {"ARCHIVE", "HISTORICAL"}:
+        return "LEARNING_REFERENCE"
     if classification == "UNVERIFIED" and not visibility.get("diagnosis", False):
         return "SOURCE_NOTE"
     if visibility.get("diagnosis", False):
