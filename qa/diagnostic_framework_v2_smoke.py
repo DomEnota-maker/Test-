@@ -61,8 +61,8 @@ try:
         adb("shell", "input", "swipe", "520", "500", "520", "1800", "320")
         time.sleep(.3)
     tap("Изучение", 0)
-    scroll_until("Опыт эксплуатации")
-    scroll_until("Источник:")
+    scroll_until("Изучение системы", 18)
+    scroll_until("Источник:", 24)
     shot("framework-v2-study")
 
     open_menu("Настройки")
