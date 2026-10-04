@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "vl80s-knowledge-expansion/1",
+  "branch": "content/vl80s-knowledge-expansion",
+  "baseReferencePack": "pantograph-no-rise",
+  "rules": {
+    "canonicalScenarioIsUnique": true,
+    "knowledgeTypeDoesNotCreateDuplicateScenario": true,
+    "archiveAndHistoryAreNotActiveInstructions": true,
+    "fieldPracticeIsNotAutomaticallyActionable": true,
+    "unsafeMethodRequiresRestrictedGate": true,
+    "unverifiedCannotBeVerified": true,
+    "conflictsArePreserved": true,
+    "variantSpecificDataRequiresApplicabilityGate": true
+  },
+  "scenarios": [
+    {
+      "scenarioId": "pantograph-no-rise",
+      "title": "Токоприёмник не поднимается",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "READY_FOR_WORK",
+      "path": "pantograph-no-rise/reference_pack.json",
+      "batch": "REFERENCE"
+    },
+    {
+      "scenarioId": "gv-no-close",
+      "title": "Главный выключатель не включается или отключается",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "RESEARCHING",
+      "path": "gv-no-close/reference_pack.json",
+      "batch": "BATCH-01"
+    },
+    {
+      "scenarioId": "traction-no-assemble",
+      "title": "Не собирается тяга или отсутствует тяга секции",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "RESEARCHING",
+      "path": "traction-no-assemble/reference_pack.json",
+      "batch": "BATCH-01"
+    },
+    {
+      "scenarioId": "ekg-stuck",
+      "title": "ЭКГ не набирает, не сбрасывает или застрял между позициями",
+      "scenarioLifecycle": "ACTIVE",
+      "packStatus": "RESEARCHING",
+      "path": "ekg-stuck/reference_pack.json",
+      "batch": "BATCH-01"
+    }
+  ]
+}
