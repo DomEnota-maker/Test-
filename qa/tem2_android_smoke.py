@@ -94,13 +94,19 @@ def working(profile):
     open_menu("Главная") if not any("Сегодня работаю на:" in label(n) for n in tree().iter("node")) else None
     for _ in range(9):
         root=tree()
-        if find(root,profile) is not None:
-            tap(profile,0)
-            wait("Сегодня работаю на: "+profile)
-            return
         chips=[n for n in root.iter("node") if n.get("scrollable")=="true"
                and n.get("package")==PACKAGE and bounds(n)[3]-bounds(n)[1]<300
                and bounds(n)[2]-bounds(n)[0]>500]
+        target=button(root,profile)
+        if target is not None and chips:
+            tx1,_,tx2,_=bounds(target)
+            vx1,_,vx2,_=bounds(chips[0])
+            # A chip can be present in the accessibility tree while its centre
+            # remains outside the horizontally clipped viewport.
+            if min(tx2,vx2)-max(tx1,vx1) >= (tx2-tx1)*.65:
+                tap_node(target)
+                wait("Сегодня работаю на: "+profile)
+                return
         if not chips: raise AssertionError("Working locomotive chip row unavailable")
         x1,y1,x2,y2=bounds(chips[0]); y=(y1+y2)//2
         adb("shell","input","swipe",str(x2-30),str(y),str(x1+30),str(y),"450")
