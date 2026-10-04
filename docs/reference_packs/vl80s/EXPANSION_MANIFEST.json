@@ -25,7 +25,7 @@
       "scenarioId": "gv-no-close",
       "title": "Главный выключатель не включается или отключается",
       "scenarioLifecycle": "ACTIVE",
-      "packStatus": "RESEARCHING",
+      "packStatus": "SOURCE_REVIEWED",
       "path": "gv-no-close/reference_pack.json",
       "batch": "BATCH-01"
     },
@@ -33,7 +33,7 @@
       "scenarioId": "traction-no-assemble",
       "title": "Не собирается тяга или отсутствует тяга секции",
       "scenarioLifecycle": "ACTIVE",
-      "packStatus": "RESEARCHING",
+      "packStatus": "SOURCE_REVIEWED",
       "path": "traction-no-assemble/reference_pack.json",
       "batch": "BATCH-01"
     },
@@ -41,7 +41,7 @@
       "scenarioId": "ekg-stuck",
       "title": "ЭКГ не набирает, не сбрасывает или застрял между позициями",
       "scenarioLifecycle": "ACTIVE",
-      "packStatus": "RESEARCHING",
+      "packStatus": "SOURCE_REVIEWED",
       "path": "ekg-stuck/reference_pack.json",
       "batch": "BATCH-01"
     }
