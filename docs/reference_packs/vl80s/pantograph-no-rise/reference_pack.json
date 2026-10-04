@@ -389,7 +389,7 @@
   ],
   "acceptanceExpectations": {
     "minimumEntryCount": 18,
-    "actualEntryCount": 18,
+    "actualEntryCount": 19,
     "requiredMetadataPerEntry": ["classification","statementType","confidence","applicationStatus","knowledgeLayerDepth","visibility","applicability","sourceRefs","limitations","relations","qualityControl"],
     "mustExercise": ["BASIC vs EXTENDED","MINIMAL vs STANDARD vs DETAILED","separate restricted gate","multi-source entry","single-source unverified entry","variant gate","conflict group","historical entry","maintenance entry","field-practice restricted entry","unsafe redacted entry","case study","Unknown/not-proven semantics"],
     "mustNot": ["expose internal IDs to user UI","promote C/D source to normative truth","flatten variants","convert field practice into mandatory action","show restricted procedure when emergency gate is off","declare a cause from one observation"]
