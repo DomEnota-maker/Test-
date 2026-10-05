@@ -120,15 +120,17 @@ try:
 
     # Screenshot and inspect each independent knowledge-mode / depth combination.
     set_emergency_off()
-    for mode, depth, marker in (
+    for index, (mode, depth, marker) in enumerate((
         ("Базовый", "Минимальная", "Материалы по проверке"),
         ("Базовый", "Стандартная", "Материалы по проверке"),
         ("Базовый", "Подробная", "Материалы по проверке"),
         ("Расширенные знания", "Минимальная", "Карта направлений поиска"),
         ("Расширенные знания", "Стандартная", "Карта направлений поиска"),
         ("Расширенные знания", "Подробная", "Карта направлений поиска"),
-    ):
-        open_menu("Настройки")
+    )):
+        if index:
+            open_menu("Настройки")
+        scroll_up_until("Базовый", 18)
         tap(mode, 12)
         tap(depth, 3)
         open_reference()
