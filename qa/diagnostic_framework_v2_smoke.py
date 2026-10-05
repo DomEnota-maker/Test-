@@ -91,7 +91,7 @@ try:
     scroll_until("Видно ли повреждение токоприёмника или контактного провода?")
     adb("shell", "input", "swipe", "520", "1850", "520", "1050", "390")
     tap("Нет", 0)
-    wait("Шаг 2;")
+    scroll_up_until("Шаг 2;", 18)
     scroll_up_until("Направление проверки")
     shot("framework-v2-beginner")
 
