@@ -61,10 +61,9 @@ data class ReferenceKnowledgePack(
 
 /** The pack is an overlay of linked knowledge; its IDs never become user-facing labels. */
 object ReferenceKnowledgePackRepository {
-    private const val ASSET = "technical/vl80s_pantograph_reference_pack.json"
     fun load(context: Context, module: FrameworkDiagnosticModule): ReferenceKnowledgePack? {
-        if (module.scenarioId != "pantograph-no-rise") return null
-        return parse(TechnicalAssetReader.json(context.applicationContext, ASSET), module)
+        val asset = module.referencePackAsset ?: return null
+        return parse(TechnicalAssetReader.json(context.applicationContext, asset), module)
     }
 
     internal fun parse(root: JSONObject, module: FrameworkDiagnosticModule): ReferenceKnowledgePack {

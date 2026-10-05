@@ -25,6 +25,7 @@ class ReferenceKnowledgePackTest {
 
     @Test fun allEntriesKeepProvenanceApplicabilityAndRelations() {
         val parsed = pack
+        assertEquals("technical/vl80s_pantograph_reference_pack.json", module.referencePackAsset)
         assertEquals(19, parsed.entries.size)
         assertEquals(12, parsed.sources.size)
         assertEquals(3, parsed.conflicts.size)
@@ -35,6 +36,16 @@ class ReferenceKnowledgePackTest {
         assertEquals("REPORTED", parsed.entries.first { it.classification == "UNVERIFIED" }.confidence)
         assertEquals("RESTRICTED", parsed.entries.first { it.classification == "FIELD_PRACTICE" }.applicationStatus)
         assertFalse(parsed.entries.first { it.classification == "UNSAFE_METHOD" }.restrictedProcedureIncluded!!)
+    }
+
+    @Test fun anotherScenarioCanAttachAReferencePackThroughData() {
+        val alternateFramework = JSONObject(framework.toString())
+        alternateFramework.getJSONArray("modules").getJSONObject(0)
+            .put("scenarioId", "additional-reference-scenario")
+        val alternatePack = JSONObject(raw.toString()).put("scenarioId", "additional-reference-scenario")
+        val alternateModule = DiagnosticFrameworkV2.parse(alternateFramework, { canonical }).single()
+        assertEquals("technical/vl80s_pantograph_reference_pack.json", alternateModule.referencePackAsset)
+        assertEquals(19, ReferenceKnowledgePackRepository.parse(alternatePack, alternateModule).entries.size)
     }
 
     @Test fun sixModeDepthCombinationsAndIndependentEmergencyGate() {

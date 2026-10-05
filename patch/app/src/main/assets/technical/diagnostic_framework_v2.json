@@ -11,6 +11,7 @@
       "variantTitles": {"vl80s-general": "Исполнение уточняется"},
       "reactionStatus": "Требует внимания",
       "canonicalEquipmentAsset": "technical/vl80s_equipment.json",
+      "referencePackAsset": "technical/vl80s_pantograph_reference_pack.json",
       "systemIds": ["VL-SYS-HV", "VL-SYS-PN"],
       "systemTitles": {"VL-SYS-HV": "Высоковольтное оборудование", "VL-SYS-PN": "Пневматическая система"},
       "componentIds": ["VL-EQ-HV-002", "VL-EQ-PN-002", "VL-EQ-PN-007", "VL-EQ-PN-013", "VL-EQ-PN-016"],

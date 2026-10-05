@@ -51,7 +51,9 @@ internal fun HybridDiagnosticCardV2(
     val answerByNode = answerTrail.toMap()
     val directions = module.orderedDirections(answerTrail)
     val context = LocalContext.current
-    val referencePack = remember(context, module.scenarioId) { ReferenceKnowledgePackRepository.load(context, module) }
+    val referencePack = remember(context, module.scenarioId, module.referencePackAsset) {
+        ReferenceKnowledgePackRepository.load(context, module)
+    }
     val emergencyEnabled = ExtendedEmergencyModeRepository(context).isEnabled()
     val applicableVariant = variantId.takeIf { it in module.variantIds } ?: module.variantIds.first()
     val nextDirection = directions.firstOrNull { it.questionKey !in answerByNode }?.id

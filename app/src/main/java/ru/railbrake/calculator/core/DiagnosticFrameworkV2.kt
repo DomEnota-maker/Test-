@@ -58,6 +58,7 @@ data class FrameworkDirection(
 data class FrameworkDiagnosticModule(
     val scenarioId: String,
     val profileId: String,
+    val referencePackAsset: String?,
     val title: String,
     val profileTitle: String,
     val variantTitles: Map<String, String>,
@@ -113,6 +114,13 @@ object DiagnosticFrameworkV2 {
         val modules = root.getJSONArray("modules").objects().map { raw ->
             val scenarioId = raw.required("scenarioId")
             val profileId = raw.required("profileId")
+            val referencePackAsset = raw.optString("referencePackAsset").takeIf(String::isNotBlank)
+            require(referencePackAsset == null ||
+                referencePackAsset.startsWith("technical/") &&
+                referencePackAsset.endsWith(".json") &&
+                ".." !in referencePackAsset && '\\' !in referencePackAsset) {
+                "$scenarioId: invalid reference pack asset"
+            }
             val variantIds = raw.strings("variantIds").toSet()
             val variantTitles = raw.getJSONObject("variantTitles").let { names ->
                 names.keys().asSequence().associateWith { names.getString(it).trim() }
@@ -219,7 +227,8 @@ object DiagnosticFrameworkV2 {
             require(directions.map { it.id }.distinct().size == directions.size && directions.all {
                 it.questionKey in nodes && componentIds.containsAll(it.componentIds)
             }) { "$scenarioId: invalid direction links" }
-            FrameworkDiagnosticModule(scenarioId, profileId, raw.required("title"), raw.required("profileTitle"),
+            FrameworkDiagnosticModule(scenarioId, profileId, referencePackAsset,
+                raw.required("title"), raw.required("profileTitle"),
                 variantTitles, raw.required("reactionStatus"), variantIds, systemIds, systemTitles, raw.required("symptom"),
                 safetyActions, stopConditions,
                 components, sources, knowledge, directions, nodes, startNodeId)
