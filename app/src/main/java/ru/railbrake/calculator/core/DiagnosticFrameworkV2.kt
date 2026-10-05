@@ -52,8 +52,11 @@ data class FrameworkDirection(
     val title: String,
     val questionKey: String,
     val componentIds: Set<String>,
-    val explanation: String
+    val explanation: String,
+    val priorityWhen: List<FrameworkPriorityRule>
 )
+
+data class FrameworkPriorityRule(val nodeId: String, val response: DiagnosticResponse)
 
 data class FrameworkDiagnosticModule(
     val scenarioId: String,
@@ -85,9 +88,11 @@ data class FrameworkDiagnosticModule(
     fun orderedDirections(answerTrail: List<Pair<String, DiagnosticResponse>>): List<FrameworkDirection> {
         val visited = answerTrail.mapTo(hashSetOf()) { it.first }
         val next = answerTrail.lastOrNull()?.let { (id, response) -> nodes[id]?.nextNodeIds?.get(response) }
-        return directions.filter { it.questionKey == next } +
-            directions.filter { it.questionKey != next && it.questionKey !in visited } +
-            directions.filter { it.questionKey != next && it.questionKey in visited }
+        return directions.sortedWith(compareByDescending<FrameworkDirection> { direction ->
+            answerTrail.indexOfLast { answer ->
+                direction.priorityWhen.any { it.nodeId == answer.first && it.response == answer.second }
+            }
+        }.thenByDescending { it.questionKey == next }.thenBy { it.questionKey in visited })
     }
 }
 
@@ -141,15 +146,7 @@ object DiagnosticFrameworkV2 {
             }
             val componentIds = raw.strings("componentIds").toSet()
             val asset = canonicalAsset(raw.required("canonicalEquipmentAsset"))
-            val allComponents = asset.getJSONArray("records").objects().associate { item ->
-                val id = item.required("id")
-                id to FrameworkComponent(
-                    id, item.required("name"), item.required("purpose"),
-                    item.strings("systemIds").toSet(),
-                    item.optJSONArray("relations")?.objects()
-                        ?.mapNotNull { it.optString("targetId").takeIf(String::isNotBlank) }?.toSet().orEmpty()
-                )
-            }
+            val allComponents = canonicalComponents(asset)
             require(componentIds.isNotEmpty() && allComponents.keys.containsAll(componentIds)) {
                 "$scenarioId: unresolved canonical component"
             }
@@ -157,7 +154,7 @@ object DiagnosticFrameworkV2 {
             require(systemIds.isNotEmpty() && components.values.flatMap { it.systemIds }.containsAll(systemIds)) {
                 "$scenarioId: unresolved system"
             }
-            val sourceCatalog = asset.getJSONObject("sources")
+            val sourceCatalog = asset.optJSONObject("sources") ?: JSONObject()
             val sources = sourceCatalog.keys().asSequence().associateWith { id ->
                 val source = sourceCatalog.getJSONObject(id)
                 FrameworkSource(id, source.required("title"), source.optString("type"),
@@ -186,7 +183,12 @@ object DiagnosticFrameworkV2 {
             }
             val directions = raw.getJSONArray("directions").objects().map { item ->
                 FrameworkDirection(item.required("id"), item.required("title"), item.required("questionKey"),
-                    item.strings("componentIds").toSet(), item.required("explanation"))
+                    item.strings("componentIds").toSet(), item.required("explanation"),
+                    item.optJSONArray("priorityWhen")?.objects()?.flatMap { rule ->
+                        rule.strings("responses").map { response ->
+                            FrameworkPriorityRule(rule.required("nodeId"), DiagnosticResponse.valueOf(response))
+                        }
+                    }.orEmpty())
             }
             val nodes = if (raw.has("nodes")) parseNodes(raw.getJSONArray("nodes").objects())
                 else {
@@ -225,7 +227,8 @@ object DiagnosticFrameworkV2 {
             visit(startNodeId)
             require(reachable == nodes.keys) { "$scenarioId: unreachable diagnostic node" }
             require(directions.map { it.id }.distinct().size == directions.size && directions.all {
-                it.questionKey in nodes && componentIds.containsAll(it.componentIds)
+                it.questionKey in nodes && componentIds.containsAll(it.componentIds) &&
+                    it.priorityWhen.all { rule -> rule.nodeId in nodes }
             }) { "$scenarioId: invalid direction links" }
             FrameworkDiagnosticModule(scenarioId, profileId, referencePackAsset,
                 raw.required("title"), raw.required("profileTitle"),
@@ -247,6 +250,27 @@ object DiagnosticFrameworkV2 {
                 next.optString(response.name).takeUnless { it.isBlank() || it == DiagnosticRepository.END_OF_FLOW }
             }, item.strings("componentIds").toSet())
     }.toMap().also { require(it.size == items.size) { "Duplicate diagnostic node" } }
+
+    /** Resolve existing Atlas entities from either canonical equipment or shared catalog assets. */
+    private fun canonicalComponents(asset: JSONObject): Map<String, FrameworkComponent> =
+        if (asset.has("records")) asset.getJSONArray("records").objects().associate { item ->
+            val id = item.required("id")
+            id to FrameworkComponent(id, item.required("name"), item.required("purpose"),
+                item.strings("systemIds").toSet(),
+                item.optJSONArray("relations")?.objects()
+                    ?.mapNotNull { it.optString("targetId").takeIf(String::isNotBlank) }?.toSet().orEmpty())
+        } else {
+            val entries = asset.getJSONArray("entries").objects()
+            val systems = entries.filter { it.optString("section") == "SYSTEMS" }
+            entries.filter { it.optString("section") == "EQUIPMENT" }.associate { item ->
+                val id = item.required("id")
+                val related = item.strings("relatedIds").toSet()
+                val systemIds = systems.filter { system -> id in system.strings("relatedIds") }
+                    .mapTo(hashSetOf()) { it.required("id") }
+                id to FrameworkComponent(id, item.required("title"), item.required("subtitle"),
+                    systemIds, related)
+            }.also { require(it.isNotEmpty()) { "Canonical catalog has no equipment" } }
+        }
 
     private fun JSONObject.required(key: String): String = getString(key).trim().also {
         require(it.isNotBlank()) { "Missing $key" }

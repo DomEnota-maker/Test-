@@ -7,6 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import ru.railbrake.calculator.ui.frameworkModulesForFamily
 
 class DiagnosticFrameworkV2Test {
     private val root = JSONObject(File("src/main/assets/technical/diagnostic_framework_v2.json").readText())
@@ -18,7 +19,7 @@ class DiagnosticFrameworkV2Test {
         val scenario = requireNotNull(DiagnosticRepository.scenario("pantograph-no-rise"))
         val module = DiagnosticFrameworkV2.parse(root, { canonical }, mapOf(scenario.id to scenario)).single()
         assertEquals(scenario.id, module.scenarioId)
-        assertEquals(7, module.nodes.size)
+        assertEquals(8, module.nodes.size)
         assertEquals("pnr-danger", module.startNodeId)
         assertEquals("Токоприёмник", module.components.getValue("VL-EQ-HV-002").title)
         assertEquals("Видно ли повреждение токоприёмника или контактного провода?", module.nodes.getValue("pnr-danger").question)
@@ -36,6 +37,16 @@ class DiagnosticFrameworkV2Test {
         assertEquals(initial.toSet(), reordered.map { it.id }.toSet())
         assertEquals("safety", reordered.last().id)
         assertEquals("permission", module.orderedDirections(listOf("pnr-danger" to DiagnosticResponse.NO)).first().id)
+        val local = module.orderedDirections(listOf("pnr-scope" to DiagnosticResponse.YES))
+        val common = module.orderedDirections(listOf("pnr-scope" to DiagnosticResponse.NO))
+        assertEquals("local", local.first().id)
+        assertEquals("common", common.first().id)
+        assertEquals(initial.toSet(), local.map { it.id }.toSet())
+        assertEquals(initial.toSet(), common.map { it.id }.toSet())
+        assertEquals("air", module.orderedDirections(listOf(
+            "pnr-scope" to DiagnosticResponse.YES,
+            "pnr-leak" to DiagnosticResponse.YES
+        )).first().id)
         assertEquals(initial, module.directions.map { it.id })
         assertFalse(module.nodes.getValue("pnr-danger").answers.getValue(DiagnosticResponse.UNKNOWN).isBlank())
     }
@@ -48,31 +59,44 @@ class DiagnosticFrameworkV2Test {
         assertTrue(module.answerMeaning("pnr-danger", DiagnosticResponse.UNKNOWN).isNotBlank())
         assertEquals(null, module.nextNode("pnr-danger", DiagnosticResponse.UNKNOWN))
         assertEquals("pnr-permission", module.nextNode("pnr-arc", DiagnosticResponse.NO)?.id)
+        assertEquals("pnr-leak", module.nextNode("pnr-valve", DiagnosticResponse.YES)?.id)
+        assertEquals(null, module.nextNode("pnr-leak", DiagnosticResponse.UNKNOWN))
     }
 
     @Test fun aNewProfileAndDataDefinedGraphNeedNoNewCoreBranch() {
+        val tem2Catalog = JSONObject(File("src/main/assets/technical/tem2_tem2_catalog.json").readText())
         val raw = JSONObject(root.toString())
         val item = raw.getJSONArray("modules").getJSONObject(0)
-        item.put("scenarioId", "future-family-scenario")
-        item.put("profileId", "future-family")
-        item.put("profileTitle", "Будущий локомотив")
-        item.put("variantIds", org.json.JSONArray().put("future-variant"))
-        item.put("variantTitles", JSONObject().put("future-variant", "Первое исполнение"))
+        item.put("scenarioId", "fixture-tem2-observation")
+        item.put("profileId", "tem2")
+        item.put("profileTitle", "ТЭМ2")
+        item.put("variantIds", org.json.JSONArray().put("tem2-base"))
+        item.put("variantTitles", JSONObject().put("tem2-base", "Исполнение уточняется"))
+        item.put("canonicalEquipmentAsset", "technical/tem2_tem2_catalog.json")
+        item.put("systemIds", org.json.JSONArray().put("TEM2-SYS-DIESEL"))
+        item.put("systemTitles", JSONObject().put("TEM2-SYS-DIESEL", "Дизель и механическая часть"))
+        item.put("componentIds", org.json.JSONArray().put("TEM2-EQ-DIESEL"))
+        item.remove("referencePackAsset")
+        item.put("knowledge", org.json.JSONArray())
         item.put("startNodeId", "first")
         item.put("directions", org.json.JSONArray().put(JSONObject()
             .put("id", "first-direction").put("title", "Проверка")
-            .put("questionKey", "first").put("componentIds", org.json.JSONArray().put("VL-EQ-HV-002"))
+            .put("questionKey", "first").put("componentIds", org.json.JSONArray().put("TEM2-EQ-DIESEL"))
             .put("explanation", "Проверить признак")))
         item.put("nodes", org.json.JSONArray().put(JSONObject()
             .put("id", "first").put("condition", "В начале")
             .put("question", "Есть признак?").put("explanation", "Один признак")
-            .put("componentIds", org.json.JSONArray().put("VL-EQ-HV-002"))
+            .put("componentIds", org.json.JSONArray().put("TEM2-EQ-DIESEL"))
             .put("answers", JSONObject().put("YES", "Есть").put("NO", "Нет").put("UNKNOWN", "Неизвестно"))
             .put("next", JSONObject().put("YES", "__end__").put("NO", "__end__")
                 .put("UNKNOWN", "__end__"))))
-        val module = DiagnosticFrameworkV2.parse(raw, { canonical }).single()
-        assertEquals("future-family", module.profileId)
-        assertEquals("Будущий локомотив", module.profileTitle)
+        val module = DiagnosticFrameworkV2.parse(raw, { tem2Catalog }).single()
+        assertEquals("tem2", module.profileId)
+        assertEquals("ТЭМ2", module.profileTitle)
         assertEquals("first", module.startNodeId)
+        assertEquals("Дизель ПД1 / фактически установленное исполнение",
+            module.components.getValue("TEM2-EQ-DIESEL").title)
+        assertEquals(listOf(module), frameworkModulesForFamily(listOf(module), TechnicalFamily.TEM2))
+        assertTrue(frameworkModulesForFamily(listOf(module), TechnicalFamily.VL80S).isEmpty())
     }
 }

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
@@ -55,7 +57,7 @@ internal fun HybridDiagnosticCardV2(
         ReferenceKnowledgePackRepository.load(context, module)
     }
     val emergencyEnabled = ExtendedEmergencyModeRepository(context).isEnabled()
-    val applicableVariant = variantId.takeIf { it in module.variantIds } ?: module.variantIds.first()
+    val applicableVariant = variantId.takeIf { it in module.variantIds }
     val nextDirection = directions.firstOrNull { it.questionKey !in answerByNode }?.id
 
     Card(modifier = Modifier.fillMaxWidth()) {
@@ -63,6 +65,8 @@ internal fun HybridDiagnosticCardV2(
             Text(scenario?.title ?: module.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
             Text("Локомотив: $locomotiveTitle")
             Text("Исполнение: $variantTitle")
+            if (applicableVariant == null) Text("Для этих сведений требуется уточнить исполнение.",
+                color = MaterialTheme.colorScheme.error)
             Text("Система: ${systemTitles.joinToString().ifBlank { scenario?.category ?: "Система не уточнена" }}")
             Text("Реакция: ${scenario?.severity?.title ?: module.reactionStatus}")
             Text("Что произошло: ${module.symptom}")
@@ -72,7 +76,7 @@ internal fun HybridDiagnosticCardV2(
     }
 
     if (mode == KnowledgeMode.BASIC) {
-        if (referencePack != null) ReferenceKnowledgeSection(referencePack, module, mode, depth, emergencyEnabled,
+        if (referencePack != null && applicableVariant != null) ReferenceKnowledgeSection(referencePack, module, mode, depth, emergencyEnabled,
             applicableVariant, study = false, nextDirection, onOpenEquipment)
         if (depth == KnowledgeDepth.MINIMAL && answerTrail.isNotEmpty()) {
             Card(modifier = Modifier.fillMaxWidth()) {
@@ -106,11 +110,12 @@ internal fun HybridDiagnosticCardV2(
         FilterChip(selected = study, onClick = { study = true }, label = { Text("Изучение") })
     }
 
-    if (referencePack == null && study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = true, onOpenEquipment = onOpenEquipment)
-    DirectionMap(directions, module, answerByNode, depth, onOpenEquipment)
-    if (referencePack != null) ReferenceKnowledgeSection(referencePack, module, mode, depth, emergencyEnabled,
+    if (referencePack == null && applicableVariant != null && study && depth == KnowledgeDepth.DETAILED)
+        KnowledgeLayers(module, showExperience = true, onOpenEquipment = onOpenEquipment)
+    if (applicableVariant != null) DirectionMap(directions, module, answerByNode, depth, onOpenEquipment)
+    if (referencePack != null && applicableVariant != null) ReferenceKnowledgeSection(referencePack, module, mode, depth, emergencyEnabled,
         applicableVariant, study, nextDirection, onOpenEquipment)
-    else {
+    else if (referencePack == null && applicableVariant != null) {
         if (study && depth != KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = depth == KnowledgeDepth.STANDARD, onOpenEquipment = onOpenEquipment)
         if (!study && depth == KnowledgeDepth.DETAILED) KnowledgeLayers(module, showExperience = false, onOpenEquipment = onOpenEquipment)
     }
@@ -124,7 +129,71 @@ private fun ReferenceKnowledgeSection(pack: ReferenceKnowledgePack, module: Fram
     if (entries.isEmpty()) return
     Text(if (study) "Изучение системы" else "Материалы по проверке",
         style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+    if (study && depth == KnowledgeDepth.DETAILED) {
+        ObjectKnowledgeDisclosure(module, entries, onOpenEquipment)
+    }
     entries.forEach { entry -> ReferenceKnowledgeCard(entry, pack, module, depth, onOpenEquipment) }
+}
+
+/** Six progressive views over the same canonical equipment and linked knowledge entries. */
+@Composable
+private fun ObjectKnowledgeDisclosure(module: FrameworkDiagnosticModule,
+    entries: List<ReferenceKnowledgeEntry>, onOpenEquipment: (String) -> Unit) {
+    val components = module.components.values.toList()
+    if (components.isEmpty()) return
+    var selectedId by rememberSaveable(module.scenarioId) { mutableStateOf(components.first().id) }
+    var level by rememberSaveable(module.scenarioId) { mutableStateOf(1) }
+    val selected = module.components[selectedId] ?: components.first()
+    val linked = entries.filter { selected.id in it.relations.componentIds && it.applicationStatus != "RESTRICTED" }
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("Изучить элемент", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(components, key = { it.id }) { component ->
+                    FilterChip(selected = component.id == selected.id,
+                        onClick = { selectedId = component.id; level = 1 },
+                        label = { Text(component.title) })
+                }
+            }
+            ObjectKnowledgeLevel(1, "Что это", selected.title, level)
+            ObjectKnowledgeLevel(2, "Назначение", selected.purpose, level)
+            val technical = linked.filter { it.classification == "TECHNICAL_REFERENCE" }
+            ObjectKnowledgeLevel(3, "Устройство",
+                technical.map { it.summary }.distinct().joinToString("\n").ifBlank {
+                    "Проверенные сведения об устройстве уточняйте по источнику и исполнению."
+                }, level)
+            val related = selected.relatedIds.mapNotNull(module.components::get).map { it.title }.distinct()
+            val systemKnowledge = technical.filter { it.relations.componentIds.size > 1 }
+                .map { it.summary }.distinct()
+            ObjectKnowledgeLevel(4, "Работа в системе",
+                (systemKnowledge + related.map { "Связан с элементом: $it" })
+                    .joinToString("\n").ifBlank { "Связи с другими элементами уточняются по схеме исполнения." }, level)
+            val directions = module.directions.filter { selected.id in it.componentIds }
+            ObjectKnowledgeLevel(5, "Диагностическое значение",
+                directions.joinToString("\n") { "${it.title}: ${it.explanation}" }.ifBlank {
+                    "Для этого элемента нет отдельного направления проверки в текущем модуле."
+                }, level)
+            val experience = linked.filter { it.classification in setOf(
+                "OPERATIONAL_EXPERIENCE", "CASE_STUDY", "HISTORICAL", "ARCHIVE") }
+            ObjectKnowledgeLevel(6, "Эксплуатационный слой",
+                experience.joinToString("\n") { "${it.title}: ${it.summary}" }.ifBlank {
+                    "Для этого элемента нет применимых наблюдений в выбранном контексте."
+                } + "\nСправочный опыт не является обязательным действием.", level)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (level < 6) TextButton(onClick = { level++ }) { Text("Следующий уровень") }
+                if (level > 1) TextButton(onClick = { level = 1 }) { Text("Свернуть") }
+                TextButton(onClick = { onOpenEquipment(selected.id) }) { Text("Открыть в Атласе") }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ObjectKnowledgeLevel(number: Int, title: String, body: String, currentLevel: Int) {
+    if (currentLevel >= number) {
+        Text("$number. $title", fontWeight = FontWeight.Bold)
+        Text(body, style = MaterialTheme.typography.bodySmall)
+    }
 }
 
 private fun ReferenceKnowledgeEntry.classTitle(): String = when (classification) {
@@ -148,6 +217,15 @@ private fun ReferenceKnowledgeEntry.confidenceTitle(): String = when (confidence
     else -> "Не установлено"
 }
 
+private fun ReferenceKnowledgeEntry.applicationTitle(): String = when (applicationStatus) {
+    "REFERENCE" -> "справка"
+    "EXPERIENCE" -> "эксплуатационное наблюдение"
+    "PRACTICE" -> "практика обслуживания; требуется допуск"
+    "ACTIONABLE" -> "действие только в пределах инструкции и допуска"
+    "RESTRICTED" -> "ограниченный материал; не инструкция"
+    else -> "применимость требует проверки"
+}
+
 @Composable
 private fun ReferenceKnowledgeCard(entry: ReferenceKnowledgeEntry, pack: ReferenceKnowledgePack,
     module: FrameworkDiagnosticModule, depth: KnowledgeDepth, onOpenEquipment: (String) -> Unit) {
@@ -160,6 +238,7 @@ private fun ReferenceKnowledgeCard(entry: ReferenceKnowledgeEntry, pack: Referen
             Text(entry.summary)
             if (depth != KnowledgeDepth.MINIMAL) {
                 Text("Достоверность: ${entry.confidenceTitle()}", style = MaterialTheme.typography.bodySmall)
+                Text("Назначение сведений: ${entry.applicationTitle()}", style = MaterialTheme.typography.bodySmall)
                 if (entry.applicability.variantCheckRequired) Text("Применимость к исполнению уточняется по схеме конкретной машины.",
                     style = MaterialTheme.typography.bodySmall)
                 if (entry.applicationStatus in setOf("EXPERIENCE", "PRACTICE", "RESTRICTED"))
@@ -167,6 +246,9 @@ private fun ReferenceKnowledgeCard(entry: ReferenceKnowledgeEntry, pack: Referen
                         fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodySmall)
             }
             if (depth == KnowledgeDepth.DETAILED) {
+                entry.applicability.conditions.forEach { condition ->
+                    Text("Когда применимо: $condition", style = MaterialTheme.typography.bodySmall)
+                }
                 entry.details.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
                 entry.limitations.forEach { Text("Ограничение: $it", style = MaterialTheme.typography.bodySmall) }
                 entry.qualityControl.conflictGroupIds.mapNotNull(pack.conflicts::get).forEach { conflict ->

@@ -1,15 +1,21 @@
 package ru.railbrake.calculator.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ru.railbrake.calculator.core.LocomotiveCatalogRegistry
+import ru.railbrake.calculator.core.DiagnosticFrameworkV2
+import ru.railbrake.calculator.core.FrameworkDiagnosticModule
 import ru.railbrake.calculator.core.TechnicalFamily
 
 @Composable
@@ -22,12 +28,22 @@ fun LocomotiveDiagnosticsScreen(
     onFamilyChange: (TechnicalFamily) -> Unit = {},
     onOpenAtlasEquipment: (String) -> Unit
 ) {
+    val context = LocalContext.current
+    val frameworkModules = remember(context) { DiagnosticFrameworkV2.load(context) }
     val linkedFamily = if (initialScenarioId != null || initialEquipmentId != null)
-        diagnosticInitialFamily(initialScenarioId, initialEquipmentId) else null
+        frameworkModules.firstOrNull { it.scenarioId == initialScenarioId }?.let { module ->
+            LocomotiveCatalogRegistry.profiles.firstOrNull { it.id == module.profileId }?.family
+        } ?: diagnosticInitialFamily(initialScenarioId, initialEquipmentId) else null
     var familyName by rememberSaveable(workingFamily, initialFamily, initialScenarioId, initialEquipmentId) {
         mutableStateOf((initialFamily ?: linkedFamily ?: workingFamily)?.name.orEmpty())
     }
     val family = TechnicalFamily.entries.firstOrNull { it.name == familyName }
+    val familyModules = family?.let { frameworkModulesForFamily(frameworkModules, it) }.orEmpty()
+    var selectedModuleId by rememberSaveable(familyName, initialScenarioId) {
+        mutableStateOf(initialScenarioId?.takeIf { id -> familyModules.any { it.scenarioId == id } })
+    }
+    val selectedModule = familyModules.firstOrNull { it.scenarioId == selectedModuleId }
+    BackHandler(enabled = selectedModule != null) { selectedModuleId = null }
     Column(Modifier.fillMaxSize()) {
         if (family == null) {
             Text("Выберите серию для диагностики. Это разовый просмотр; рабочий локомотив не изменится.",
@@ -52,15 +68,40 @@ fun LocomotiveDiagnosticsScreen(
             if (family == TechnicalFamily.VL80S)
                 DiagnosticScreen(diagnosticScenarioForFamily(initialScenarioId, family),
                     diagnosticEquipmentForFamily(initialEquipmentId, family), onOpenAtlasEquipment)
-            else ErmakDiagnosticsScreen(
-                initialScenarioId = diagnosticScenarioForFamily(initialScenarioId, family),
-                initialEquipmentId = diagnosticEquipmentForFamily(initialEquipmentId, family),
-                workingVariantId = workingVariantId.takeIf { family == workingFamily },
-                family = family
-            )
+            else if (selectedModule != null) FrameworkStandaloneDetails(
+                module = selectedModule, onBack = { selectedModuleId = null },
+                initialVariantId = workingVariantId.takeIf { family == workingFamily },
+                onOpenAtlasEquipment = onOpenAtlasEquipment)
+            else Column {
+                if (familyModules.isNotEmpty()) {
+                    Text("Модули базы знаний", modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.titleMedium)
+                    LazyRow(Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(familyModules, key = { it.scenarioId }) { module ->
+                            Card(onClick = { selectedModuleId = module.scenarioId }) {
+                                Text(module.title, Modifier.padding(12.dp))
+                            }
+                        }
+                    }
+                }
+                Box(Modifier.fillMaxWidth().weight(1f)) {
+                    ErmakDiagnosticsScreen(
+                        initialScenarioId = diagnosticScenarioForFamily(initialScenarioId, family),
+                        initialEquipmentId = diagnosticEquipmentForFamily(initialEquipmentId, family),
+                        workingVariantId = workingVariantId.takeIf { family == workingFamily },
+                        family = family
+                    )
+                }
+            }
         }
     }
 }
+
+internal fun frameworkModulesForFamily(modules: List<FrameworkDiagnosticModule>, family: TechnicalFamily):
+    List<FrameworkDiagnosticModule> = modules.filter {
+        it.profileId == LocomotiveCatalogRegistry.profile(family).id
+    }
 
 internal fun diagnosticInitialFamily(scenarioId: String?, equipmentId: String?): TechnicalFamily =
     when {

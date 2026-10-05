@@ -111,7 +111,9 @@ fun DiagnosticScreen(initialScenarioId: String? = null, initialEquipmentId: Stri
         selected == null -> DiagnosticCatalog(
             onOpen = { selectedId = it.id },
             onOpenEquipment = { selectedEquipmentId = it.id },
-            standaloneModules = frameworkModules.filter { DiagnosticRepository.scenario(it.scenarioId) == null },
+            standaloneModules = frameworkModules.filter {
+                it.profileId == "vl80s" && DiagnosticRepository.scenario(it.scenarioId) == null
+            },
             onOpenFramework = { selectedId = it }
         )
         else -> DiagnosticDetails(
@@ -394,15 +396,20 @@ private fun DiagnosticCatalog(
 }
 
 @Composable
-private fun FrameworkStandaloneDetails(
+internal fun FrameworkStandaloneDetails(
     module: FrameworkDiagnosticModule,
     onBack: () -> Unit,
-    onOpenAtlasEquipment: (String) -> Unit
+    onOpenAtlasEquipment: (String) -> Unit,
+    initialVariantId: String? = null
 ) {
     val context = LocalContext.current
     val settings = remember(context) { KnowledgeDisplayRepository(context) }
-    val selectedVariantId = remember(context) { LocomotiveProfileRepository(context).selectedVariantId() }
-    val variantTitle = module.variantTitles[selectedVariantId] ?: module.variantTitles.values.first()
+    val storedVariantId = initialVariantId ?: remember(context) { LocomotiveProfileRepository(context).selectedVariantId() }
+    var selectedVariantId by rememberSaveable(module.scenarioId) {
+        mutableStateOf(storedVariantId.takeIf(module.variantIds::contains)
+            ?: module.variantIds.singleOrNull())
+    }
+    val variantTitle = selectedVariantId?.let(module.variantTitles::get) ?: "Исполнение требуется уточнить"
     var currentKey by rememberSaveable(module.scenarioId) { mutableStateOf<String?>(module.startNodeId) }
     var trail by rememberSaveable(module.scenarioId) { mutableStateOf(emptyList<String>()) }
     val answers = trail.mapNotNull { record ->
@@ -416,17 +423,32 @@ private fun FrameworkStandaloneDetails(
     LazyColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)) {
         item { TextButton(onClick = onBack) { Text("← Все неисправности") } }
+        if (module.variantIds.size > 1) item {
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Выберите исполнение по данным своей машины")
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(module.variantIds.toList()) { id ->
+                        FilterChip(selected = id == selectedVariantId,
+                            onClick = { selectedVariantId = id; trail = emptyList(); currentKey = module.startNodeId },
+                            label = { Text(module.variantTitles.getValue(id)) })
+                    }
+                }
+            }
+        }
         item {
             HybridDiagnosticCardV2(module = module, scenario = null,
                 locomotiveTitle = module.profileTitle, variantTitle = variantTitle,
-                variantId = selectedVariantId,
+                variantId = selectedVariantId.orEmpty(),
                 systemTitles = module.systemIds.mapNotNull(module.systemTitles::get),
                 mode = settings.mode(), depth = settings.depth(), answerTrail = answers,
                 onOpenEquipment = onOpenAtlasEquipment)
         }
         item { DiagnosticSafetyNotice() }
         item { InfoCard("Сначала", module.safetyActions, MaterialTheme.colorScheme.primaryContainer) }
-        item {
+        if (selectedVariantId == null) item {
+            InfoCard("Исполнение не выбрано", listOf("Уточните исполнение, прежде чем переходить к диагностическим вопросам."),
+                MaterialTheme.colorScheme.errorContainer)
+        } else item {
             TriageCard(scenario = null, frameworkNode = currentKey?.let(module.nodes::get),
                 currentQuestionKey = currentKey, answers = answerTexts,
                 onAnswer = { response ->
