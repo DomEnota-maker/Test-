@@ -115,7 +115,7 @@ def working(profile):
 def shot(name):
     (OUT / f"{name}.png").write_bytes(adb("exec-out","screencap","-p"))
 
-def check_warning():
+def check_warning(require_warning=True):
     open_menu("Настройки")
     for _ in range(12):
         root=tree()
@@ -138,6 +138,11 @@ def check_warning():
     else:
         raise AssertionError("Expanded mode setting unavailable")
 
+    if not require_warning:
+        # Acknowledgement persists across later off/on cycles. The independent
+        # switch can become enabled immediately without showing the dialog again.
+        if find(wait("Расширенный режим включён", timeout=8), "Расширенный режим включён") is not None:
+            return
     root=wait("Пролистайте предупреждение до конца")
     confirm=button(root,"Включить")
     if confirm is None or confirm.get("enabled")!="false":

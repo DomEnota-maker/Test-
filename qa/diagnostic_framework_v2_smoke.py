@@ -148,7 +148,7 @@ try:
     if restricted_visible():
         raise AssertionError("Restricted material visible with separate gate off")
 
-    check_warning()
+    check_warning(require_warning=False)
     open_reference()
     scroll_until("Изучение", 6)
     tap("Изучение", 0)
