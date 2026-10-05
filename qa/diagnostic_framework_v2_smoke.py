@@ -114,7 +114,7 @@ try:
     open_reference()
     scroll_until("Карта направлений поиска")
     shot("framework-v2-expert-minimal")
-    scroll_up_until("Показать подробные проверки и материалы")
+    scroll_until("Показать подробные проверки и материалы", 40)
     tap("Показать подробные проверки и материалы", 0)
     scroll_until("Проверки по уровню допуска", 30)
 
