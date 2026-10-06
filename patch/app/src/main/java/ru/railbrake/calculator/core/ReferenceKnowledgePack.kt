@@ -25,7 +25,7 @@ data class ReferenceQualityControl(
 )
 data class ReferenceKnowledgeEntry(
     val id: String, val title: String, val classification: String, val statementType: String,
-    val confidence: String, val applicationStatus: String, val knowledgeLayerDepth: Int,
+    val confidence: String, val applicationStatus: String, val runtimeRole: String, val knowledgeLayerDepth: Int,
     val visibility: ReferenceVisibility, val applicability: ReferenceApplicability,
     val summary: String, val details: List<String>, val limitations: List<String>,
     val sourceRefs: Set<String>, val relations: ReferenceRelations,
@@ -61,6 +61,19 @@ data class ReferenceKnowledgePack(
 
 /** The pack is an overlay of linked knowledge; its IDs never become user-facing labels. */
 object ReferenceKnowledgePackRepository {
+    private val classifications = setOf(
+        "NORMATIVE", "MANUFACTURER", "TECHNICAL_REFERENCE", "OPERATIONAL_EXPERIENCE",
+        "FIELD_PRACTICE", "MAINTENANCE_PRACTICE", "HISTORICAL", "ARCHIVE",
+        "CASE_STUDY", "UNVERIFIED", "UNSAFE_METHOD"
+    )
+    private val statementTypes = setOf("FACT", "OBSERVATION", "HYPOTHESIS", "RECOMMENDATION", "CASE_REPORT")
+    private val confidenceValues = setOf("VERIFIED", "SUPPORTED", "REPORTED", "UNKNOWN")
+    private val applicationStatuses = setOf("REFERENCE", "EXPERIENCE", "PRACTICE", "ACTIONABLE", "RESTRICTED")
+    private val runtimeRoles = setOf(
+        "DIAGNOSTIC_CONTEXT", "LEARNING_REFERENCE", "MAINTENANCE_REFERENCE",
+        "ARCHIVE_REFERENCE", "SOURCE_NOTE", "RESTRICTED_REFERENCE"
+    )
+
     fun load(context: Context, module: FrameworkDiagnosticModule): ReferenceKnowledgePack? {
         val asset = module.referencePackAsset ?: return null
         return parse(TechnicalAssetReader.json(context.applicationContext, asset), module)
@@ -88,7 +101,7 @@ object ReferenceKnowledgePackRepository {
             val qc = raw.getJSONObject("qualityControl")
             ReferenceKnowledgeEntry(raw.getString("id"), raw.getString("title"), raw.getString("classification"),
                 raw.getString("statementType"), raw.getString("confidence"), raw.getString("applicationStatus"),
-                raw.getInt("knowledgeLayerDepth"),
+                raw.getString("runtimeRole"), raw.getInt("knowledgeLayerDepth"),
                 ReferenceVisibility(visibility.getBoolean("base"), visibility.getBoolean("extended"),
                     visibility.getBoolean("extendedEmergencyRequired"), visibility.getBoolean("diagnosis"),
                     visibility.getBoolean("study"), KnowledgeDepth.valueOf(visibility.getString("minDepth"))),
@@ -114,15 +127,33 @@ object ReferenceKnowledgePackRepository {
         val entryIds = entries.mapTo(hashSetOf()) { it.id }
         val directionIds = module.directions.mapTo(hashSetOf()) { it.id }
         entries.forEach { entry ->
+            require(entry.classification in classifications) { "${entry.id}: unsupported classification ${entry.classification}" }
+            require(entry.statementType in statementTypes) { "${entry.id}: unsupported statement type ${entry.statementType}" }
+            require(entry.confidence in confidenceValues) { "${entry.id}: unsupported confidence ${entry.confidence}" }
+            require(entry.applicationStatus in applicationStatuses) { "${entry.id}: unsupported application status ${entry.applicationStatus}" }
+            require(entry.runtimeRole in runtimeRoles) { "${entry.id}: unsupported runtime role ${entry.runtimeRole}" }
             require(entry.sourceRefs.isNotEmpty() && sources.keys.containsAll(entry.sourceRefs))
             require(module.components.keys.containsAll(entry.relations.componentIds) &&
                 directionIds.containsAll(entry.relations.directionIds) &&
                 entryIds.containsAll(entry.relations.relatedEntryIds) &&
                 conflicts.keys.containsAll(entry.qualityControl.conflictGroupIds))
             require(profileId in entry.applicability.profiles && variants.containsAll(entry.applicability.variants))
-            if (entry.classification in setOf("FIELD_PRACTICE", "UNSAFE_METHOD")) require(
+            if (entry.classification in setOf("ARCHIVE", "HISTORICAL")) require(
+                entry.runtimeRole != "DIAGNOSTIC_CONTEXT") {
+                "${entry.id}: archive/history cannot be active diagnostic context"
+            }
+            if (entry.classification == "UNVERIFIED") require(
+                entry.confidence != "VERIFIED" && entry.applicationStatus != "ACTIONABLE") {
+                "${entry.id}: unverified content cannot become verified/actionable"
+            }
+            if (entry.runtimeRole == "RESTRICTED_REFERENCE") require(
                 entry.applicationStatus == "RESTRICTED" && entry.visibility.emergencyRequired &&
-                    entry.restrictedProcedureIncluded == false)
+                    entry.restrictedProcedureIncluded == false) {
+                "${entry.id}: restricted runtime role requires redacted restricted-gate content"
+            }
+            if (entry.classification in setOf("FIELD_PRACTICE", "UNSAFE_METHOD")) require(
+                entry.applicationStatus == "RESTRICTED" && entry.runtimeRole == "RESTRICTED_REFERENCE" &&
+                    entry.visibility.emergencyRequired && entry.restrictedProcedureIncluded == false)
         }
         return ReferenceKnowledgePack(scenarioId, profileId, variants, root.getString("productionStatus"),
             sources, conflicts, entries)
