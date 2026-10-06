@@ -104,13 +104,25 @@ def locate_anywhere(text, down=30, up=36):
 
 
 def reset_reference_to_start():
-    open_reference()
     first_step = "Шаг 1; дальнейший вопрос зависит от ответа"
+    # During exhaustive edge coverage we deliberately stay inside the same
+    # diagnostic card. Reopening the drawer for every edge made the test
+    # vulnerable to matching the non-clickable screen title "Диагностика".
     try:
-        return locate_anywhere(first_step, 8, 14)
-    except AssertionError:
-        locate_anywhere("Начать заново", 36, 42)
+        locate_anywhere("Начать заново", 18, 28)
         tap("Начать заново", 0)
+        return locate_anywhere(first_step, 16, 24)
+    except AssertionError:
+        pass
+    try:
+        return locate_anywhere(first_step, 12, 20)
+    except AssertionError:
+        open_reference()
+        try:
+            locate_anywhere("Начать заново", 18, 28)
+            tap("Начать заново", 0)
+        except AssertionError:
+            pass
         return locate_anywhere(first_step, 16, 24)
 
 
