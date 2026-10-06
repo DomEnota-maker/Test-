@@ -644,7 +644,7 @@ class TechnicalDataRepository internal constructor(private val loadAsset: (Strin
             title="Полная приёмка", subtitle="${items.size} пунктов • пошагово", status="ROUTE", blocks=emptyList(),
             sequence=fullAcceptanceSequence(requiredIds, items.map(TechnicalEntry::id)), searchText="полная приёмка пошагово"
         ))
-        return listOf(requiredRoute) + effectiveRoutes + requiredItems + items
+        return Vl80sAssistantAcceptance.entries() + listOf(requiredRoute) + effectiveRoutes + requiredItems + items
     }
 
     private fun loadVl80sElectrical(): List<TechnicalEntry> =
