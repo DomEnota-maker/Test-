@@ -302,7 +302,7 @@ class TechnicalDataRepository internal constructor(private val loadAsset: (Strin
             .flatMap { family -> TechnicalSection.entries.map { family to it } }
         id.startsWith("CHME3") -> listOf(TechnicalFamily.CHME3, TechnicalFamily.CHME3T, TechnicalFamily.CHME3E)
             .flatMap { family -> TechnicalSection.entries.map { family to it } }
-        id.startsWith("VL80-ACC-") || id.startsWith("VL80-REQ-") || id.startsWith("VL80-ROUTE-") || id.startsWith("route_") -> listOf(TechnicalFamily.VL80S to TechnicalSection.ACCEPTANCE)
+        id.startsWith("VL80-ACC-") || id.startsWith("VL80-ASST-") || id.startsWith("VL80-REQ-") || id.startsWith("VL80-ROUTE-") || id.startsWith("route_") -> listOf(TechnicalFamily.VL80S to TechnicalSection.ACCEPTANCE)
         id.startsWith("VL-EQ-") -> listOf(TechnicalFamily.VL80S to TechnicalSection.EQUIPMENT)
         id.startsWith("VL-SYS-") -> listOf(TechnicalFamily.VL80S to TechnicalSection.SYSTEMS)
         id.startsWith("vl80-") -> listOf(TechnicalFamily.VL80S to TechnicalSection.KNOWLEDGE)
