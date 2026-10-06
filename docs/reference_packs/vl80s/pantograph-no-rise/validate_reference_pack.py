@@ -10,6 +10,7 @@ REQUIRED = {
     "statementType",
     "confidence",
     "applicationStatus",
+    "runtimeRole",
     "knowledgeLayerDepth",
     "visibility",
     "applicability",
@@ -28,6 +29,7 @@ STATEMENT_TYPES = {"FACT", "OBSERVATION", "HYPOTHESIS", "RECOMMENDATION", "CASE_
 CONFIDENCE = {"VERIFIED", "SUPPORTED", "REPORTED", "UNKNOWN"}
 APPLICATION = {"REFERENCE", "EXPERIENCE", "PRACTICE", "ACTIONABLE", "RESTRICTED"}
 DEPTHS = {"MINIMAL", "STANDARD", "DETAILED"}
+RUNTIME_ROLES = {"DIAGNOSTIC_CONTEXT", "LEARNING_REFERENCE", "MAINTENANCE_REFERENCE", "ARCHIVE_REFERENCE", "SOURCE_NOTE", "RESTRICTED_REFERENCE"}
 
 
 def fail(message: str) -> None:
@@ -62,6 +64,8 @@ def main() -> None:
             fail(f"{e['id']}: bad confidence")
         if e["applicationStatus"] not in APPLICATION:
             fail(f"{e['id']}: bad applicationStatus")
+        if e["runtimeRole"] not in RUNTIME_ROLES:
+            fail(f"{e['id']}: bad runtimeRole")
         if not 1 <= e["knowledgeLayerDepth"] <= 6:
             fail(f"{e['id']}: bad knowledgeLayerDepth")
         if e["visibility"]["minDepth"] not in DEPTHS:
@@ -79,8 +83,14 @@ def main() -> None:
         if unknown_related:
             fail(f"{e['id']}: unresolved related entries {sorted(unknown_related)}")
 
+        if e["classification"] in {"ARCHIVE", "HISTORICAL"}:
+            assert e["runtimeRole"] != "DIAGNOSTIC_CONTEXT", f"{e['id']}: archive/history cannot be active diagnostic context"
+        if e["classification"] == "UNVERIFIED":
+            assert e["confidence"] != "VERIFIED", f"{e['id']}: unverified content cannot be VERIFIED"
+            assert e["applicationStatus"] != "ACTIONABLE", f"{e['id']}: unverified content cannot be ACTIONABLE"
         if e["classification"] in {"FIELD_PRACTICE", "UNSAFE_METHOD"}:
             assert e["applicationStatus"] == "RESTRICTED", f"{e['id']}: restricted class must remain RESTRICTED"
+            assert e["runtimeRole"] == "RESTRICTED_REFERENCE", f"{e['id']}: restricted class must use RESTRICTED_REFERENCE"
             assert e["visibility"]["extendedEmergencyRequired"] is True, f"{e['id']}: missing restricted gate"
             assert e.get("restrictedProcedure", {}).get("procedureIncluded") is False, f"{e['id']}: dangerous procedure unexpectedly included"
 
