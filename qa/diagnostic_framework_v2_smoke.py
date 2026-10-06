@@ -139,6 +139,41 @@ def tap_exact_anywhere(text, down=10, up=14):
     raise AssertionError(f"Missing exact tap target after bidirectional search: {text}")
 
 
+def apply_graph_response(node_id, response, attempts=3):
+    """Tap one response and confirm that the diagnostic node actually advanced."""
+    node = PANTOGRAPH_NODES[node_id]
+    question = node["question"]
+    response_label = RESPONSE_LABEL[response]
+
+    for attempt in range(1, attempts + 1):
+        locate_anywhere(question, 10, 14)
+        # Compose may still be settling after a long-card scroll. A short pause
+        # before the tap and an explicit state-change check make the acceptance
+        # test resilient without weakening the assertion.
+        time.sleep(.8)
+        tap_exact_anywhere(response_label, 4, 6)
+        time.sleep(1.0)
+
+        root = tree()
+        labels = [label(n) for n in root.iter("node") if label(n)]
+        question_still_visible = any(question == item for item in labels)
+        if not question_still_visible:
+            return
+
+        print(
+            f"Framework v2 response RETRY {attempt}/{attempts}: "
+            f"{node_id} {response}",
+            flush=True,
+        )
+        time.sleep(.8)
+
+    shot(f"framework-v2-response-stuck-{node_id}-{response}")
+    raise AssertionError(
+        f"Diagnostic response did not advance node after {attempts} attempts: "
+        f"{node_id} {response}"
+    )
+
+
 def rewind_reference_card():
     # First return to the stable top anchor of the long diagnostic card.
     # Searching for the triage section while traversing Study content proved
@@ -205,7 +240,7 @@ def prepare_node(node_id, prefix):
     reset_reference_to_start()
     for source_id, response in prefix:
         locate_anywhere(PANTOGRAPH_NODES[source_id]["question"], 14, 18)
-        tap_exact_anywhere(RESPONSE_LABEL[response], 8, 12)
+        apply_graph_response(source_id, response)
         nxt = PANTOGRAPH_NODES[source_id]["next"][response]
         if nxt != "__end__":
             locate_anywhere(PANTOGRAPH_NODES[nxt]["question"], 18, 24)
@@ -228,7 +263,7 @@ def exercise_every_graph_edge_on_device():
                 locate_anywhere("Назад на шаг", 32, 36)
                 tap_exact_anywhere("Назад на шаг", 4, 8)
                 locate_anywhere(node["question"], 18, 24)
-            tap_exact_anywhere(RESPONSE_LABEL[response], 8, 12)
+            apply_graph_response(node_id, response)
             locate_anywhere(node["answers"][response], 26, 30)
             nxt = node["next"][response]
             if nxt == "__end__":
