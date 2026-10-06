@@ -99,4 +99,33 @@ class DiagnosticFrameworkV2Test {
         assertEquals(listOf(module), frameworkModulesForFamily(listOf(module), TechnicalFamily.TEM2))
         assertTrue(frameworkModulesForFamily(listOf(module), TechnicalFamily.VL80S).isEmpty())
     }
+
+    @Test fun goldenPantographGraphExhaustivelyCoversEveryTerminalRouteAndResponseEdge() {
+        val scenario = requireNotNull(DiagnosticRepository.scenario("pantograph-no-rise"))
+        val module = DiagnosticFrameworkV2.parse(root, { canonical }, mapOf(scenario.id to scenario)).single()
+        val responses = DiagnosticResponse.entries.toSet()
+        val visitedEdges = linkedSetOf<Pair<String, DiagnosticResponse>>()
+        val terminalRoutes = mutableListOf<List<Pair<String, DiagnosticResponse>>>()
+
+        fun walk(nodeId: String, trail: List<Pair<String, DiagnosticResponse>>, active: Set<String>) {
+            assertFalse("cycle at $nodeId", nodeId in active)
+            val node = module.nodes.getValue(nodeId)
+            responses.forEach { response ->
+                visitedEdges += nodeId to response
+                val next = node.nextNodeIds.getValue(response)
+                val updated = trail + (nodeId to response)
+                if (next == null) terminalRoutes += updated
+                else walk(next, updated, active + nodeId)
+            }
+        }
+
+        walk(module.startNodeId, emptyList(), emptySet())
+        val expectedEdges = module.nodes.keys.flatMap { id -> responses.map { id to it } }.toSet()
+        assertEquals(expectedEdges, visitedEdges)
+        assertEquals(25, terminalRoutes.size)
+        assertTrue(terminalRoutes.all { it.isNotEmpty() })
+        assertTrue(module.nodes.values.all {
+            it.answers.getValue(DiagnosticResponse.UNKNOWN) != it.answers.getValue(DiagnosticResponse.NO)
+        })
+    }
 }
