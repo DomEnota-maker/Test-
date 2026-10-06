@@ -103,6 +103,20 @@ def locate_anywhere(text, down=30, up=36):
         return scroll_up_until(text, up)
 
 
+def ensure_diagnostic_view():
+    # The preceding restricted-layer acceptance intentionally leaves the card
+    # in Study mode. Full graph traversal must switch the same card back to
+    # Diagnostics before looking for triage controls.
+    try:
+        locate_anywhere("Диагностика", 18, 24)
+        tap("Диагностика", 1)
+        locate_anywhere("Уточнение симптома", 20, 24)
+    except AssertionError:
+        # Basic mode has no Study/Diagnostics chips, so an already visible
+        # triage card is also a valid diagnostic state.
+        locate_anywhere("Уточнение симптома", 20, 24)
+
+
 def reset_reference_to_start():
     first_step = "Шаг 1; дальнейший вопрос зависит от ответа"
     # During exhaustive edge coverage we deliberately stay inside the same
@@ -156,8 +170,13 @@ def prepare_node(node_id, prefix):
 
 def exercise_every_graph_edge_on_device():
     prefixes = shortest_prefixes()
+    ensure_diagnostic_view()
     evidence = ["node\tresponse\tnext\tmeaning_verified"]
+    total = len(PANTOGRAPH_NODES) * 3
+    completed = 0
+    print(f"Framework v2 edge sweep START: {total} response edges", flush=True)
     for node_id in PANTOGRAPH_NODES:
+        print(f"Framework v2 node START: {node_id}", flush=True)
         prepare_node(node_id, prefixes[node_id])
         node = PANTOGRAPH_NODES[node_id]
         for index, response in enumerate(("YES", "NO", "UNKNOWN")):
@@ -173,6 +192,8 @@ def exercise_every_graph_edge_on_device():
             else:
                 locate_anywhere(PANTOGRAPH_NODES[nxt]["question"], 24, 30)
             evidence.append(f"{node_id}\t{response}\t{nxt}\tPASS")
+            completed += 1
+            print(f"Framework v2 edge PASS {completed}/{total}: {node_id} {response} -> {nxt}", flush=True)
     (OUT / "framework-v2-edge-coverage.tsv").write_text("\n".join(evidence) + "\n", encoding="utf-8")
     if len(evidence) != 1 + len(PANTOGRAPH_NODES) * 3:
         raise AssertionError("Incomplete on-device response-edge coverage")
