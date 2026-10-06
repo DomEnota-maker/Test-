@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Acceptance smoke for the VL80S reference card in beginner, expert and study views."""
+import base64
+import json
 import re
 import time
+from pathlib import Path
 
 from tem2_android_smoke import (PACKAGE, OUT, adb, bounds, check_warning,
                                find, label, open_menu, shot, tap, tap_node, tree, wait)
@@ -86,6 +89,123 @@ def restricted_visible(swipes=35):
     return found
 
 
+FRAMEWORK_ASSET = Path(__file__).resolve().parents[1] / "app/src/main/assets/technical/diagnostic_framework_v2.json"
+FRAMEWORK_RAW = json.loads(FRAMEWORK_ASSET.read_text(encoding="utf-8"))
+PANTOGRAPH = next(item for item in FRAMEWORK_RAW["modules"] if item["scenarioId"] == "pantograph-no-rise")
+PANTOGRAPH_NODES = {item["id"]: item for item in PANTOGRAPH["nodes"]}
+RESPONSE_LABEL = {"YES": "Да", "NO": "Нет", "UNKNOWN": "Не знаю"}
+
+
+def locate_anywhere(text, down=30, up=36):
+    try:
+        return scroll_until(text, down)
+    except AssertionError:
+        return scroll_up_until(text, up)
+
+
+def reset_reference_to_start():
+    open_reference()
+    first_step = "Шаг 1; дальнейший вопрос зависит от ответа"
+    try:
+        return locate_anywhere(first_step, 8, 14)
+    except AssertionError:
+        locate_anywhere("Начать заново", 36, 42)
+        tap("Начать заново", 0)
+        return locate_anywhere(first_step, 16, 24)
+
+
+def shortest_prefixes():
+    start = PANTOGRAPH["startNodeId"]
+    prefixes = {start: []}
+    queue = [start]
+    while queue:
+        node_id = queue.pop(0)
+        node = PANTOGRAPH_NODES[node_id]
+        for response in ("YES", "NO", "UNKNOWN"):
+            nxt = node["next"][response]
+            if nxt != "__end__" and nxt not in prefixes:
+                prefixes[nxt] = prefixes[node_id] + [(node_id, response)]
+                queue.append(nxt)
+    if set(prefixes) != set(PANTOGRAPH_NODES):
+        raise AssertionError("Not every diagnostic node has a reachable UI prefix")
+    return prefixes
+
+
+def prepare_node(node_id, prefix):
+    reset_reference_to_start()
+    for source_id, response in prefix:
+        locate_anywhere(PANTOGRAPH_NODES[source_id]["question"], 14, 18)
+        tap(RESPONSE_LABEL[response], 2)
+        nxt = PANTOGRAPH_NODES[source_id]["next"][response]
+        if nxt != "__end__":
+            locate_anywhere(PANTOGRAPH_NODES[nxt]["question"], 18, 24)
+    locate_anywhere(PANTOGRAPH_NODES[node_id]["question"], 18, 24)
+
+
+def exercise_every_graph_edge_on_device():
+    prefixes = shortest_prefixes()
+    evidence = ["node\tresponse\tnext\tmeaning_verified"]
+    for node_id in PANTOGRAPH_NODES:
+        prepare_node(node_id, prefixes[node_id])
+        node = PANTOGRAPH_NODES[node_id]
+        for index, response in enumerate(("YES", "NO", "UNKNOWN")):
+            if index:
+                locate_anywhere("Назад на шаг", 32, 36)
+                tap("Назад на шаг", 0)
+                locate_anywhere(node["question"], 18, 24)
+            tap(RESPONSE_LABEL[response], 2)
+            locate_anywhere(node["answers"][response], 26, 30)
+            nxt = node["next"][response]
+            if nxt == "__end__":
+                locate_anywhere("Вопросы пройдены. Выводы включены в шаблон доклада.", 24, 30)
+            else:
+                locate_anywhere(PANTOGRAPH_NODES[nxt]["question"], 24, 30)
+            evidence.append(f"{node_id}\t{response}\t{nxt}\tPASS")
+    (OUT / "framework-v2-edge-coverage.tsv").write_text("\n".join(evidence) + "\n", encoding="utf-8")
+    if len(evidence) != 1 + len(PANTOGRAPH_NODES) * 3:
+        raise AssertionError("Incomplete on-device response-edge coverage")
+
+
+def write_appearance_preferences(theme):
+    xml = (
+        '<?xml version="1.0" encoding="utf-8" standalone="yes" ?>\n'
+        "<map>\n"
+        '    <string name="accent_palette">BLUE</string>\n'
+        f'    <string name="theme_mode">{theme}</string>\n'
+        "</map>\n"
+    )
+    encoded = base64.b64encode(xml.encode("utf-8")).decode("ascii")
+    command = (
+        f"run-as {PACKAGE} sh -c 'mkdir -p shared_prefs && "
+        f"echo {encoded} | base64 -d > shared_prefs/calculation_inputs.xml'"
+    )
+    adb("shell", command)
+
+
+def restart_visual_environment(font_scale, theme):
+    adb("shell", "settings", "put", "system", "font_scale", font_scale)
+    adb("shell", "am", "force-stop", PACKAGE)
+    write_appearance_preferences(theme)
+    adb("shell", "monkey", "-p", PACKAGE, "1")
+    wait("Железнодорожный помощник")
+
+
+def long_card_visual_stress():
+    restart_visual_environment("1.3", "DARK")
+    open_reference()
+    locate_anywhere("Изучение", 10, 18)
+    tap("Изучение", 0)
+    locate_anywhere("Изучить элемент", 24, 30)
+    shot("framework-v2-long-dark-font130-top")
+    locate_anywhere("Л-13У1 и Л-14М1 в исторических материалах", 58, 62)
+    shot("framework-v2-long-dark-font130-middle")
+    locate_anywhere("Принудительное включение/обход разрешающей цепи — отдельный unsafe-класс", 72, 76)
+    locate_anywhere("Источник:", 14, 18)
+    shot("framework-v2-long-dark-font130-bottom")
+    if restricted_visible(18) != {"field", "unsafe"}:
+        raise AssertionError("Restricted layer lost during dark/font130 long-card stress")
+
+
 try:
     open_reference()
     scroll_until("Видно ли повреждение токоприёмника или контактного провода?")
@@ -155,8 +275,12 @@ try:
     if restricted_visible() != {"field", "unsafe"}:
         raise AssertionError("Restricted entries not separately available behind enabled gate")
     shot("framework-v2-restricted-separate-layer")
+
+    exercise_every_graph_edge_on_device()
+    long_card_visual_stress()
 finally:
+    adb("shell", "settings", "put", "system", "font_scale", "1.0")
     (OUT / "framework-v2-crash-logcat.txt").write_bytes(adb("logcat", "-d", "-b", "crash"))
 
 assert b"Process: ru.railbrake.calculator" not in (OUT / "framework-v2-crash-logcat.txt").read_bytes()
-print("Diagnostic Framework v2 six mode-depth views, progressive object and independent gate PASS")
+print("Diagnostic Framework v2 GOLDEN REFERENCE PASS: six mode-depth views, all 24 graph response edges, progressive object, independent gate and long-card visual stress")
