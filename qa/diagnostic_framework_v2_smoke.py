@@ -104,40 +104,32 @@ def locate_anywhere(text, down=30, up=36):
 
 
 def ensure_diagnostic_view():
-    # The preceding restricted-layer acceptance intentionally leaves the card
-    # in Study mode. Full graph traversal must switch the same card back to
-    # Diagnostics before looking for triage controls.
-    try:
-        locate_anywhere("Диагностика", 18, 24)
-        tap("Диагностика", 1)
-        locate_anywhere("Уточнение симптома", 20, 24)
-    except AssertionError:
-        # Basic mode has no Study/Diagnostics chips, so an already visible
-        # triage card is also a valid diagnostic state.
-        locate_anywhere("Уточнение симптома", 20, 24)
+    # Triage controls are independent from the knowledge-card Study/Diagnostics
+    # presentation switch. For graph acceptance we only need the triage card
+    # itself to be reachable.
+    locate_anywhere("Уточнение симптома", 12, 30)
 
 
 def reset_reference_to_start():
-    first_step = "Шаг 1; дальнейший вопрос зависит от ответа"
-    # During exhaustive edge coverage we deliberately stay inside the same
-    # diagnostic card. Reopening the drawer for every edge made the test
-    # vulnerable to matching the non-clickable screen title "Диагностика".
-    try:
-        locate_anywhere("Начать заново", 18, 28)
-        tap("Начать заново", 0)
-        return locate_anywhere(first_step, 16, 24)
-    except AssertionError:
-        pass
-    try:
-        return locate_anywhere(first_step, 12, 20)
-    except AssertionError:
-        open_reference()
-        try:
-            locate_anywhere("Начать заново", 18, 28)
+    start_question = PANTOGRAPH_NODES[PANTOGRAPH["startNodeId"]]["question"]
+
+    # The triage card lives near the top of the diagnostic screen. Walk upward
+    # deterministically instead of scanning the entire long knowledge card in
+    # both directions; this avoids getting trapped in the Study content area.
+    for _ in range(42):
+        root = tree()
+        if any(start_question == label(n) for n in root.iter("node")):
+            return root
+
+        if any("Начать заново" == label(n) for n in root.iter("node")):
             tap("Начать заново", 0)
-        except AssertionError:
-            pass
-        return locate_anywhere(first_step, 16, 24)
+            return locate_anywhere(start_question, 6, 18)
+
+        adb("shell", "input", "swipe", "520", "900", "520", "2100", "320")
+        time.sleep(.25)
+
+    shot("framework-v2-reset-to-start-failure")
+    raise AssertionError(f"Unable to return triage graph to start question: {start_question}")
 
 
 def shortest_prefixes():
