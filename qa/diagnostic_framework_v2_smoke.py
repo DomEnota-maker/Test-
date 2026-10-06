@@ -273,9 +273,23 @@ try:
     tap("Изучение", 0)
     scroll_until("Изучить элемент", 20)
     scroll_until("1. Что это", 3)
-    for _ in range(5):
-        tap("Следующий уровень", 18)
-    scroll_until("6. Эксплуатационный слой", 18)
+    for marker in (
+        "2. Назначение",
+        "3. Устройство",
+        "4. Работа в системе",
+        "5. Диагностическое значение",
+        "6. Эксплуатационный слой",
+    ):
+        # The card grows after each level, so verify every transition instead
+        # of firing five blind taps at a moving control.
+        for attempt in range(2):
+            try:
+                locate_anywhere(marker, 8, 12)
+                break
+            except AssertionError:
+                tap("Следующий уровень", 24)
+        else:
+            raise AssertionError(f"Object knowledge level did not advance to: {marker}")
     shot("framework-v2-six-object-levels")
     if restricted_visible():
         raise AssertionError("Restricted material visible with separate gate off")
