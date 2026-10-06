@@ -27,6 +27,7 @@
 - `statementType`;
 - `confidence`;
 - `applicationStatus`;
+- `runtimeRole`;
 - `knowledgeLayerDepth`;
 - `visibility`;
 - `applicability`;
@@ -63,6 +64,17 @@
 - PRACTICE;
 - ACTIONABLE;
 - RESTRICTED.
+
+### Runtime Role
+
+- DIAGNOSTIC_CONTEXT;
+- LEARNING_REFERENCE;
+- MAINTENANCE_REFERENCE;
+- ARCHIVE_REFERENCE;
+- SOURCE_NOTE;
+- RESTRICTED_REFERENCE.
+
+Runtime role is independent from classification. Archive/history may not become active diagnostic context merely because they mention a diagnostic procedure; restricted entries must remain behind the separate gate.
 
 ## 4. Source integrity
 
