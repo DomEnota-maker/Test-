@@ -55,10 +55,21 @@ def button(root, text):
         node=parents[node]
     return node if node.get("clickable")=="true" else None
 
+def dismiss_launcher_anr(root):
+    title = find(root, "Pixel Launcher isn't responding")
+    close = find(root, "Close app")
+    if title is not None and close is not None:
+        tap_node(close)
+        time.sleep(1)
+        return True
+    return False
+
 def wait(text, timeout=60):
     deadline = time.monotonic()+timeout
     while time.monotonic() < deadline:
         root=tree()
+        if dismiss_launcher_anr(root):
+            continue
         if any(text in label(n) for n in root.iter("node")):
             return root
         time.sleep(1)
