@@ -103,6 +103,42 @@ def locate_anywhere(text, down=30, up=36):
         return scroll_up_until(text, up)
 
 
+def tap_exact_anywhere(text, down=10, up=14):
+    """Tap an exact clickable/checkable label, searching in both directions."""
+    def try_current():
+        root = tree()
+        parents = {c: p for p in root.iter() for c in p}
+        for candidate in (n for n in root.iter("node") if label(n) == text):
+            node = candidate
+            while (
+                node.get("clickable") != "true"
+                and node.get("checkable") != "true"
+                and node in parents
+            ):
+                node = parents[node]
+            if node.get("clickable") == "true" or node.get("checkable") == "true":
+                tap_node(node)
+                return True
+        return False
+
+    for attempt in range(down + 1):
+        if try_current():
+            return
+        if attempt < down:
+            adb("shell", "input", "swipe", "520", "1750", "520", "520", "360")
+            time.sleep(.35)
+
+    for attempt in range(up + 1):
+        if try_current():
+            return
+        if attempt < up:
+            adb("shell", "input", "swipe", "520", "720", "520", "2050", "360")
+            time.sleep(.35)
+
+    shot(f"framework-v2-missing-tap-{text.replace(' ', '-')}")
+    raise AssertionError(f"Missing exact tap target after bidirectional search: {text}")
+
+
 def rewind_reference_card():
     # First return to the stable top anchor of the long diagnostic card.
     # Searching for the triage section while traversing Study content proved
@@ -169,7 +205,7 @@ def prepare_node(node_id, prefix):
     reset_reference_to_start()
     for source_id, response in prefix:
         locate_anywhere(PANTOGRAPH_NODES[source_id]["question"], 14, 18)
-        tap(RESPONSE_LABEL[response], 2)
+        tap_exact_anywhere(RESPONSE_LABEL[response], 8, 12)
         nxt = PANTOGRAPH_NODES[source_id]["next"][response]
         if nxt != "__end__":
             locate_anywhere(PANTOGRAPH_NODES[nxt]["question"], 18, 24)
@@ -190,9 +226,9 @@ def exercise_every_graph_edge_on_device():
         for index, response in enumerate(("YES", "NO", "UNKNOWN")):
             if index:
                 locate_anywhere("Назад на шаг", 32, 36)
-                tap("Назад на шаг", 0)
+                tap_exact_anywhere("Назад на шаг", 4, 8)
                 locate_anywhere(node["question"], 18, 24)
-            tap(RESPONSE_LABEL[response], 2)
+            tap_exact_anywhere(RESPONSE_LABEL[response], 8, 12)
             locate_anywhere(node["answers"][response], 26, 30)
             nxt = node["next"][response]
             if nxt == "__end__":
