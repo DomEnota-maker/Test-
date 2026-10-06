@@ -103,33 +103,49 @@ def locate_anywhere(text, down=30, up=36):
         return scroll_up_until(text, up)
 
 
-def ensure_diagnostic_view():
-    # Triage controls are independent from the knowledge-card Study/Diagnostics
-    # presentation switch. For graph acceptance we only need the triage card
-    # itself to be reachable.
-    locate_anywhere("Уточнение симптома", 12, 30)
+def rewind_reference_card():
+    # First return to the stable top anchor of the long diagnostic card.
+    # Searching for the triage section while traversing Study content proved
+    # brittle because the card can be much longer than a fixed swipe budget.
+    for _ in range(52):
+        root = tree()
+        labels = [label(n) for n in root.iter("node")]
+        if ("Токоприёмник не поднимается" in labels
+                and "Локомотив: ВЛ80С" in labels
+                and "← Все неисправности" in labels):
+            return root
+        adb("shell", "input", "swipe", "520", "900", "520", "2100", "300")
+        time.sleep(.20)
+    shot("framework-v2-card-top-failure")
+    raise AssertionError("Unable to return to diagnostic card top")
 
 
 def reset_reference_to_start():
     start_question = PANTOGRAPH_NODES[PANTOGRAPH["startNodeId"]]["question"]
+    rewind_reference_card()
 
-    # The triage card lives near the top of the diagnostic screen. Walk upward
-    # deterministically instead of scanning the entire long knowledge card in
-    # both directions; this avoids getting trapped in the Study content area.
-    for _ in range(42):
+    # From the stable top anchor, move only downward until either the untouched
+    # first question or the explicit graph-reset control becomes visible.
+    for _ in range(34):
         root = tree()
-        if any(start_question == label(n) for n in root.iter("node")):
+        labels = [label(n) for n in root.iter("node")]
+        if start_question in labels:
             return root
-
-        if any("Начать заново" == label(n) for n in root.iter("node")):
+        if "Начать заново" in labels:
             tap("Начать заново", 0)
-            return locate_anywhere(start_question, 6, 18)
-
-        adb("shell", "input", "swipe", "520", "900", "520", "2100", "320")
+            return locate_anywhere(start_question, 8, 18)
+        adb("shell", "input", "swipe", "520", "1840", "520", "500", "340")
         time.sleep(.25)
 
     shot("framework-v2-reset-to-start-failure")
     raise AssertionError(f"Unable to return triage graph to start question: {start_question}")
+
+
+def ensure_diagnostic_view():
+    # Triage is present in both Diagnostics and Study presentation states.
+    # Reaching the actual start question is a stronger acceptance condition
+    # than relying on the section heading text.
+    reset_reference_to_start()
 
 
 def shortest_prefixes():
