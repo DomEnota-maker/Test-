@@ -69,8 +69,6 @@ def set_emergency_off():
 
 def restricted_visible(swipes=35):
     found = set()
-    previous = None
-    stationary = 0
     for i in range(swipes + 1):
         labels = tuple(label(n) for n in tree().iter("node") if label(n))
         if any("Полевая практика · отдельное ограничение" in x for x in labels):
@@ -79,11 +77,11 @@ def restricted_visible(swipes=35):
             found.add("unsafe")
         if found == {"field", "unsafe"}:
             break
-        stationary = stationary + 1 if labels == previous else 0
-        if stationary >= 2:
-            break
-        previous = labels
         if i < swipes:
+            # At font_scale=1.3 a tall Compose card can yield the same
+            # accessibility labels across consecutive viewports while the
+            # ScrollView still has content below. Exhaust the bounded swipe
+            # budget instead of treating repeated labels as end-of-content.
             adb("shell", "input", "swipe", "520", "1850", "520", "470", "360")
             time.sleep(.25)
     return found
