@@ -84,6 +84,25 @@ def tap(text, vertical_swipes=2):
             time.sleep(.7)
     raise AssertionError(f"Missing tap target: {text}")
 
+def launch_and_wait(text, attempts=3):
+    last_error = None
+    for attempt in range(attempts):
+        adb("shell", "am", "force-stop", PACKAGE)
+        try:
+            adb("shell", "am", "start", "-W", "-n", f"{PACKAGE}/.MainActivity")
+        except subprocess.CalledProcessError as exc:
+            last_error = exc
+        time.sleep(2 + attempt)
+        try:
+            return wait(text, timeout=25)
+        except AssertionError as exc:
+            last_error = exc
+            # Fresh emulator boots can expose a transient null accessibility root.
+            adb("shell", "input", "keyevent", "82")
+            time.sleep(1)
+    raise AssertionError(f"App did not become visible after {attempts} launch attempts: {text}") from last_error
+
+
 def open_menu(text):
     tap("☰", 0)
     wait(text)
@@ -188,18 +207,14 @@ def check_profile(profile, route):
     shot(f"{profile}-acceptance")
     open_menu("Главная")
     wait("Сегодня работаю на: "+profile)
-    adb("shell","am","force-stop",PACKAGE)
-    adb("shell","monkey","-p",PACKAGE,"1")
-    wait("Сегодня работаю на: "+profile)
+    launch_and_wait("Сегодня работаю на: "+profile)
     shot(f"{profile}-restarted")
 
 if __name__ == "__main__":
     apk=os.environ["APK"]
     subprocess.run(["adb","install","-r",apk],check=True,timeout=120)
     adb("logcat","-c")
-    adb("shell","am","force-stop",PACKAGE)
-    adb("shell","monkey","-p",PACKAGE,"1")
-    wait("Железнодорожный помощник")
+    launch_and_wait("Железнодорожный помощник")
     try:
         check_profile("ТЭМ2","Начать снаружи")
         check_profile("ТЭМ2У","Начать из кабины")
