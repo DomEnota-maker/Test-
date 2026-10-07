@@ -76,12 +76,61 @@ internal object Vl80sAssistantAcceptance {
     )
 
     fun entries(): List<TechnicalEntry> {
-        val checks = points.mapIndexed { index, point ->
+        // Keep existing IDs stable when the walking order changes.
+        val indexed = points.mapIndexed { index, point ->
+            "VL80-ASST-${(index + 1).toString().padStart(2, '0')}" to point
+        }
+        val preparation = indexed.filter { it.second.area == "Перед обходом" }
+        val firstCabin = indexed.filter { it.second.area == "Кабина" && it.second.title != "Вторая кабина" }
+        val section = indexed.filter { it.second.area == "Внутри секции" }
+        val sectionTail = indexed.filter { it.second.area == "Хвост секции" }
+        val outside = indexed.filter { it.second.area == "Снаружи" }
+        val train = indexed.filter { it.second.area == "У состава" }
+        val departure = indexed.filter { it.second.area == "Перед отправлением" }
+
+        fun secondCabinPoint(original: Point): Point {
+            val point = original.copy(
+                area = "Вторая кабина",
+                caution = listOf(
+                    original.caution,
+                    "В нерабочей кабине не переводить органы управления ради отметки; порядок проверки сверить с картой приёмки."
+                ).filter(String::isNotBlank).joinToString(" ")
+            )
+            return when (original.title) {
+                "Документы и предупреждения" -> point.copy(
+                    check = "Сверить документацию, схемы и записи, предусмотренные именно во второй кабине; поездные документы и предупреждения уже сверены в первой.",
+                    normal = "Наличие документов во второй кабине соответствует описи; отсутствующее по исполнению отметить «Не применяется»."
+                )
+                "Приборы безопасности и радиосвязь" -> point.copy(
+                    check = "Осмотреть установленную аппаратуру безопасности и радиостанцию второй кабины; действие проверять только в предусмотренном для неё режиме.",
+                    normal = "Нет повреждений и необъяснённой индикации; проверка действия выполнена только если предусмотрена."
+                )
+                "Давление воздуха" -> point.copy(
+                    check = "Считать доступные показания ТМ и ПМ во второй кабине, если они должны отображаться в текущем режиме; сопоставить с показаниями рабочей кабины.",
+                    normal = "Показания согласуются с режимом и сообщены машинисту; неприменимость отмечена отдельно."
+                )
+                "Тормоза и стояночный тормоз" -> point.copy(
+                    check = "Сверить положение тормозных органов второй кабины и состояние стояночного тормоза по карте приёмки для текущего режима.",
+                    normal = "Нет необъяснённых отклонений; проверка не требует переключения нерабочей кабины."
+                )
+                "Освещение, сигнал и обзор" -> point.copy(
+                    check = "Осмотреть прожектор, фонари, звуковые сигналы, окна и стеклоочистители второй кабины; действие проверить в установленном режиме.",
+                    normal = "Необходимые приборы исправны; недоступную в текущем режиме проверку отметить отдельно."
+                )
+                "Аккумулятор и заряд" -> point.copy(
+                    check = "Сверить доступные во второй кабине показания напряжения и зарядки с уже проверенными данными обеих секций.",
+                    normal = "Нет необъяснённого расхождения показаний."
+                )
+                else -> point
+            }
+        }
+
+        fun entry(id: String, point: Point, title: String = point.title): TechnicalEntry =
             TechnicalEntry(
-                id = "VL80-ASST-${(index + 1).toString().padStart(2, '0')}",
+                id = id,
                 family = TechnicalFamily.VL80S,
                 section = TechnicalSection.ACCEPTANCE,
-                title = point.title,
+                title = title,
                 subtitle = point.check,
                 status = "CHECK",
                 blocks = buildList {
@@ -94,24 +143,49 @@ internal object Vl80sAssistantAcceptance {
                     add(TechnicalBlock("Источник и применимость", listOf(point.source, "Исполнение и распределение обязанностей сверить с документацией конкретного локомотива и депо.")))
                 },
                 relatedIds = point.related,
-                searchText = listOf(point.area, point.title, point.check, point.designation).joinToString(" ").lowercase()
+                searchText = listOf(point.area, title, point.check, point.designation).joinToString(" ").lowercase()
             )
+
+        val checks = buildList {
+            preparation.forEach { (id, point) -> add(entry(id, point)) }
+            firstCabin.forEach { (id, point) ->
+                add(entry(id, point.copy(area = "Первая кабина"), "Первая кабина • ${point.title}"))
+            }
+            section.forEach { (id, point) ->
+                add(entry(id, point.copy(area = "Первая секция"), "Первая секция • ${point.title}"))
+            }
+            sectionTail.forEach { (id, point) ->
+                add(entry(id, point.copy(area = "Хвост первой секции"), "Первая секция • ${point.title}"))
+            }
+            // At the inter-section passage, inspect the second section from its tail towards its cab.
+            (sectionTail.asReversed() + section.asReversed()).forEach { (id, point) ->
+                val secondId = "VL80-ASST-SEC2-${id.removePrefix("VL80-ASST-")}"
+                add(entry(secondId, point.copy(area = "Вторая секция"), "Вторая секция • ${point.title}"))
+            }
+            firstCabin.forEach { (id, point) ->
+                val secondId = "VL80-ASST-CAB2-${id.removePrefix("VL80-ASST-")}"
+                add(entry(secondId, secondCabinPoint(point), "Вторая кабина • ${point.title}"))
+            }
+            outside.forEach { (id, point) -> add(entry(id, point)) }
+            train.forEach { (id, point) -> add(entry(id, point)) }
+            departure.forEach { (id, point) -> add(entry(id, point)) }
         }
+        check(checks.map { it.id }.distinct().size == checks.size)
         val route = TechnicalEntry(
             id = "VL80-ROUTE-assistant",
             family = TechnicalFamily.VL80S,
             section = TechnicalSection.ACCEPTANCE,
             title = "Для помощника машиниста",
-            subtitle = "Кабины, секции, наружный обход, состав и доклад • ${checks.size} пунктов",
+            subtitle = "Две кабины, две секции, наружный обход и состав • ${checks.size} пунктов",
             status = "ROUTE",
             blocks = listOf(TechnicalBlock("Порядок применения", listOf(
-                "Маршрут наблюдений помощника по ВЛ80С. Отмечайте факт проверки и замечания по каждой секции.",
-                "Последовательность, распределение обязанностей и исполнительные отличия сверяйте с действующей картой приёмки депо.",
-                "При признаке срабатывания защиты сообщите машинисту секцию и аппарат. Отметка в приложении не разрешает сбрасывать защиту, открывать ограждения или изменять положение кранов.",
-                "Пункты перед отправлением и после промежуточной остановки применять по ситуации; неприменимые пункты отмечать отдельно. «Минута готовности» выполняется непосредственно перед отправлением, фактические показания объявляются машинисту."
+                "Маршрут наблюдений помощника по ВЛ80С: первая кабина → первая секция → вторая секция → вторая кабина → наружный обход → состав.",
+                "Каждая секция и кабина имеет отдельные отметки. Последовательность, распределение обязанностей и отличия исполнения сверяйте с картой приёмки депо.",
+                "При признаке срабатывания защиты сообщите машинисту секцию и аппарат. Отметка не разрешает сбрасывать защиту, открывать ограждения или изменять положение кранов.",
+                "Пункты перед отправлением и после промежуточной остановки применяются по ситуации; неприменимое отмечается отдельно. Фактические показания объявляются машинисту."
             ))),
             sequence = checks.map { it.id },
-            searchText = "для помощника машиниста приемка вл80с минута готовности кабина секции блинкеры реле 113".lowercase()
+            searchText = "для помощника машиниста приемка вл80с минута готовности две кабины две секции реле 113"
         )
         return listOf(route) + checks
     }
