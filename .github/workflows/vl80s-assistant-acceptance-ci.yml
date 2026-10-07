@@ -1,0 +1,128 @@
+name: VL80S assistant acceptance CI
+
+on:
+  push:
+    branches: [feature/vl80s-assistant-acceptance]
+  pull_request:
+    branches: [feature/diagnostic-framework-v2]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check mirrored content and route wiring
+        run: |
+          set -euo pipefail
+          cmp app/src/main/java/ru/railbrake/calculator/core/Vl80sAssistantAcceptance.kt patch/app/src/main/java/ru/railbrake/calculator/core/Vl80sAssistantAcceptance.kt
+          cmp app/src/main/java/ru/railbrake/calculator/core/TechnicalDataRepository.kt patch/app/src/main/java/ru/railbrake/calculator/core/TechnicalDataRepository.kt
+          grep -Fq 'Vl80sAssistantAcceptance.entries()' app/src/main/java/ru/railbrake/calculator/core/TechnicalDataRepository.kt
+          grep -Fq 'id.startsWith("VL80-ASST-")' app/src/main/java/ru/railbrake/calculator/core/TechnicalDataRepository.kt
+          git diff --check
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Install Android SDK 34
+        run: |
+          yes | "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null || true
+          "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-34' 'build-tools;34.0.0'
+      - name: Prepare disposable Android build tree
+        run: |
+          mkdir -p buildsrc
+          unzip -q RailBrakeCalculator.zip -d buildsrc
+          cp -a patch/. buildsrc/RailBrakeCalculator/
+      - name: Resolve pinned offline ASR AAR
+        run: |
+          mkdir -p buildsrc/RailBrakeCalculator/app/libs
+          curl -fL --retry 3 --connect-timeout 20 https://github.com/k2-fsa/sherpa-onnx/releases/download/v1.13.8/sherpa-onnx-1.13.8.aar -o buildsrc/RailBrakeCalculator/app/libs/sherpa-onnx.aar
+          printf '%s  %s\n' 633c24321e06b1fe79feafa03ea16cbc0f8a286641e2da3559bac91bdb13bd96 buildsrc/RailBrakeCalculator/app/libs/sherpa-onnx.aar | sha256sum --check
+      - name: Unit, lint and build
+        working-directory: buildsrc/RailBrakeCalculator
+        run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --no-daemon --console=plain
+      - name: Decode signing key
+        env:
+          RELEASE_KEYSTORE_B64: ${{ secrets.RAILBRAKE_KEYSTORE_BASE64 }}
+        run: |
+          test -n "$RELEASE_KEYSTORE_B64"
+          printf '%s' "$RELEASE_KEYSTORE_B64" | base64 --decode > buildsrc/RailBrakeCalculator/release.keystore
+      - name: Build signed release APK
+        working-directory: buildsrc/RailBrakeCalculator
+        env:
+          RAILBRAKE_KEYSTORE_PATH: ${{ github.workspace }}/buildsrc/RailBrakeCalculator/release.keystore
+          RAILBRAKE_STORE_PASSWORD: ${{ secrets.RAILBRAKE_STORE_PASSWORD }}
+          RAILBRAKE_KEY_ALIAS: ${{ secrets.RAILBRAKE_KEY_ALIAS }}
+          RAILBRAKE_KEY_PASSWORD: ${{ secrets.RAILBRAKE_KEY_PASSWORD }}
+        run: gradle :app:assembleRelease --no-daemon --console=plain
+      - name: Verify signing certificate
+        run: |
+          "$ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner" verify --print-certs buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk > signed-apksigner.log
+          grep -qi 'Signer #1 certificate SHA-256 digest: ea9fe9341a6ba72b585bd7ff82ce29c8fc5b7b59e76b8b134df203eaab8e2788' signed-apksigner.log
+      - name: Split signed APK for verified transfer
+        run: |
+          mkdir -p release-parts
+          split -b 24m -d -a 2 buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk release-parts/part-
+          sha256sum buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk > release-parts/apk.sha256
+          test "$(find release-parts -name 'part-*' | wc -l)" -eq 6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-00
+          path: release-parts/part-00
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-01
+          path: release-parts/part-01
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-02
+          path: release-parts/part-02
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-03
+          path: release-parts/part-03
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-04
+          path: release-parts/part-04
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-05
+          path: release-parts/part-05
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-sha256
+          path: release-parts/apk.sha256
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-acceptance-release-signed
+          path: buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: vl80s-assistant-acceptance-debug
+          path: |
+            buildsrc/RailBrakeCalculator/app/build/outputs/apk/debug/*.apk
+            buildsrc/RailBrakeCalculator/app/build/reports/lint-results-debug.html
+          if-no-files-found: ignore
