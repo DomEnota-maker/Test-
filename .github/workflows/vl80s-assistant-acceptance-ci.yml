@@ -66,6 +66,53 @@ jobs:
         run: |
           "$ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner" verify --print-certs buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk > signed-apksigner.log
           grep -qi 'Signer #1 certificate SHA-256 digest: ea9fe9341a6ba72b585bd7ff82ce29c8fc5b7b59e76b8b134df203eaab8e2788' signed-apksigner.log
+      - name: Split signed APK for verified transfer
+        run: |
+          mkdir -p release-parts
+          split -b 24m -d -a 2 buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk release-parts/part-
+          sha256sum buildsrc/RailBrakeCalculator/app/build/outputs/apk/release/app-release.apk > release-parts/apk.sha256
+          test "$(find release-parts -name 'part-*' | wc -l)" -eq 6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-00
+          path: release-parts/part-00
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-01
+          path: release-parts/part-01
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-02
+          path: release-parts/part-02
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-03
+          path: release-parts/part-03
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-04
+          path: release-parts/part-04
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-part-05
+          path: release-parts/part-05
+          if-no-files-found: error
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vl80s-assistant-sha256
+          path: release-parts/apk.sha256
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           name: vl80s-assistant-acceptance-release-signed
